@@ -1,5 +1,7 @@
 package se.sundsvall.businessengagements.service.mapper.ssbtgu;
 
+import static java.util.Collections.emptyList;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,7 +34,7 @@ public class OfficialsMapper {
 	 */
 	public static List<Official> mapOfficials(String officialsString) {
 		if (StringUtils.isBlank(officialsString)) {
-			return List.of();
+			return emptyList();
 		}
 		Map<String, Official> officialsMap = new HashMap<>();   //Store it temporary in a map since to be sure that we don't get duplicates
 		String[] split = officialsString.split("\r\n|\n|\r"); //Split on newline
