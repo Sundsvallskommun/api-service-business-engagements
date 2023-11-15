@@ -1,0 +1,26 @@
+spring:
+  cache:
+    type: none
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+bolagsverket:
+  entity:
+    ttl: PT30M
+integration:
+  bolagsverket:
+    should-use-keystore: false
+    should-verify-transactionid: false
+    ssbten-api-url: http://nowhere.com
+    ssbtgu-api-url: http://nowhere.com
+    ttl: PT30M
+  party:
+    url: http://nowhere.com
+    oauth2-token-url: http://nowhere.com
+    oauth2-client-id: override
+    oauth2-client-secret: override

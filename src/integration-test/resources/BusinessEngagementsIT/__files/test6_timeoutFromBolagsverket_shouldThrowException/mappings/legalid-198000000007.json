@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/party/PRIVATE/522b52c1-c34d-4f80-b637-29288b08d6dc/legalId"
+  },
+  "response": {
+    "body": "198000000007",
+    "headers": {
+      "Content-Type": "text/plain"
+    },
+    "status": "200"
+  }
+}

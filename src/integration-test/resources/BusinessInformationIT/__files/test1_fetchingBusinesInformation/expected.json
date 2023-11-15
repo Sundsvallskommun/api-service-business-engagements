@@ -1,0 +1,72 @@
+{
+  "companyName": "Sundsvall Kommun",
+  "legalForm": {
+    "legalFormDescription": "Övriga aktiebolag",
+    "legalFormCode": "49"
+  },
+  "address": {
+    "city": "STOCKHOLM",
+    "street": "Mäster Samuelsgatan 42",
+    "postcode": "11157",
+    "careOf": ""
+  },
+  "emailAddress": "somewhere@nowhere.com",
+  "phoneNumber": "070-990463",
+  "municipality": {
+    "municipalityName": "Stockholm kommun",
+    "municipalityCode": "0180"
+  },
+  "county": {
+    "countyName": "Stockholms län",
+    "countyCode": "01"
+  },
+  "fiscalYear": {
+    "fromDay": 1,
+    "fromMonth": 1,
+    "toDay": 31,
+    "toMonth": 12
+  },
+  "companyForm": {
+    "companyFormCode": "AB",
+    "companyFormDescription": "aktiebolag"
+  },
+  "companyRegistrationTime": "1993-01-07",
+  "liquidationInformation": {
+    "liquidationReasons": [
+      {
+        "liquidationCode": "21",
+        "liquidationDescription": "Konkurs avslutad",
+        "liquidationDate": "2013-10-24",
+        "liquidationType": "Konkurs"
+      },
+      {
+        "liquidationCode": "32",
+        "liquidationDescription": "Likvidation beslutad",
+        "liquidationDate": "2013-09-03",
+        "liquidationType": "Likvidation"
+      }
+    ],
+    "cancelledLiquidation": {
+      "liquidationCode": "21",
+      "liquidationDescription": "Konkurs avslutad",
+      "liquidationDate": "2013-10-24",
+      "liquidationType": "Konkurs"
+    }
+  },
+  "deregistrationDate": "2013-10-24",
+  "companyLocation": {
+    "address": {
+      "city": "STOCKHOLM",
+      "street": "MÄSTER SAMUELSGATAN",
+      "postcode": "11157"
+    }
+  },
+  "businessSignatory": "Firman tecknas av styrelsen",
+  "companyDescription": "Psykologisk forskning på bin samt därmed förenlig verksamhet.",
+  "errorInformation": {
+    "hasErrors": true,
+    "errorDescriptions": {
+      "9071006": "Ej behörig - ej firmatecknare."
+    }
+  }
+}

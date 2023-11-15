@@ -1,0 +1,35 @@
+{
+  "request": {
+    "bodyPatterns": [
+      {
+        "matchesXPath": "//*[ns2:PersonIdentitetsbeteckning]//*[ns2:Organisationsnummer='5560000003']",
+        "xPathNamespaces": {
+          "ns2": "http://schema.bolagsverket.se/ssbt/foretag"
+        }
+      }
+    ],
+    "method": "POST",
+    "url": "/ssbtgu"
+  },
+  "response": {
+    "bodyFileName": "../__files/ssbtgu/5591628137.xml",
+    "headers": {
+      "Connection": [
+        "keep-alive"
+      ],
+      "Content-Type": [
+        "text/xml"
+      ],
+      "Keep-Alive": [
+        "timeout=60"
+      ],
+      "Transfer-Encoding": [
+        "chunked"
+      ],
+      "Content-Encoding": [
+        ""
+      ]
+    },
+    "status": 200
+  }
+}

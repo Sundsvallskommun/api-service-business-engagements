@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<project
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
+		xmlns="http://maven.apache.org/POM/4.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>se.sundsvall.dept44</groupId>
+		<artifactId>dept44-service-parent</artifactId>
+		<version>3.4</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<groupId>se.sundsvall</groupId>
+	<artifactId>business-engagements</artifactId>
+	<version>1.2</version>
+	<name>Business Engagements</name>
+
+	<properties>
+		<!-- CI/CD properties -->
+		<docker.image.name>ms-businessengagements</docker.image.name>
+		<exposed.app.port>8080</exposed.app.port>
+		<published.container.port.test>8728</published.container.port.test>
+		<published.container.port.production>8727</published.container.port.production>
+		<!-- Version properties -->
+		<jaxb2-fluent-api.version>3.0</jaxb2-fluent-api.version>
+		<jaxb-maven-plugin.version>3.1.0</jaxb-maven-plugin.version>
+		<openapi-generator-maven-plugin.version>7.1.0</openapi-generator-maven-plugin.version>
+		<!-- Generated sources -->
+		<bolagsverket-generated-sources-folder>${project.build.directory}/bolagsverket-sources
+		</bolagsverket-generated-sources-folder>
+		<party-generated-sources-folder>${project.build.directory}/party-sources
+		</party-generated-sources-folder>
+	</properties>
+
+	<dependencies>
+		<!-- Dept44 -->
+		<dependency>
+			<groupId>se.sundsvall.dept44</groupId>
+			<artifactId>dept44-starter-webservicetemplate</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>se.sundsvall.dept44</groupId>
+			<artifactId>dept44-starter-feign</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>se.sundsvall.dept44</groupId>
+			<artifactId>dept44-common-validators</artifactId>
+		</dependency>
+		<!-- SB -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<!-- Other -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- Test -->
+		<dependency>
+			<groupId>se.sundsvall.dept44</groupId>
+			<artifactId>dept44-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>**/se/sundsvall/businessengagements/BusinessEngagements*</exclude>
+						<!-- Ignore generated sources -->
+						<exclude>**/generated/se/sundsvall/party/**/*</exclude>
+						<exclude>**/se/bolagsverket/**/*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<!-- Generated clients -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>${jaxb-maven-plugin.version}</version>
+				<!-- Enables fluent builder for generated classes -->
+				<dependencies>
+					<dependency>
+						<groupId>org.jvnet.jaxb2_commons</groupId>
+						<artifactId>jaxb2-fluent-api</artifactId>
+						<version>${jaxb2-fluent-api.version}</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>xjc</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<xjbSources>
+						<xjbSource>${project.basedir}/src/main/resources/contracts/xjb/ssbten.xjb
+						</xjbSource>
+					</xjbSources>
+					<!-- Enable fluent -->
+					<arguments>
+						<argument>-Xfluent-api</argument>
+					</arguments>
+					<outputDirectory>${bolagsverket-generated-sources-folder}</outputDirectory>
+					<sourceType>wsdl</sourceType>
+					<sources>
+						<source>${project.basedir}/src/main/resources/contracts/ssbten/Ssbten.wsdl
+						</source>
+						<source>${project.basedir}/src/main/resources/contracts/ssbten/Ssbtgu.wsdl
+						</source>
+					</sources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>${openapi-generator-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>party-api</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>
+								${project.basedir}/src/main/resources/contracts/party/party.yaml
+							</inputSpec>
+							<output>${party-generated-sources-folder}</output>
+							<generatorName>jaxrs-spec</generatorName>
+							<generateApis>false</generateApis>
+							<generateSupportingFiles>false</generateSupportingFiles>
+							<configOptions>
+								<useSpringBoot3>true</useSpringBoot3>
+								<dateLibrary>java8</dateLibrary>
+								<generatePom>false</generatePom>
+								<interfaceOnly>true</interfaceOnly>
+								<modelPackage>generated.se.sundsvall.party</modelPackage>
+								<useBeanValidation>false</useBeanValidation>
+								<useSwaggerAnnotations>false</useSwaggerAnnotations>
+							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<!-- Add generated sources from bolagsverket so they're reacheable. -->
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${bolagsverket-generated-sources-folder}</source>
+								<source>${party-generated-sources-folder}</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>

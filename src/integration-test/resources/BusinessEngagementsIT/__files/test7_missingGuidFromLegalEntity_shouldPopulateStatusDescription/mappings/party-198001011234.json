@@ -1,0 +1,13 @@
+{
+  "request": {
+    "url": "/party/ENTERPRISE/198001011234/partyId",
+    "method": "GET"
+  },
+  "response": {
+    "body": "",
+    "headers": {
+      "Content-Type": "application/problem+json; charset=utf-8"
+    },
+    "status": "404"
+  }
+}

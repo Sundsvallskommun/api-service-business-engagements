@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/party/ENTERPRISE/9020025012/partyId"
+  },
+  "response": {
+    "body": "{\"type\":\"https://zalando.github.io/problem/constraint-violation\",\"status\":400,\"violations\":[{\"field\":\"getPartyIdByLegalId.legalId\",\"message\":\"must match the regular expression ^([1235789][2-9]\\\\d{8})$\"}],\"title\":\"Constraint Violation\"}",
+    "headers": {
+      "Content-Type": "application/problem+json"
+    },
+    "status": "400"
+  }
+}
