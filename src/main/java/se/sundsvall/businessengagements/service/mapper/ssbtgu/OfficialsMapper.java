@@ -32,7 +32,7 @@ public class OfficialsMapper {
 	 */
 	public static List<Official> mapOfficials(String officialsString) {
 		if (StringUtils.isBlank(officialsString)) {
-			return null;
+			return List.of();
 		}
 		Map<String, Official> officialsMap = new HashMap<>();   //Store it temporary in a map since to be sure that we don't get duplicates
 		String[] split = officialsString.split("\r\n|\n|\r"); //Split on newline

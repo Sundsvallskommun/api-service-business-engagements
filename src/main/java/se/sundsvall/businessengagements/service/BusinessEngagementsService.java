@@ -4,8 +4,6 @@ import static org.zalando.problem.Status.NOT_FOUND;
 
 import java.util.Optional;
 
-import javax.annotation.Resource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -119,8 +117,7 @@ public class BusinessEngagementsService {
 	 * @param partyId The partyId to fetch for
 	 * @return An optional response, empty if no cached entity was found.
 	 */
-	@Transactional
-	public Optional<BusinessEngagementsResponse> getResponseIfCached(String partyId) {
+	Optional<BusinessEngagementsResponse> getResponseIfCached(String partyId) {
 		final Optional<EngagementsCacheEntity> possibleCachedEntity = engagementsCacheRepository.findByPartyId(partyId);
 
 		Optional<BusinessEngagementsResponse> possibleResponse = Optional.empty();
@@ -133,8 +130,7 @@ public class BusinessEngagementsService {
 		return possibleResponse;
 	}
 
-	@Transactional
-	public void handleNewCacheEntity(BusinessEngagementsResponse response, String partyId) {
+	void handleNewCacheEntity(BusinessEngagementsResponse response, String partyId) {
 
 		//We don't want to persist anything with errors.
 		if (response.getStatusDescriptions() == null || response.getStatusDescriptions().isEmpty()) {
