@@ -11,9 +11,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>se.sundsvall</groupId>
-	<artifactId>business-engagements</artifactId>
+	<artifactId>api-service-business-engagements</artifactId>
 	<version>1.2</version>
-	<name>Business Engagements</name>
+	<name>api-service-business-engagements</name>
 	<properties>
 		<!-- CI/CD properties -->
 		<docker.image.name>ms-businessengagements</docker.image.name>
