@@ -2,15 +2,15 @@ package se.sundsvall.businessengagements.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -90,11 +90,9 @@ class BusinessEngagementsServiceTest {
 		verify(mockSsbtenService, times(1)).getBusinessEngagements(any(BusinessEngagementsRequestDto.class));
 		verify(mockRepository, times(1)).save(any(EngagementsCacheEntity.class));
 
-		assertThat(response.getEngagements().stream().anyMatch(engagement ->
-			engagement.getOrganizationNumber().equals("5591628136") &&
-				engagement.getOrganizationId().equals("uuid1") &&
-				engagement.getOrganizationName().equals("Something IT AB")
-		)).isTrue();
+		assertThat(response.getEngagements().stream().anyMatch(engagement -> "5591628136".equals(engagement.getOrganizationNumber()) &&
+			"uuid1".equals(engagement.getOrganizationId()) &&
+			"Something IT AB".equals(engagement.getOrganizationName()))).isTrue();
 	}
 
 	@Test
@@ -136,7 +134,7 @@ class BusinessEngagementsServiceTest {
 
 	@Test
 	void testGetResponseIfCached_shouldReturnOptionalEmpty_whenNotFound() {
-		String partyId = "abc123";
+		final String partyId = "abc123";
 		when(mockRepository.findByPartyId(anyString())).thenReturn(Optional.empty());
 		final Optional<BusinessEngagementsResponse> responseIfCached = service.getResponseIfCached(partyId);
 
@@ -145,27 +143,27 @@ class BusinessEngagementsServiceTest {
 
 	@Test
 	void testFetchAndPopulateGuid() {
-		BusinessEngagementsResponse response = new BusinessEngagementsResponse();
+		final BusinessEngagementsResponse response = new BusinessEngagementsResponse();
 		response.addEngagement(Engagement.builder().withOrganizationNumber("123456").build());
 		response.addEngagement(Engagement.builder().withOrganizationNumber("654321").build());
 		response.addEngagement(Engagement.builder().withOrganizationNumber("987654").build());
 
 		when(mockPartyClient.getPartyIdFromOrganizationNumber("123456")).thenReturn(Optional.of("uuid1"));
 		when(mockPartyClient.getPartyIdFromOrganizationNumber("654321")).thenReturn(Optional.of("uuid2"));
-		//Test that we got not uuid
+		// Test that we got not uuid
 		when(mockPartyClient.getPartyIdFromOrganizationNumber("987654")).thenReturn(Optional.empty());
 
 		service.fetchAndPopulateGuidForOrganizations(response);
 
-		assertThat(response.getEngagements().stream().anyMatch(engagement -> engagement.getOrganizationNumber().equalsIgnoreCase("123456") && engagement.getOrganizationId().equals("uuid1"))).isTrue();
-		assertThat(response.getEngagements().stream().anyMatch(engagement -> engagement.getOrganizationNumber().equalsIgnoreCase("654321") && engagement.getOrganizationId().equals("uuid2"))).isTrue();
-		assertThat(response.getEngagements().stream().anyMatch(engagement -> engagement.getOrganizationNumber().equalsIgnoreCase("987654") && engagement.getOrganizationId() == null)).isTrue();    //No uuid
-		assertThat(response.getStatusDescriptions()).containsValue("Couldn't fetch guid for organization number"); //Make sure we have a status description.
+		assertThat(response.getEngagements().stream().anyMatch(engagement -> "123456".equalsIgnoreCase(engagement.getOrganizationNumber()) && "uuid1".equals(engagement.getOrganizationId()))).isTrue();
+		assertThat(response.getEngagements().stream().anyMatch(engagement -> "654321".equalsIgnoreCase(engagement.getOrganizationNumber()) && "uuid2".equals(engagement.getOrganizationId()))).isTrue();
+		assertThat(response.getEngagements().stream().anyMatch(engagement -> "987654".equalsIgnoreCase(engagement.getOrganizationNumber()) && (engagement.getOrganizationId() == null))).isTrue();    // No uuid
+		assertThat(response.getStatusDescriptions()).containsValue("Couldn't fetch guid for organization number"); // Make sure we have a status description.
 	}
 
 	@Test
 	void testHandleNewCacheEntity_shouldStore_whenNoFaultyContent() {
-		BusinessEngagementsResponse response = BusinessEngagementsResponse.builder().build();
+		final BusinessEngagementsResponse response = BusinessEngagementsResponse.builder().build();
 
 		service.handleNewCacheEntity(response, "partyId");
 
@@ -176,10 +174,8 @@ class BusinessEngagementsServiceTest {
 
 	@Test
 	void testHandleNewCacheEntity_shouldNotStore_whenFaultyContent() {
-		BusinessEngagementsResponse response = BusinessEngagementsResponse.builder()
-			.withStatusDescriptions(new HashMap<>() {{
-				put("NOK", "Something wrong");
-			}})
+		final BusinessEngagementsResponse response = BusinessEngagementsResponse.builder()
+			.withStatusDescriptions(Map.of("NOK", "Something wrong"))
 			.build();
 		service.handleNewCacheEntity(response, "partyId");
 

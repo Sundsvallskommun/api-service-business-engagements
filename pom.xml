@@ -10,12 +10,10 @@
 		<version>4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-
 	<groupId>se.sundsvall</groupId>
-	<artifactId>business-engagements</artifactId>
+	<artifactId>api-service-business-engagements</artifactId>
 	<version>1.2</version>
-	<name>Business Engagements</name>
-
+	<name>api-service-business-engagements</name>
 	<properties>
 		<!-- CI/CD properties -->
 		<docker.image.name>ms-businessengagements</docker.image.name>
@@ -25,14 +23,9 @@
 		<!-- Version properties -->
 		<jaxb2-fluent-api.version>3.0</jaxb2-fluent-api.version>
 		<jaxb-maven-plugin.version>3.1.0</jaxb-maven-plugin.version>
-		<openapi-generator-maven-plugin.version>7.1.0</openapi-generator-maven-plugin.version>
 		<!-- Generated sources -->
-		<bolagsverket-generated-sources-folder>${project.build.directory}/bolagsverket-sources
-		</bolagsverket-generated-sources-folder>
-		<party-generated-sources-folder>${project.build.directory}/party-sources
-		</party-generated-sources-folder>
+		<generated-sources-path>${project.build.directory}/generated-sources</generated-sources-path>
 	</properties>
-
 	<dependencies>
 		<!-- Dept44 -->
 		<dependency>
@@ -84,7 +77,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -121,28 +113,25 @@
 					</execution>
 				</executions>
 				<configuration>
+					<clearOutputDir>false</clearOutputDir>
 					<xjbSources>
-						<xjbSource>${project.basedir}/src/main/resources/contracts/xjb/ssbten.xjb
-						</xjbSource>
+						<xjbSource>src/main/resources/contracts/xjb/ssbten.xjb</xjbSource>
 					</xjbSources>
 					<!-- Enable fluent -->
 					<arguments>
 						<argument>-Xfluent-api</argument>
 					</arguments>
-					<outputDirectory>${bolagsverket-generated-sources-folder}</outputDirectory>
+					<outputDirectory>${generated-sources-path}/models</outputDirectory>
 					<sourceType>wsdl</sourceType>
 					<sources>
-						<source>${project.basedir}/src/main/resources/contracts/ssbten/Ssbten.wsdl
-						</source>
-						<source>${project.basedir}/src/main/resources/contracts/ssbten/Ssbtgu.wsdl
-						</source>
+						<source>src/main/resources/contracts/ssbten/Ssbten.wsdl</source>
+						<source>src/main/resources/contracts/ssbten/Ssbtgu.wsdl</source>
 					</sources>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>${openapi-generator-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>party-api</id>
@@ -150,20 +139,20 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<inputSpec>
-								${project.basedir}/src/main/resources/contracts/party/party.yaml
-							</inputSpec>
-							<output>${party-generated-sources-folder}</output>
-							<generatorName>jaxrs-spec</generatorName>
+							<inputSpec>src/main/resources/contracts/party/party.yaml</inputSpec>
+							<output>${generated-sources-path}</output>
+							<generatorName>spring</generatorName>
 							<generateApis>false</generateApis>
 							<generateSupportingFiles>false</generateSupportingFiles>
 							<configOptions>
 								<useSpringBoot3>true</useSpringBoot3>
+								<sourceFolder>models</sourceFolder>
 								<dateLibrary>java8</dateLibrary>
 								<generatePom>false</generatePom>
 								<interfaceOnly>true</interfaceOnly>
 								<modelPackage>generated.se.sundsvall.party</modelPackage>
 								<useBeanValidation>false</useBeanValidation>
+								<openApiNullable>false</openApiNullable>
 								<useSwaggerAnnotations>false</useSwaggerAnnotations>
 							</configOptions>
 						</configuration>
@@ -182,8 +171,7 @@
 						</goals>
 						<configuration>
 							<sources>
-								<source>${bolagsverket-generated-sources-folder}</source>
-								<source>${party-generated-sources-folder}</source>
+								<source>${generated-sources-path}/models</source>
 							</sources>
 						</configuration>
 					</execution>
@@ -191,6 +179,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
 </project>

@@ -5,7 +5,6 @@ import java.util.Base64;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ws.client.core.WebServiceTemplate;
@@ -20,10 +19,8 @@ public class SsbtguClientConfig {
 	private static final Logger LOG = LoggerFactory.getLogger(SsbtguClientConfig.class);
 
 	private final SsbtProperties properties;
-
 	private final Logbook logbook;
 
-	@Autowired
 	public SsbtguClientConfig(final SsbtProperties properties, final Logbook logbook) {
 		this.properties = properties;
 		this.logbook = logbook;

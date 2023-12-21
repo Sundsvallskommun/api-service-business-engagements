@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Represents a persons business engagement.")
 public class Engagement implements Serializable {
 
+	private static final long serialVersionUID = -5101038115881580186L;
+
 	@Schema(description = "Name of the organization", example = "Styrbjörns båtar")
 	private String organizationName;
 

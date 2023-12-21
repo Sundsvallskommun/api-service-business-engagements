@@ -5,7 +5,6 @@ import java.util.Base64;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ws.client.core.WebServiceTemplate;
@@ -23,7 +22,6 @@ public class SsbtenClientConfig {
 
 	private final Logbook logbook;
 
-	@Autowired
 	public SsbtenClientConfig(final SsbtProperties properties, final Logbook logbook) {
 		this.properties = properties;
 		this.logbook = logbook;
@@ -54,6 +52,5 @@ public class SsbtenClientConfig {
 				.decode(properties.keyStoreAsBase64().getBytes(StandardCharsets.UTF_8)))
 			.withKeyStorePassword(properties.keystorePassword());
 	}
-
 
 }
