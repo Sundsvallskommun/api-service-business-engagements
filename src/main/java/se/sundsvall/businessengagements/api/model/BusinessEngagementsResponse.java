@@ -19,6 +19,8 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Business engagements response model")
 public class BusinessEngagementsResponse implements Serializable {
 
+	private static final long serialVersionUID = 7202306090787565132L;
+
 	private List<Engagement> engagements;
 
 	@Schema(description = "In case fetching one or more engagement failed, this will show why it failed."
@@ -28,7 +30,8 @@ public class BusinessEngagementsResponse implements Serializable {
 
 	@Schema(description = "If fetching all engagements went \"OK\" or \"NOK\". "
 		+ "A \"NOK\" may still return engagements but indicates that the information is incomplete.",
-		example = "OK", requiredMode = Schema.RequiredMode.REQUIRED)
+		example = "OK",
+		requiredMode = Schema.RequiredMode.REQUIRED)
 	private Status status;
 
 	public void addEngagement(Engagement engagement) {
@@ -41,7 +44,7 @@ public class BusinessEngagementsResponse implements Serializable {
 	/**
 	 * Convenience method for adding an engagement to the response.
 	 *
-	 * @param organizationName The name of the organization
+	 * @param organizationName   The name of the organization
 	 * @param organizationNumber The organization number
 	 */
 	public void addEngagement(String organizationName, String organizationNumber) {
@@ -54,7 +57,7 @@ public class BusinessEngagementsResponse implements Serializable {
 	/**
 	 * Adds a status description to the response, only used when something went wrong from integrations.
 	 *
-	 * @param type The type of the status
+	 * @param type              The type of the status
 	 * @param statusDescription The description of the status
 	 */
 	public void addStatusDescription(String type, String statusDescription) {

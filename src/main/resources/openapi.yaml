@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "1.2"
 servers:
-- url: http://localhost:60084
+- url: http://localhost:58941
   description: Generated server url
 tags:
 - name: Business Engagements
@@ -36,6 +36,24 @@ paths:
           type: string
           description: Name of the organization
       responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Problem'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Problem'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Problem'
         "204":
           description: No Content
           content:
@@ -48,24 +66,6 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/BusinessInformation'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/Problem'
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/Problem'
-        "500":
-          description: Internal Server Error
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/Problem'
   /engagements/{partyId}:
     get:
       tags:
@@ -98,26 +98,14 @@ paths:
           example: Mina Sidor
         example: Mina Sidor
       responses:
-        "204":
-          description: No Content
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/BusinessEngagementsResponse'
-        "404":
-          description: Not Found
+        "400":
+          description: Bad Request
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/Problem'
-        "200":
-          description: Successful Operation
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/BusinessEngagementsResponse'
-        "400":
-          description: Bad Request
+        "404":
+          description: Not Found
           content:
             '*/*':
               schema:
@@ -128,6 +116,18 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/Problem'
+        "200":
+          description: Successful Operation
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BusinessEngagementsResponse'
+        "204":
+          description: No Content
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BusinessEngagementsResponse'
   /api-docs:
     get:
       tags:
@@ -146,6 +146,33 @@ paths:
       x-wso2-mutual-ssl: Optional
 components:
   schemas:
+    Problem:
+      type: object
+      properties:
+        instance:
+          type: string
+          format: uri
+        type:
+          type: string
+          format: uri
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        detail:
+          type: string
+        title:
+          type: string
+        status:
+          $ref: '#/components/schemas/StatusType'
+    StatusType:
+      type: object
+      properties:
+        reasonPhrase:
+          type: string
+        statusCode:
+          type: integer
+          format: int32
     Address:
       type: object
       properties:
@@ -378,33 +405,6 @@ components:
           description: Shares value currency
           example: sek
       description: Shares information model
-    Problem:
-      type: object
-      properties:
-        instance:
-          type: string
-          format: uri
-        type:
-          type: string
-          format: uri
-        parameters:
-          type: object
-          additionalProperties:
-            type: object
-        status:
-          $ref: '#/components/schemas/StatusType'
-        title:
-          type: string
-        detail:
-          type: string
-    StatusType:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-          format: int32
-        reasonPhrase:
-          type: string
     BusinessEngagementsResponse:
       required:
       - status

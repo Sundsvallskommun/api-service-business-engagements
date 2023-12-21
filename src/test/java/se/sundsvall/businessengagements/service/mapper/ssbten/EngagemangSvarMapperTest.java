@@ -1,16 +1,13 @@
 package se.sundsvall.businessengagements.service.mapper.ssbten;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import se.bolagsverket.schema.ssbten.engagemang.EngagemangSvar;
 import se.sundsvall.businessengagements.TestObjectFactory;
 import se.sundsvall.businessengagements.api.model.BusinessEngagementsResponse;
-
-import se.bolagsverket.schema.ssbten.engagemang.EngagemangSvar;
 
 /**
  * Only tests one "happy" and one "fail" case, more cases will be tested in integration tests.
@@ -21,13 +18,11 @@ class EngagemangSvarMapperTest {
 
 	private final EngagemangSvarMapper mapper = new EngagemangSvarMapper();
 
-	private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
 	@Test
 	void testMapBolagsverketResponse(final SoftAssertions softly) throws Exception {
-		EngagemangSvar engagemangSvar = TestObjectFactory.getEngagemangSvar(TestObjectFactory.getHappyFileAsString());
+		final EngagemangSvar engagemangSvar = TestObjectFactory.getEngagemangSvar(TestObjectFactory.getHappyFileAsString());
 
-		BusinessEngagementsResponse response = mapper.mapBolagsverketResponse(engagemangSvar);
+		final BusinessEngagementsResponse response = mapper.mapBolagsverketResponse(engagemangSvar);
 
 		softly.assertThat(response.getEngagements().size()).isEqualTo(6);
 		softly.assertThat(responseContainsName(response, "Jons barnvagnar")).isTrue();
@@ -47,9 +42,9 @@ class EngagemangSvarMapperTest {
 
 	@Test
 	void testMapFailedResponseFromBolagsverket(final SoftAssertions softly) throws Exception {
-		EngagemangSvar engagemangSvar = TestObjectFactory.getEngagemangSvar(TestObjectFactory.getFailFileAsString());
+		final EngagemangSvar engagemangSvar = TestObjectFactory.getEngagemangSvar(TestObjectFactory.getFailFileAsString());
 
-		BusinessEngagementsResponse response = mapper.mapBolagsverketResponse(engagemangSvar);
+		final BusinessEngagementsResponse response = mapper.mapBolagsverketResponse(engagemangSvar);
 
 		softly.assertThat(response.getStatusDescriptions().size()).isEqualTo(2);
 		softly.assertThat(response.getStatusDescriptions().get("No response from underlying system.")).contains("Kan inte upprätta anslutning med dataproducenten");

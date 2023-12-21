@@ -25,7 +25,7 @@ public class SsbtenIntegration {
 	public EngagemangSvar callBolagsverket(EngagemangBegaran engagemangBegaranRequest) {
 		try {
 			return (EngagemangSvar) webServiceTemplate.marshalSendAndReceive(engagemangBegaranRequest);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			throw Problem.builder()
 				.withTitle("Error while getting digital engagements from bolagsverket/ssbten")
 				.withStatus(INTERNAL_SERVER_ERROR)
@@ -33,5 +33,4 @@ public class SsbtenIntegration {
 				.build();
 		}
 	}
-
 }

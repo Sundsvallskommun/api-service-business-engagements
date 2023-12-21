@@ -33,6 +33,8 @@ public class LiquidationInformation {
 	@Schema(description = "Reason for liquidation or cancellation of liquidation")
 	public static class LiquidationReason implements Serializable {
 
+		private static final long serialVersionUID = -6283599400246819040L;
+
 		@Schema(description = "Liquidation code", example = "21")
 		private String liquidationCode;
 

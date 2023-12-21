@@ -10,12 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
+import feign.Request;
+import feign.codec.ErrorDecoder;
 import se.sundsvall.dept44.configuration.feign.FeignConfiguration;
 import se.sundsvall.dept44.configuration.feign.FeignMultiCustomizer;
 import se.sundsvall.dept44.configuration.feign.decoder.ProblemErrorDecoder;
-
-import feign.Request;
-import feign.codec.ErrorDecoder;
 
 @Import(FeignConfiguration.class)
 public class PartyConfiguration {
@@ -29,7 +28,7 @@ public class PartyConfiguration {
 	}
 
 	@Bean
-	public FeignBuilderCustomizer feignBuilderCustomizer() {
+	FeignBuilderCustomizer feignBuilderCustomizer() {
 		return FeignMultiCustomizer.create()
 			.withErrorDecoder(errorDecoder())
 			.withRequestOptions(feignOptions())
@@ -47,7 +46,7 @@ public class PartyConfiguration {
 	}
 
 	ErrorDecoder errorDecoder() {
-		//We want to return 404 as a 404.
+		// We want to return 404 as a 404.
 		return new ProblemErrorDecoder(REGISTRATION_ID, List.of(HttpStatus.NOT_FOUND.value()));
 	}
 
@@ -55,8 +54,7 @@ public class PartyConfiguration {
 		return new Request.Options(
 			TimeUnit.SECONDS.convert(partyProperties.getConnectTimeout()), TimeUnit.SECONDS,
 			TimeUnit.SECONDS.convert(partyProperties.getReadTimeout()), TimeUnit.SECONDS,
-			false
-		);
+			false);
 	}
 
 }

@@ -26,12 +26,12 @@ import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppg
 @ExtendWith(SoftAssertionsExtension.class)
 class SsbtguRequestMapperTest {
 
-	private SsbtguRequestMapper mapper = new SsbtguRequestMapper();
+	private final SsbtguRequestMapper mapper = new SsbtguRequestMapper();
 
 	@Test
 	void testBasicInformationIsPresent(final SoftAssertions softly) {
-		GrundlaggandeUppgifterBegaran req = mapper.createGrundlaggandeUppgifterBegaran("orgnumber", "orgname");
-		GrundlaggandeUppgifterBegaranMetadata metaData = req.getGrundlaggandeUppgifterBegaranMetadata();
+		final GrundlaggandeUppgifterBegaran req = mapper.createGrundlaggandeUppgifterBegaran("orgnumber", "orgname");
+		final GrundlaggandeUppgifterBegaranMetadata metaData = req.getGrundlaggandeUppgifterBegaranMetadata();
 
 		softly.assertThat(metaData.getDatakonsument().getPartId().getOrganisationsnummer()).isEqualTo("2120002411");
 		softly.assertThat(metaData.getDatakonsument().getService().getServiceNamn()).isEqualTo("BUSENGBV");
@@ -39,7 +39,7 @@ class SsbtguRequestMapperTest {
 		softly.assertThat(metaData.getAnvandare().getPartNamn()).isEqualTo("orgname");
 		softly.assertThat(metaData.getAnvandningsomrade()).isEqualTo(Anvandningsomrade.INDIREKT_ATERANVANDNING);
 
-		GrundlaggandeUppgifterBegaranDetaljer details = req.getGrundlaggandeUppgifterBegaranDetaljer();
+		final GrundlaggandeUppgifterBegaranDetaljer details = req.getGrundlaggandeUppgifterBegaranDetaljer();
 		softly.assertThat(details.getForetagId().getPersonIdentitetsbeteckning().getOrganisationsnummer()).isEqualTo("orgnumber");
 	}
 
@@ -58,23 +58,22 @@ class SsbtguRequestMapperTest {
 		softly.assertThat(details.getForetagId().getPersonIdentitetsbeteckning().getOrganisationsnummer()).isEqualTo("orgnumber");
 	}
 
-
 	@Test
 	void testRequestContainsWantedUppgiftIds(final SoftAssertions softly) {
-		GrundlaggandeUppgifterBegaranDetaljer details = mapper.createGrundlaggandeUppgifterBegaran("orgnumber", "orgname").getGrundlaggandeUppgifterBegaranDetaljer();
+		final GrundlaggandeUppgifterBegaranDetaljer details = mapper.createGrundlaggandeUppgifterBegaran("orgnumber", "orgname").getGrundlaggandeUppgifterBegaranDetaljer();
 
-		List<String> ids = new ArrayList<>(details.getGrundlaggandeUppgiftIds().stream().map(GrundlaggandeUppgiftId::value).toList());
+		final List<String> ids = new ArrayList<>(details.getGrundlaggandeUppgiftIds().stream().map(GrundlaggandeUppgiftId::value).toList());
 
-		for (String id : ids) {
-			softly.assertThat(mapper.informationIds).contains(id);
+		for (final String id : ids) {
+			softly.assertThat(SsbtguRequestMapper.informationIds).contains(id);
 		}
 	}
 
 	@Test
 	void testXmlGregorianCalendarIsInitialized(final SoftAssertions softly) {
-		XMLGregorianCalendar xmlCal = mapper.createXmlGregorianCalendarNow();
-		LocalDateTime now = LocalDateTime.now();
-		LocalDateTime dateTimeFromCalendar = LocalDateTime.of(xmlCal.getYear(), xmlCal.getMonth(), xmlCal.getDay(), xmlCal.getHour(), xmlCal.getMinute(), xmlCal.getSecond());
+		final XMLGregorianCalendar xmlCal = mapper.createXmlGregorianCalendarNow();
+		final LocalDateTime now = LocalDateTime.now();
+		final LocalDateTime dateTimeFromCalendar = LocalDateTime.of(xmlCal.getYear(), xmlCal.getMonth(), xmlCal.getDay(), xmlCal.getHour(), xmlCal.getMinute(), xmlCal.getSecond());
 		softly.assertThat(dateTimeFromCalendar.isBefore(now)).isTrue();
 	}
 
@@ -86,5 +85,4 @@ class SsbtguRequestMapperTest {
 				.withMessage("Error while creating request towards Bolagsverket");
 		}
 	}
-
 }
