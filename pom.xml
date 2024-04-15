@@ -22,7 +22,7 @@
 		<published.container.port.production>8727</published.container.port.production>
 		<!-- Version properties -->
 		<jaxb2-fluent-api.version>3.0</jaxb2-fluent-api.version>
-		<jaxb-maven-plugin.version>3.1.0</jaxb-maven-plugin.version>
+		<jaxb-maven-plugin.version>3.2.0</jaxb-maven-plugin.version>
 		<!-- Generated sources -->
 		<generated-sources-path>${project.build.directory}/generated-sources</generated-sources-path>
 	</properties>
