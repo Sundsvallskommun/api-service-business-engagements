@@ -14,7 +14,6 @@ import se.sundsvall.dept44.test.annotation.wiremock.WireMockAppTestSuite;
 // as they are already included in the AbstractAppTest#sendRequestAndVerifyResponse method.
 // This also suppresses the "(java:S5976) Similar tests should be grouped in a single Parameterized test" rule.
 // Because we are using expected.json files to verify the response, a parameterized test would be messy.
-@SuppressWarnings({"squid:S2699", "squid:S5976"})
 @WireMockAppTestSuite(files = "classpath:/BusinessEngagementsIT/", classes = BusinessEngagements.class)
 class BusinessEngagementsIT extends AbstractAppTest {
 
