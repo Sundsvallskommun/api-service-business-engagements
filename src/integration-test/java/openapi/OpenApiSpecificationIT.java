@@ -31,12 +31,6 @@ class OpenApiSpecificationIT {
 
 	private final YAMLMapper yamlMapper = new YAMLMapper();
 
-	@Value("${openapi.name}")
-	private String openApiName;
-
-	@Value("${openapi.version}")
-	private String openApiVersion;
-
 	@Value("classpath:/openapi.yml")
 	private Resource openApiResource;
 
