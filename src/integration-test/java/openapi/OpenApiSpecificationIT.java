@@ -3,16 +3,15 @@ package openapi;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static net.javacrumbs.jsonunit.core.Option.IGNORING_ARRAY_ORDER;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.springframework.web.util.UriComponentsBuilder.fromPath;
 import static se.sundsvall.dept44.util.ResourceUtils.asString;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.reactive.server.WebTestClient;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
@@ -30,7 +29,7 @@ import se.sundsvall.businessengagements.BusinessEngagements;
 @ActiveProfiles("it")
 class OpenApiSpecificationIT {
 
-	private static final YAMLMapper YAML_MAPPER = new YAMLMapper();
+	private final YAMLMapper yamlMapper = new YAMLMapper();
 
 	@Value("${openapi.name}")
 	private String openApiName;
@@ -42,7 +41,7 @@ class OpenApiSpecificationIT {
 	private Resource openApiResource;
 
 	@Autowired
-	private TestRestTemplate restTemplate;
+	private WebTestClient webTestClient;
 
 	@Test
 	void compareOpenApiSpecifications() {
@@ -61,11 +60,12 @@ class OpenApiSpecificationIT {
 	 * @return the current OpenAPI specification
 	 */
 	private String getCurrentOpenApiSpecification() {
-		final var uri = fromPath("/api-docs.yaml")
-			.buildAndExpand(openApiName, openApiVersion)
-			.toUri();
-
-		return restTemplate.getForObject(uri, String.class);
+		return webTestClient.get().uri("/api-docs")
+			.exchange()
+			.expectStatus().isOk()
+			.expectBody(String.class)
+			.returnResult()
+			.getResponseBody();
 	}
 
 	/**
@@ -76,7 +76,7 @@ class OpenApiSpecificationIT {
 	 */
 	private String toJson(final String yaml) {
 		try {
-			return YAML_MAPPER.readTree(yaml).toString();
+			return yamlMapper.readTree(yaml).toString();
 		} catch (final JsonProcessingException e) {
 			throw new IllegalStateException("Unable to convert YAML to JSON", e);
 		}
