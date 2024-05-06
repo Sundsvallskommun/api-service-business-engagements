@@ -1,5 +1,10 @@
 {
   "request": {
+    "headers": {
+      "Authorization": {
+        "equalTo": "Bearer abc123"
+      }
+    },
     "method": "GET",
     "url": "/party/ENTERPRISE/7691234567/partyId"
   },

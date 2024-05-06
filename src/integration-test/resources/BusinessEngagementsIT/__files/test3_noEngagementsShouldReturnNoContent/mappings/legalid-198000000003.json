@@ -1,5 +1,10 @@
 {
   "request": {
+    "headers": {
+      "Authorization": {
+        "equalTo": "Bearer abc123"
+      }
+    },
     "method": "GET",
     "url": "/party/PRIVATE/e57ea0ee-4132-11ec-973a-0242ac130003/legalId"
   },

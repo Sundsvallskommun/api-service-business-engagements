@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import se.sundsvall.businessengagements.BusinessEngagements;
 import se.sundsvall.dept44.test.AbstractAppTest;
 import se.sundsvall.dept44.test.annotation.wiremock.WireMockAppTestSuite;
-// This suppresses the "(java:S2699)Tests should include assertions" rule.
-// Since we are using dept44s AbstractAppTest we don't need to add assertions
-// as they are already included in the AbstractAppTest#sendRequestAndVerifyResponse method.
-@SuppressWarnings("squid:S2699")
+
 @WireMockAppTestSuite(files = "classpath:/BusinessInformationIT/", classes = BusinessEngagements.class)
 class BusinessInformationIT extends AbstractAppTest {
 
@@ -41,6 +38,4 @@ class BusinessInformationIT extends AbstractAppTest {
 			.withExpectedResponse("expected.json")
 			.sendRequestAndVerifyResponse();
 	}
-
-
 }
