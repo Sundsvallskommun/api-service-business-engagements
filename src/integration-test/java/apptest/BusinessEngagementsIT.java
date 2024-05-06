@@ -9,11 +9,11 @@ import org.springframework.test.annotation.DirtiesContext;
 import se.sundsvall.businessengagements.BusinessEngagements;
 import se.sundsvall.dept44.test.AbstractAppTest;
 import se.sundsvall.dept44.test.annotation.wiremock.WireMockAppTestSuite;
-// This suppresses the "(java:S2699)Tests should include assertions" rule.
-// Since we are using dept44s AbstractAppTest we don't need to add assertions
-// as they are already included in the AbstractAppTest#sendRequestAndVerifyResponse method.
-// This also suppresses the "(java:S5976) Similar tests should be grouped in a single Parameterized test" rule.
-// Because we are using expected.json files to verify the response, a parameterized test would be messy.
+
+// The "(java:S5976) Similar tests should be grouped in a single Parameterized test" rule is suppressed
+// because we are using expected.json files to verify the response, and thus a parameterized test would 
+// be messy.
+@SuppressWarnings("squid:S5976")
 @WireMockAppTestSuite(files = "classpath:/BusinessEngagementsIT/", classes = BusinessEngagements.class)
 class BusinessEngagementsIT extends AbstractAppTest {
 
@@ -25,6 +25,7 @@ class BusinessEngagementsIT extends AbstractAppTest {
 	@DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
 	//Since data is persisted in the H2 we need to reset it in methods that use the same data
 	@Test
+
 	void test1_successful() {
 		String partyId = "e57e9dec-4132-11ec-973a-0242ac130003";   //For clarity, this is what we match the request on.
 		setupCall()
