@@ -22,14 +22,13 @@ class BusinessEngagementsIT extends AbstractAppTest {
 		CommonStubs.stubAccessToken();
 	}
 
-	@DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
-	//Since data is persisted in the H2 we need to reset it in methods that use the same data
-	@Test
+	private static final String SERVICE_PATH = "/engagements/";
 
+	@Test
 	void test1_successful() {
 		String partyId = "e57e9dec-4132-11ec-973a-0242ac130003";   //For clarity, this is what we match the request on.
 		setupCall()
-			.withServicePath("/engagements/" + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
+			.withServicePath(SERVICE_PATH + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
 			.withHttpMethod(HttpMethod.GET)
 			.withExpectedResponseStatus(HttpStatus.OK)
 			.withExpectedResponse("expected.json")
@@ -40,7 +39,7 @@ class BusinessEngagementsIT extends AbstractAppTest {
 	void test2_okResponseButTimeoutFromBolagsverket() {
 		String partyId = "e57e9ffe-4132-11ec-973a-0242ac130003";
 		setupCall()
-			.withServicePath("/engagements/" + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
+			.withServicePath(SERVICE_PATH + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
 			.withHttpMethod(HttpMethod.GET)
 			.withExpectedResponseStatus(HttpStatus.OK)
 			.withExpectedResponse("expected.json")
@@ -51,7 +50,7 @@ class BusinessEngagementsIT extends AbstractAppTest {
 	void test3_noEngagementsShouldReturnNoContent() {
 		String partyId = "e57ea0ee-4132-11ec-973a-0242ac130003";
 		setupCall()
-			.withServicePath("/engagements/" + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
+			.withServicePath(SERVICE_PATH + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
 			.withHttpMethod(HttpMethod.GET)
 			.withExpectedResponseStatus(HttpStatus.NO_CONTENT)
 			.sendRequestAndVerifyResponse();
@@ -61,7 +60,7 @@ class BusinessEngagementsIT extends AbstractAppTest {
 	void test4_errorResponseFromBolagsverket_shouldReturnError() {
 		String partyId = "e57ea1b6-4132-11ec-973a-0242ac130003";
 		setupCall()
-			.withServicePath("/engagements/" + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
+			.withServicePath(SERVICE_PATH + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
 			.withHttpMethod(HttpMethod.GET)
 			.withExpectedResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 			.withExpectedResponse("expected.json")
@@ -72,7 +71,7 @@ class BusinessEngagementsIT extends AbstractAppTest {
 	void test5_okResponseButInternalErrorsFromBothBolagsverketAndSkatteverket() {
 		String partyId = "e57ea274-4132-11ec-973a-0242ac130003";
 		setupCall()
-			.withServicePath("/engagements/" + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
+			.withServicePath(SERVICE_PATH + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
 			.withHttpMethod(HttpMethod.GET)
 			.withExpectedResponseStatus(HttpStatus.OK)
 			.withExpectedResponse("expected.json")
@@ -84,7 +83,7 @@ class BusinessEngagementsIT extends AbstractAppTest {
 	void test6_timeoutFromBolagsverket_shouldThrowException() {
 		String partyId = "522b52c1-c34d-4f80-b637-29288b08d6dc";
 		setupCall()
-			.withServicePath("/engagements/" + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
+			.withServicePath(SERVICE_PATH + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
 			.withHttpMethod(HttpMethod.GET)
 			.withExpectedResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 			.withExpectedResponse("expected.json")
@@ -101,7 +100,7 @@ class BusinessEngagementsIT extends AbstractAppTest {
 	void test7_missingGuidFromLegalEntity_shouldPopulateStatusDescription() {
 		String partyId = "e57e9dec-4132-11ec-973a-0242ac130003";   //For clarity, this is what we match the request on.
 		setupCall()
-			.withServicePath("/engagements/" + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
+			.withServicePath(SERVICE_PATH + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
 			.withHttpMethod(HttpMethod.GET)
 			.withExpectedResponseStatus(HttpStatus.OK)
 			.withExpectedResponse("expected.json")
@@ -112,7 +111,7 @@ class BusinessEngagementsIT extends AbstractAppTest {
 	void test8_404FromParty_shouldReturn404() {
 		String partyId = "6a5c3d04-412d-11ec-973a-0242ac130004";
 		setupCall()
-			.withServicePath("/engagements/" + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
+			.withServicePath(SERVICE_PATH + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
 			.withHttpMethod(HttpMethod.GET)
 			.withExpectedResponseStatus(HttpStatus.NOT_FOUND)
 			.withExpectedResponse("expected.json")
@@ -123,7 +122,7 @@ class BusinessEngagementsIT extends AbstractAppTest {
 	void test9_400FromParty_whenMappingOrganizationId_shouldNotReturnError() {
 		String partyId = "65694a6d-5f5d-4bb6-b256-3b81cb419b60";
 		setupCall()
-			.withServicePath("/engagements/" + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
+			.withServicePath(SERVICE_PATH + partyId + "?personalName=Jane%20Doe&serviceName=Kommunen")
 			.withHttpMethod(HttpMethod.GET)
 			.withExpectedResponseStatus(HttpStatus.OK)
 			.withExpectedResponse("expected.json")

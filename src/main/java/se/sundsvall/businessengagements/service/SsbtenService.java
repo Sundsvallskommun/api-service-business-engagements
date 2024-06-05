@@ -1,6 +1,6 @@
 package se.sundsvall.businessengagements.service;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import se.sundsvall.businessengagements.api.model.BusinessEngagementsResponse;
 import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;
@@ -8,10 +8,7 @@ import se.sundsvall.businessengagements.integration.bolagsverket.ssbten.SsbtenIn
 import se.sundsvall.businessengagements.service.mapper.ssbten.EngagemangBegaranRequestMapper;
 import se.sundsvall.businessengagements.service.mapper.ssbten.EngagemangSvarMapper;
 
-import se.bolagsverket.schema.ssbten.engagemang.EngagemangBegaran;
-import se.bolagsverket.schema.ssbten.engagemang.EngagemangSvar;
-
-@Component
+@Service
 public class SsbtenService {
 
 	private final SsbtenIntegration ssbtenIntegration;
@@ -29,10 +26,10 @@ public class SsbtenService {
 
 	public BusinessEngagementsResponse getBusinessEngagements(BusinessEngagementsRequestDto requestDto) {
 		//Create request object for Bolagsverket
-		final EngagemangBegaran engagemangBegaranRequest = engagemangBegaranRequestMapper.createEngagemangBegaranRequest(requestDto);
+		var engagemangBegaranRequest = engagemangBegaranRequestMapper.createEngagemangBegaranRequest(requestDto);
 
 		//Get the response
-		final EngagemangSvar engagemangSvar = ssbtenIntegration.callBolagsverket(engagemangBegaranRequest);
+		var engagemangSvar = ssbtenIntegration.callBolagsverket(engagemangBegaranRequest);
 
 		//Map it to our response and return
 		return engagemangSvarMapper.mapBolagsverketResponse(engagemangSvar);

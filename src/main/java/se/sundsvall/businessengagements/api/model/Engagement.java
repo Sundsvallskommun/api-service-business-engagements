@@ -1,5 +1,6 @@
 package se.sundsvall.businessengagements.api.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Represents a persons business engagement.")
 public class Engagement implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -5101038115881580186L;
 
 	@Schema(description = "Name of the organization", example = "Styrbjörns båtar")

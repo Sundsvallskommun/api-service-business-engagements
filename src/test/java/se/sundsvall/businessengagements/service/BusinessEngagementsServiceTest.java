@@ -10,7 +10,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -28,8 +27,6 @@ import se.sundsvall.businessengagements.api.model.BusinessEngagementsResponse;
 import se.sundsvall.businessengagements.api.model.BusinessInformation;
 import se.sundsvall.businessengagements.api.model.Engagement;
 import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;
-import se.sundsvall.businessengagements.integration.db.EngagementsCacheRepository;
-import se.sundsvall.businessengagements.integration.db.entity.EngagementsCacheEntity;
 import se.sundsvall.businessengagements.integration.party.PartyClient;
 import se.sundsvall.businessengagements.service.mapper.ssbten.EngagemangBegaranRequestMapper;
 
@@ -39,9 +36,6 @@ class BusinessEngagementsServiceTest {
 
 	@Mock
 	private EngagemangBegaranRequestMapper mockEngagemangBegaranRequestMapper;
-
-	@Mock
-	private EngagementsCacheRepository mockRepository;
 
 	@Mock
 	private PartyClient mockPartyClient;
@@ -70,7 +64,10 @@ class BusinessEngagementsServiceTest {
 		when(mockPartyClient.getOrganizationNumberFromPartyId("abc123")).thenReturn(Optional.empty());
 
 		assertThatExceptionOfType(ThrowableProblem.class).isThrownBy(() -> service.getBusinessInformation("abc123", "some name"))
-			.withMessage("Couldn't find organizationNumber for partyId: abc123");
+			.satisfies(problem -> {
+				assertThat(problem.getTitle()).isEqualTo("Couldn't fetch business information");
+				assertThat(problem.getDetail()).isEqualTo("Couldn't find organizationNumber for partyId: abc123");
+			});
 	}
 
 	@Test
@@ -85,10 +82,8 @@ class BusinessEngagementsServiceTest {
 
 		final BusinessEngagementsResponse response = service.getBusinessEngagements(TestObjectFactory.createDummyRequestDto());
 
-		verify(mockRepository, times(1)).findByPartyId("abc123");
 		verify(mockPartyClient, times(1)).getPersonalNumberFromPartyId(anyString());
 		verify(mockSsbtenService, times(1)).getBusinessEngagements(any(BusinessEngagementsRequestDto.class));
-		verify(mockRepository, times(1)).save(any(EngagementsCacheEntity.class));
 
 		assertThat(response.getEngagements().stream().anyMatch(engagement -> "5591628136".equals(engagement.getOrganizationNumber()) &&
 			"uuid1".equals(engagement.getOrganizationId()) &&
@@ -123,25 +118,6 @@ class BusinessEngagementsServiceTest {
 	}
 
 	@Test
-	void testGetResponseIfCached_shouldReturnValue_whenFound() {
-		when(mockRepository.findByPartyId("abc123")).thenReturn(Optional.of(EngagementsCacheEntity.builder()
-			.withResponse(new BusinessEngagementsResponse())
-			.build()));
-		final Optional<BusinessEngagementsResponse> responseIfCached = service.getResponseIfCached("abc123");
-
-		assertThat(responseIfCached).isPresent();
-	}
-
-	@Test
-	void testGetResponseIfCached_shouldReturnOptionalEmpty_whenNotFound() {
-		final String partyId = "abc123";
-		when(mockRepository.findByPartyId(anyString())).thenReturn(Optional.empty());
-		final Optional<BusinessEngagementsResponse> responseIfCached = service.getResponseIfCached(partyId);
-
-		assertThat(responseIfCached).isNotPresent();
-	}
-
-	@Test
 	void testFetchAndPopulateGuid() {
 		final BusinessEngagementsResponse response = new BusinessEngagementsResponse();
 		response.addEngagement(Engagement.builder().withOrganizationNumber("123456").build());
@@ -160,27 +136,4 @@ class BusinessEngagementsServiceTest {
 		assertThat(response.getEngagements().stream().anyMatch(engagement -> "987654".equalsIgnoreCase(engagement.getOrganizationNumber()) && (engagement.getOrganizationId() == null))).isTrue();    // No uuid
 		assertThat(response.getStatusDescriptions()).containsValue("Couldn't fetch guid for organization number"); // Make sure we have a status description.
 	}
-
-	@Test
-	void testHandleNewCacheEntity_shouldStore_whenNoFaultyContent() {
-		final BusinessEngagementsResponse response = BusinessEngagementsResponse.builder().build();
-
-		service.handleNewCacheEntity(response, "partyId");
-
-		verify(mockRepository, times(1)).deleteByPartyId("partyId");
-		verify(mockRepository, times(1)).save(any(EngagementsCacheEntity.class));
-
-	}
-
-	@Test
-	void testHandleNewCacheEntity_shouldNotStore_whenFaultyContent() {
-		final BusinessEngagementsResponse response = BusinessEngagementsResponse.builder()
-			.withStatusDescriptions(Map.of("NOK", "Something wrong"))
-			.build();
-		service.handleNewCacheEntity(response, "partyId");
-
-		verify(mockRepository, times(0)).deleteByPartyId(anyString());
-		verify(mockRepository, times(0)).save(any(EngagementsCacheEntity.class));
-	}
-
 }

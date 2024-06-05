@@ -28,9 +28,9 @@ import se.bolagsverket.schema.ssbt.metadata.Service;
  * </pre>
  */
 @Component
-class DatakonsumentMapper {
+public class DatakonsumentMapper {
 
-	ObjectFactory metaDataFactory = new ObjectFactory();
+	private final ObjectFactory metaDataFactory = new ObjectFactory();
 
 	/**
 	 * <pre>
@@ -47,7 +47,6 @@ class DatakonsumentMapper {
 	 *
 	 *  </pre>
 	 *
-	 * @param requestDto
 	 * @return {}
 	 */
 	Datakonsument createDatakonsument() {

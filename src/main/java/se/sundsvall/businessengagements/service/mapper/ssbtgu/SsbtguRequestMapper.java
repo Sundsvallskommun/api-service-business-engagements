@@ -7,7 +7,6 @@ import static se.sundsvall.businessengagements.service.BusinessEngagementsServic
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
@@ -96,8 +95,8 @@ public class SsbtguRequestMapper {
 
 	XMLGregorianCalendar createXmlGregorianCalendarNow() {
 		try {
-			ZonedDateTime zonedDateTime = LocalDateTime.now().atZone(ZoneId.systemDefault());
-			GregorianCalendar cal = GregorianCalendar.from(zonedDateTime);
+			var zonedDateTime = LocalDateTime.now().atZone(ZoneId.systemDefault());
+			var cal = GregorianCalendar.from(zonedDateTime);
 			return DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
 		} catch (DatatypeConfigurationException e) {
 			//Should never happen.

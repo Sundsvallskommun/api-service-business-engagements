@@ -6,7 +6,6 @@ import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto
 
 import se.bolagsverket.schema.ssbt.metadata.ObjectFactory;
 import se.bolagsverket.schema.ssbt.metadata.Part;
-import se.bolagsverket.schema.ssbt.metadata.PartId;
 
 /**
  * <pre>
@@ -25,9 +24,9 @@ import se.bolagsverket.schema.ssbt.metadata.PartId;
 public class AnvandareMapper {
 
 	public Part createAnvandare(final BusinessEngagementsRequestDto requestDto) {
-		ObjectFactory objectFactory = new ObjectFactory();
+		var objectFactory = new ObjectFactory();
 
-		PartId partId = objectFactory.createPartId()
+		var partId = objectFactory.createPartId()
 			.withPersonnummer(requestDto.getLegalId());
 
 		return objectFactory.createPart()

@@ -41,9 +41,9 @@ public class EngagemangBegaranDetaljerMapper {
 	//These are the different Business/Corporate forms we want to see, i.e. all of them
 	private static final List<String> FORETAGSFORM_KODER = List.of("AB", "BRF", "E", "EK", "HB", "KB");
 
-	ObjectFactory objectFactory = new ObjectFactory();
+	private final ObjectFactory objectFactory = new ObjectFactory();
 
-	se.bolagsverket.schema.ssbt.foretag.ObjectFactory foretagObjectFactory = new se.bolagsverket.schema.ssbt.foretag.ObjectFactory();
+	private final se.bolagsverket.schema.ssbt.foretag.ObjectFactory foretagObjectFactory = new se.bolagsverket.schema.ssbt.foretag.ObjectFactory();
 
 	EngagemangBegaranDetaljer createEngagemangBegaranDetaljer(final BusinessEngagementsRequestDto requestDto) {
 		return objectFactory.createEngagemangBegaranDetaljer()
@@ -67,6 +67,4 @@ public class EngagemangBegaranDetaljerMapper {
 			.withAllaEnskilda(false)
 			.withForetagsformKods(FORETAGSFORM_KODER);
 	}
-
-
 }

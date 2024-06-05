@@ -1,5 +1,6 @@
 package se.sundsvall.businessengagements.api.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Business engagements response model")
 public class BusinessEngagementsResponse implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 7202306090787565132L;
 
 	private List<Engagement> engagements;

@@ -6,21 +6,16 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Transactional;
 import org.zalando.problem.Problem;
 
 import se.sundsvall.businessengagements.api.model.BusinessEngagementsResponse;
 import se.sundsvall.businessengagements.api.model.BusinessInformation;
 import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;
-import se.sundsvall.businessengagements.integration.db.EngagementsCacheRepository;
-import se.sundsvall.businessengagements.integration.db.EntityMapper;
-import se.sundsvall.businessengagements.integration.db.entity.EngagementsCacheEntity;
 import se.sundsvall.businessengagements.integration.party.PartyClient;
 
 @Service
-@EnableTransactionManagement
 public class BusinessEngagementsService {
 
 	public static final String SUNDSVALLS_KOMMUN = "Sundsvalls Kommun";
@@ -29,29 +24,30 @@ public class BusinessEngagementsService {
 
 	public static final String SERVICE_NAME = "BUSENGBV";  //This is communicated between Bolagsverket and Sundsvalls kommun, must be set in each request.
 
+	public static final String BUSINESS_INFORMATION_CACHE = "businessInformation";
+	public static final String BUSINESS_ENGAGEMENTS_CACHE = "businessEngagements";
+
 	private static final Logger LOG = LoggerFactory.getLogger(BusinessEngagementsService.class);
-
-	private final EngagementsCacheRepository engagementsCacheRepository;
-
+	
 	private final PartyClient partyClient;
 
 	private final SsbtenService ssbtenService;
 
 	private final SsbtguService ssbtguService;
 
-	public BusinessEngagementsService(final EngagementsCacheRepository engagementsCacheRepository,
-		final PartyClient partyClient, SsbtenService ssbtenService, SsbtguService ssbtguService) {
-		this.engagementsCacheRepository = engagementsCacheRepository;
+	public BusinessEngagementsService(final PartyClient partyClient, SsbtenService ssbtenService, SsbtguService ssbtguService) {
 		this.partyClient = partyClient;
 		this.ssbtenService = ssbtenService;
 		this.ssbtguService = ssbtguService;
 	}
 
+	@Cacheable(value = BUSINESS_INFORMATION_CACHE)
 	public BusinessInformation getBusinessInformation(String partyId, String organizationName) {
 		return partyClient.getOrganizationNumberFromPartyId(partyId)
 			.map(orgNo -> ssbtguService.fetchBusinessInformation(orgNo, organizationName))
 			.orElseThrow(() -> Problem.builder()
-				.withTitle("Couldn't find organizationNumber for partyId: " + partyId)
+				.withTitle("Couldn't fetch business information")
+				.withDetail("Couldn't find organizationNumber for partyId: " + partyId)
 				.withStatus(NOT_FOUND)
 				.build());
 	}
@@ -62,29 +58,18 @@ public class BusinessEngagementsService {
 	 * @param requestDto The request DTO
 	 * @return The response DTO
 	 */
-	@Transactional
+	@Cacheable(value = BUSINESS_ENGAGEMENTS_CACHE, key = "#requestDto.partyId")
 	public BusinessEngagementsResponse getBusinessEngagements(BusinessEngagementsRequestDto requestDto) {
 
-		//First check if we have a cached entity for the given partyId
-		final Optional<BusinessEngagementsResponse> optionalCachedResponse = getResponseIfCached(requestDto.getPartyId());
+		requestDto.setLegalId(partyClient.getPersonalNumberFromPartyId(requestDto.getPartyId()));
 
-		if (optionalCachedResponse.isPresent()) {
-			return optionalCachedResponse.get();
-		} else {
+		var engagements = ssbtenService.getBusinessEngagements(requestDto);
 
-			requestDto.setLegalId(partyClient.getPersonalNumberFromPartyId(requestDto.getPartyId()));
-
-			BusinessEngagementsResponse engagements = ssbtenService.getBusinessEngagements(requestDto);
-
-			if (engagements.getEngagements() != null && !engagements.getEngagements().isEmpty()) {
-				fetchAndPopulateGuidForOrganizations(engagements);
-
-				//Here we have an entity that (maybe) needs caching
-				handleNewCacheEntity(engagements, requestDto.getPartyId());
-			}
-
-			return engagements;
+		if (engagements.getEngagements() != null && !engagements.getEngagements().isEmpty()) {
+			fetchAndPopulateGuidForOrganizations(engagements);
 		}
+
+		return engagements;
 	}
 
 	void fetchAndPopulateGuidForOrganizations(BusinessEngagementsResponse businessEngagementsResponse) {
@@ -110,42 +95,4 @@ public class BusinessEngagementsService {
 				}
 			});
 	}
-
-	/**
-	 * Fetches a cached response
-	 *
-	 * @param partyId The partyId to fetch for
-	 * @return An optional response, empty if no cached entity was found.
-	 */
-	Optional<BusinessEngagementsResponse> getResponseIfCached(String partyId) {
-		final Optional<EngagementsCacheEntity> possibleCachedEntity = engagementsCacheRepository.findByPartyId(partyId);
-
-		Optional<BusinessEngagementsResponse> possibleResponse = Optional.empty();
-
-		if (possibleCachedEntity.isPresent()) {
-			final EngagementsCacheEntity entity = possibleCachedEntity.get();
-			possibleResponse = Optional.of(entity.getResponse());
-		}
-
-		return possibleResponse;
-	}
-
-	void handleNewCacheEntity(BusinessEngagementsResponse response, String partyId) {
-
-		//We don't want to persist anything with errors.
-		if (response.getStatusDescriptions() == null || response.getStatusDescriptions().isEmpty()) {
-			//First we need to remove any possible old entity.
-			int entitiesDeleted = engagementsCacheRepository.deleteByPartyId(partyId);
-
-			if (entitiesDeleted > 0) {    //Only print if we actually remove anything
-				LOG.info("Removed cached entity");
-			}
-
-			engagementsCacheRepository.save(EntityMapper.mapResponseToEntity(response, partyId));
-			LOG.info("Persisted a new entity");
-		} else {
-			LOG.info("Not persisting response entity since it has missing information.");
-		}
-	}
-
 }

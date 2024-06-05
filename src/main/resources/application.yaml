@@ -1,48 +1,23 @@
-#===========================
-# Spring config
-#===========================
 spring:
   application:
     name: api-businessengagements
   main:
     banner-mode: 'off'
-  datasource:
-    driver-class-name: ${config.datasource.driver-class-name}
-    url: ${config.datasource.url}
-    username: ${config.datasource.username}
-    password: ${config.datasource.password}
-  jpa:
-    hibernate:
-      ddl-auto: ${config.jpa.hibernate.ddl-auto}
-#===========================
-# Bolagsverket config
-#===========================
-bolagsverket:
-  entity:
-    ttl: ${config.bolagsverket.entity.ttl}
 integration:
   bolagsverket:
     connectTimeout: PT5S
     readTimeout: PT15S
-    keystore-password: ${config.integration.bolagsverket.keystore-password}
-    key-store-as-base64: ${config.integration.bolagsverket.key-store-as-base64}
-    should-use-keystore: ${config.integration.bolagsverket.should-use-keystore}
-    should-verify-transactionid: ${config.integration.bolagsverket.should-verify-transactionid}
-    ssbten-api-url: ${config.integration.bolagsverket.ssbten-api-url}
-    ssbtgu-api-url: ${config.integration.bolagsverket.ssbtgu-api-url}
-    ttl: ${integration.bolagsverket.readTimeout}
-
-  #===========================
-  # Party config
-  #===========================
+    ttl: PT15S
   party:
-    url: ${config.integration.party.url}
-    oauth2-token-url: ${config.integration.party.oauth2-token-url}
-    oauth2-client-id: ${config.integration.party.oauth2-client-id}
-    oauth2-client-secret: ${config.integration.party.oauth2-client-secret}
     connect-timeout: PT5S
     read-timeout: PT15S
 openapi:
-  name: api-businessengagements
-  title: api-businessengagements
+  name: ${spring.application.name}
+  title: ${spring.application.name}
   version: '@project.version@'
+# Cache properties
+appconfig:
+  cache:
+    enabled: true
+    expire-after-write: PT5M
+    maximum-size: 100
