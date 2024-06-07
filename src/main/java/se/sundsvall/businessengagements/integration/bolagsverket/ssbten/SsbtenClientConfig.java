@@ -30,7 +30,7 @@ public class SsbtenClientConfig {
 	@Bean(name = "bolagsverket-ssbten-webservice-template")
 	public WebServiceTemplate getSsbtenWebserviceTemplate() {
 
-		final WebServiceTemplateBuilder builder = new WebServiceTemplateBuilder()
+		var builder = new WebServiceTemplateBuilder()
 			.withBaseUrl(properties.ssbtenApiUrl())
 			.withPackageToScan("se.bolagsverket.schema.ssbten")
 			.withReadTimeout(properties.readTimeout())
@@ -47,10 +47,7 @@ public class SsbtenClientConfig {
 	}
 
 	private void loadKeyStore(final WebServiceTemplateBuilder builder) {
-		builder
-			.withKeyStoreData(Base64.getDecoder()
-				.decode(properties.keyStoreAsBase64().getBytes(StandardCharsets.UTF_8)))
+		builder.withKeyStoreData(Base64.getDecoder().decode(properties.keyStoreAsBase64().getBytes(StandardCharsets.UTF_8)))
 			.withKeyStorePassword(properties.keystorePassword());
 	}
-
 }

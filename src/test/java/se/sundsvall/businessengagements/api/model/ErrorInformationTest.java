@@ -54,9 +54,9 @@ class ErrorInformationTest {
 
 	@Test
 	void noDirtOnCreatedBean() {
-		assertThat(ErrorInformation.builder().build()).satisfies(errorInformation -> {
-			assertThat(errorInformation).hasAllNullFieldsOrPropertiesExcept("errorDescriptions");
-			assertThat(errorInformation.getErrorDescriptions()).isEmpty();
+		assertThat(ErrorInformation.builder().build()).satisfies(errorInfo -> {
+			assertThat(errorInfo).hasAllNullFieldsOrPropertiesExcept("errorDescriptions");
+			assertThat(errorInfo.getErrorDescriptions()).isEmpty();
 		});
 	}
 

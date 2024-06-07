@@ -1,17 +1,3 @@
-spring:
-  cache:
-    type: none
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password: password
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
-bolagsverket:
-  entity:
-    ttl: PT30M
 integration:
   bolagsverket:
     connectTimeout: 1000
@@ -30,3 +16,6 @@ integration:
     oauth2-client-secret: fake
     oauth2-token-url: http://localhost:${wiremock.server.port}/token
     url: http://localhost:${wiremock.server.port}/party
+spring:
+  cache:
+    type: none

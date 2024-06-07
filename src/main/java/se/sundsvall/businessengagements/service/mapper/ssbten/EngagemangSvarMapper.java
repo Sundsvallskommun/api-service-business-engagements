@@ -1,6 +1,5 @@
 package se.sundsvall.businessengagements.service.mapper.ssbten;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,10 +27,10 @@ public class EngagemangSvarMapper {
 	 */
 	public BusinessEngagementsResponse mapBolagsverketResponse(EngagemangSvar engagemangSvar) {
 
-		final List<Foretag> foretagList = getSuccessfulEngagements(engagemangSvar);
+		var foretagList = getSuccessfulEngagements(engagemangSvar);
 
 		//Now we have all Foretag objects
-		final BusinessEngagementsResponse response = mapSuccessfulEngagementsToResponse(foretagList);
+		var response = mapSuccessfulEngagementsToResponse(foretagList);
 
 		//But we don't have those engagements that might have failed. map those as well
 		mapFailedEngagementsToResponse(engagemangSvar, response);
@@ -63,11 +62,11 @@ public class EngagemangSvarMapper {
 	 * @return
 	 */
 	BusinessEngagementsResponse mapSuccessfulEngagementsToResponse(List<Foretag> foretagList) {
-		BusinessEngagementsResponse response = new BusinessEngagementsResponse();
+		var response = new BusinessEngagementsResponse();
 
 		foretagList.forEach(foretag -> {
 			//Get the type of business, e.g. "Aktiebolag" or "Enskild firma" etc.
-			final String foretagsformKod = foretag.getForetagsform().getForetagsformKod();
+			var foretagsformKod = foretag.getForetagsform().getForetagsformKod();
 
 			//Check if it's an "enskild firma", in that case we handle business information differently
 			if ("E".equalsIgnoreCase(foretagsformKod)) {
@@ -92,7 +91,7 @@ public class EngagemangSvarMapper {
 	void extractAndSetNameAndPersonalNumber(final BusinessEngagementsResponse response, final Foretag foretag) {
 
 		//First extract the personnumber since it's the same "everywhere"
-		String personalNumber = foretag.getForetagId().getPersonIdentitetsbeteckning().getPersonnummer();
+		var personalNumber = foretag.getForetagId().getPersonIdentitetsbeteckning().getPersonnummer();
 
 		//If the name of the "enskild firma" is protected, it may be found in "ForetagNamn" in the "NamnSkydd" field
 		if (!foretag.getNamnskydds().isEmpty()) { //Check if we have something
@@ -110,14 +109,10 @@ public class EngagemangSvarMapper {
 	 * @param response
 	 */
 	void mapFailedEngagementsToResponse(final EngagemangSvar engagemangSvar, final BusinessEngagementsResponse response) {
-		final List<ForetagEngagemang> foretagEngagemangList = new ArrayList<>(engagemangSvar.getEngagemangSvarDetaljer()
-			.getForetagEngagemangs());
 
-		foretagEngagemangList.forEach(engagemang -> {
-			if (engagemang.getFel() != null) {
-				response.addStatusDescription(translateType(engagemang.getFel().getTyp()), engagemang.getFel().getFelBeskrivning());
-			}
-		});
+		engagemangSvar.getEngagemangSvarDetaljer().getForetagEngagemangs().stream()
+			.filter(engagemang -> engagemang.getFel() != null)
+			.forEach(enagemang -> response.addStatusDescription(translateType(enagemang.getFel().getTyp()), enagemang.getFel().getFelBeskrivning()));
 	}
 
 	/**
@@ -148,9 +143,6 @@ public class EngagemangSvarMapper {
 			case OTILLGANGLIG_UPPGIFTSKALLA -> "No response from underlying system.";
 			case TIMEOUT -> "Timeout.";
 			default -> "Unknown error.";
-
 		};
 	}
-
-
 }

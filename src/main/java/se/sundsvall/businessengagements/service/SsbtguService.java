@@ -13,9 +13,6 @@ import se.sundsvall.businessengagements.integration.bolagsverket.ssbtgu.SsbtguIn
 import se.sundsvall.businessengagements.service.mapper.ssbtgu.SsbtguRequestMapper;
 import se.sundsvall.businessengagements.service.mapper.ssbtgu.SsbtguResponseMapper;
 
-import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterBegaran;
-import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterSvar;
-
 @Component
 public class SsbtguService {
 
@@ -39,11 +36,11 @@ public class SsbtguService {
 	}
 
 	public BusinessInformation fetchBusinessInformation(String orgNumber, String orgName) {
-		GrundlaggandeUppgifterBegaran grundlaggandeUppgifterBegaran = ssbtguRequestMapper.createGrundlaggandeUppgifterBegaran(orgNumber, orgName);
-		GrundlaggandeUppgifterSvar grundlaggandeUppgifterSvar = ssbtguIntegration.callBolagsverket(grundlaggandeUppgifterBegaran);
+		var grundlaggandeUppgifterBegaran = ssbtguRequestMapper.createGrundlaggandeUppgifterBegaran(orgNumber, orgName);
+		var grundlaggandeUppgifterSvar = ssbtguIntegration.callBolagsverket(grundlaggandeUppgifterBegaran);
 
-		String outTransaktionId = grundlaggandeUppgifterBegaran.getGrundlaggandeUppgifterBegaranMetadata().getTransaktionId();
-		String inTransationId = grundlaggandeUppgifterSvar.getGrundlaggandeUppgifterSvarMetadata().getTransaktionId();
+		var outTransaktionId = grundlaggandeUppgifterBegaran.getGrundlaggandeUppgifterBegaranMetadata().getTransaktionId();
+		var inTransationId = grundlaggandeUppgifterSvar.getGrundlaggandeUppgifterSvarMetadata().getTransaktionId();
 
 		validateResponse(outTransaktionId, inTransationId);
 

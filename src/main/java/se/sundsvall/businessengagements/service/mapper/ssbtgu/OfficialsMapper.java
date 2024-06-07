@@ -39,13 +39,13 @@ public class OfficialsMapper {
 		Map<String, Official> officialsMap = new HashMap<>();   //Store it temporary in a map since to be sure that we don't get duplicates
 		String[] split = officialsString.split("\r\n|\n|\r"); //Split on newline
 
-		List<String> lines = new ArrayList<>(Arrays.asList(split));
+		var lines = new ArrayList<>(Arrays.asList(split));
 
 		int ctr = 0;
-		String roleAsString = "";   //Here we store e.g. "styrelseledamot,ordförande", defined here for later use
+		var roleAsString = "";   //Here we store e.g. "styrelseledamot,ordförande", defined here for later use
 
 		while (ctr < lines.size()) {
-			String line = lines.get(ctr).trim(); //Get a row/line and trim it
+			var line = lines.get(ctr).trim(); //Get a row/line and trim it
 			//Check if it doesn't start with a number, then it's a description of the role, anything else is a person/organization
 			if (!Character.isDigit(line.charAt(0))) {
 
@@ -54,15 +54,15 @@ public class OfficialsMapper {
 			} else {
 
 				//Here we have something along "198000000011 Larsson, Nils, SUNDSVALL"
-				String newLine = lines.get(ctr);
+				var newLine = lines.get(ctr);
 
 				//If it starts with a number, it's the personalNumber / organizationNumber.
 				if (Character.isDigit(newLine.charAt(0))) {
 					//Extract all parts from the string/line
-					String legalId = getLegalId(newLine);
-					String name = getName(newLine);
-					List<String> positions = getPositions(roleAsString);
-					String location = getLocation(newLine).trim();
+					var legalId = getLegalId(newLine);
+					var name = getName(newLine);
+					var positions = getPositions(roleAsString);
+					var location = getLocation(newLine).trim();
 
 					//If we get a personalId/orgNo already stored we want to update its roles, not add new ones.
 					if (officialsMap.containsKey(legalId)) {
@@ -90,7 +90,7 @@ public class OfficialsMapper {
 	}
 
 	private static List<String> getPositions(String role) {
-		List<String> immutableRoles = Arrays.stream(role.split(","))
+		var immutableRoles = Arrays.stream(role.split(","))
 			.map(String::trim)
 			.toList();
 		return new ArrayList<>(immutableRoles);

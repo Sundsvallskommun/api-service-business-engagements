@@ -1,5 +1,6 @@
 package se.sundsvall.businessengagements.api.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -33,6 +34,7 @@ public class LiquidationInformation {
 	@Schema(description = "Reason for liquidation or cancellation of liquidation")
 	public static class LiquidationReason implements Serializable {
 
+		@Serial
 		private static final long serialVersionUID = -6283599400246819040L;
 
 		@Schema(description = "Liquidation code", example = "21")

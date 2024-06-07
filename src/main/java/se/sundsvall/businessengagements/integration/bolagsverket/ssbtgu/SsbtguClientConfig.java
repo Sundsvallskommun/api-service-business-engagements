@@ -51,5 +51,4 @@ public class SsbtguClientConfig {
 				.decode(properties.keyStoreAsBase64().getBytes(StandardCharsets.UTF_8)))
 			.withKeyStorePassword(properties.keystorePassword());
 	}
-
 }

@@ -98,16 +98,12 @@ public class EngagemangBegaranRequestMapper {
 
 	/**
 	 * Need to set this in the request towards Bolagsverket, hence why it's a separate property.
-	 *
-	 * @return
 	 */
 	@Value("${integration.bolagsverket.ttl}")
 	private Duration bolagsverketTtl;
 
 	public EngagemangBegaranRequestMapper(final DatakonsumentMapper datakonsumentMapper, final EngagemangBegaranDetaljerMapper engagemangBegaranDetaljerMapper,
-		final AnvandareMapper anvandareMapper,
-		@Value("${integration.bolagsverket.ttl}")
-		Duration bolagsverketTtl) {
+		final AnvandareMapper anvandareMapper, @Value("${integration.bolagsverket.ttl}") Duration bolagsverketTtl) {
 		this.ssbtenFactory = new ObjectFactory();
 		this.datakonsumentMapper = datakonsumentMapper;
 		this.engagemangBegaranDetaljerMapper = engagemangBegaranDetaljerMapper;
@@ -122,7 +118,7 @@ public class EngagemangBegaranRequestMapper {
 	 * @return {@link se.bolagsverket.schema.ssbten.engagemang.EngagemangBegaran}.
 	 */
 	public EngagemangBegaran createEngagemangBegaranRequest(final BusinessEngagementsRequestDto requestDto) {
-		EngagemangBegaran engagemangBegaranRequest = ssbtenFactory.createEngagemangBegaran();
+		var engagemangBegaranRequest = ssbtenFactory.createEngagemangBegaran();
 		engagemangBegaranRequest.setEngagemangBegaranMetadata(createEngagemangBegaranMetadata(requestDto));
 		engagemangBegaranRequest.setEngagemangBegaranDetaljer(engagemangBegaranDetaljerMapper.createEngagemangBegaranDetaljer(requestDto));
 		engagemangBegaranRequest.setSchemaVersion(SCHEMA_VERSION);
@@ -143,7 +139,7 @@ public class EngagemangBegaranRequestMapper {
 	 * @return
 	 */
 	EngagemangBegaranMetadata createEngagemangBegaranMetadata(final BusinessEngagementsRequestDto requestDto) {
-		final EngagemangBegaranMetadata engagemangBegaranMetadata = ssbtenFactory.createEngagemangBegaranMetadata();
+		var engagemangBegaranMetadata = ssbtenFactory.createEngagemangBegaranMetadata();
 		engagemangBegaranMetadata.setMeddelandeId(UUID.randomUUID().toString());    //Unique for the transaction I guess?
 		engagemangBegaranMetadata.setTransaktionId(RequestId.get());                //Unique for the request, should be taken from x-request-id
 		engagemangBegaranMetadata.setTidstampel(getXMLGregorianCalendarTimeStamp());
@@ -159,8 +155,8 @@ public class EngagemangBegaranRequestMapper {
 	}
 
 	TTL createTtl() {
-		se.bolagsverket.schema.ssbt.metadata.ObjectFactory metadataFactory = new se.bolagsverket.schema.ssbt.metadata.ObjectFactory();
-		final TTL ttl = metadataFactory.createTTL();
+		var metadataFactory = new se.bolagsverket.schema.ssbt.metadata.ObjectFactory();
+		var ttl = metadataFactory.createTTL();
 		ttl.setTidsenhet(Tidsenhet.MILLISEKUNDER);
 		ttl.setValue(Math.toIntExact(bolagsverketTtl.toMillis()));
 
@@ -168,11 +164,8 @@ public class EngagemangBegaranRequestMapper {
 	}
 
 	/**
-	 * <pre>
-	 *     BV requires that "tidstampel" is sent on the format: "2016-04-27T12:29:54.856Z"
-	 * </pre>
-	 *
-	 * @return
+	 * Creates a timestamp for the request.
+	 * @return {@link XMLGregorianCalendar}
 	 */
 	XMLGregorianCalendar getXMLGregorianCalendarTimeStamp() {
 		try {
@@ -184,5 +177,4 @@ public class EngagemangBegaranRequestMapper {
 
 		return null;    //Should also never happen?
 	}
-
 }
