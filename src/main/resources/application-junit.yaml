@@ -16,9 +16,6 @@ integration:
     oauth2-client-secret: fake-secret
     oauth2-token-url: http://localhost/token
     url: http://localhost/party
-# Cache properties
-appconfig:
+spring:
   cache:
-    enabled: false
-    expire-after-write: PT5S
-    maximum-size: 10
+    type: none

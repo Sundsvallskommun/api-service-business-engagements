@@ -16,9 +16,6 @@ integration:
     oauth2-client-secret: fake
     oauth2-token-url: http://localhost:${wiremock.server.port}/token
     url: http://localhost:${wiremock.server.port}/party
-# Cache properties
-appconfig:
+spring:
   cache:
-    enabled: false
-    expire-after-write: PT0S
-    maximum-size: 1
+    type: none
