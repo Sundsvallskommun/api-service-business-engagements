@@ -26,7 +26,7 @@ public class SsbtguClientConfig {
 		this.logbook = logbook;
 	}
 
-	@Bean(name = "bolagsverket-ssbtgu-webservice-template")
+	@Bean(name = "bolagsverketSsbtguWebserviceTemplate")
 	public WebServiceTemplate getSsbtguWebserviceTemplate() {
 
 		final WebServiceTemplateBuilder builder = new WebServiceTemplateBuilder()

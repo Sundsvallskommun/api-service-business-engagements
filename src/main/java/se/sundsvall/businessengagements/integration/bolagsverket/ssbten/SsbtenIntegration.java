@@ -18,7 +18,7 @@ public class SsbtenIntegration {
 	private final WebServiceTemplate webServiceTemplate;
 
 	public SsbtenIntegration(
-		@Qualifier("bolagsverket-ssbten-webservice-template") final WebServiceTemplate webServiceTemplate) {
+		@Qualifier("bolagsverketSsbtenWebserviceTemplate") final WebServiceTemplate webServiceTemplate) {
 		this.webServiceTemplate = webServiceTemplate;
 	}
 
