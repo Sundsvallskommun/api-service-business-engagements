@@ -13,6 +13,7 @@ import se.sundsvall.dept44.test.annotation.wiremock.WireMockAppTestSuite;
 class BusinessInformationIT extends AbstractAppTest {
 
 	private static final String PARTY_ID = "fb2f0290-3820-11ed-a261-0242ac120003";
+	private static final String PATH = "/information/" + PARTY_ID + "?organizationName=Some%20Organization";
 
 	@BeforeEach
 	public void setup() {
@@ -22,7 +23,7 @@ class BusinessInformationIT extends AbstractAppTest {
 	@Test
 	void test1_fetchingBusinesInformation() {
 		setupCall()
-			.withServicePath("/information/" + PARTY_ID + "?organizationName=Some%20Organization")
+			.withServicePath(PATH)
 			.withHttpMethod(HttpMethod.GET)
 			.withExpectedResponseStatus(HttpStatus.OK)
 			.withExpectedResponse("expected.json")
@@ -32,7 +33,7 @@ class BusinessInformationIT extends AbstractAppTest {
 	@Test
 	void test2_fetchBusinessInformation_shouldOnlyExcludeMissingInformation() {
 		setupCall()
-			.withServicePath("/information/" + PARTY_ID + "?organizationName=Some%20Organization")
+			.withServicePath(PATH)
 			.withHttpMethod(HttpMethod.GET)
 			.withExpectedResponseStatus(HttpStatus.OK)
 			.withExpectedResponse("expected.json")
