@@ -27,7 +27,7 @@ public class SsbtenClientConfig {
 		this.logbook = logbook;
 	}
 
-	@Bean(name = "bolagsverket-ssbten-webservice-template")
+	@Bean(name = "bolagsverketSsbtenWebserviceTemplate")
 	public WebServiceTemplate getSsbtenWebserviceTemplate() {
 
 		var builder = new WebServiceTemplateBuilder()

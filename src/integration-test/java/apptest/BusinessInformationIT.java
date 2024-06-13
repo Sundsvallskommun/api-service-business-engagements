@@ -12,16 +12,17 @@ import se.sundsvall.dept44.test.annotation.wiremock.WireMockAppTestSuite;
 @WireMockAppTestSuite(files = "classpath:/BusinessInformationIT/", classes = BusinessEngagements.class)
 class BusinessInformationIT extends AbstractAppTest {
 
+	private static final String PARTY_ID = "fb2f0290-3820-11ed-a261-0242ac120003";
+
 	@BeforeEach
 	public void setup() {
 		CommonStubs.stubAccessToken();
 	}
 
 	@Test
-	void test1_fetchingBusinesInformation() throws Exception {
-		String partyId = "fb2f0290-3820-11ed-a261-0242ac120003";
+	void test1_fetchingBusinesInformation() {
 		setupCall()
-			.withServicePath("/information/" + partyId + "?organizationName=Some%20Organization")
+			.withServicePath("/information/" + PARTY_ID + "?organizationName=Some%20Organization")
 			.withHttpMethod(HttpMethod.GET)
 			.withExpectedResponseStatus(HttpStatus.OK)
 			.withExpectedResponse("expected.json")
@@ -30,9 +31,8 @@ class BusinessInformationIT extends AbstractAppTest {
 
 	@Test
 	void test2_fetchBusinessInformation_shouldOnlyExcludeMissingInformation() {
-		String partyId = "fb2f0290-3820-11ed-a261-0242ac120003";
 		setupCall()
-			.withServicePath("/information/" + partyId + "?organizationName=Some%20Organization")
+			.withServicePath("/information/" + PARTY_ID + "?organizationName=Some%20Organization")
 			.withHttpMethod(HttpMethod.GET)
 			.withExpectedResponseStatus(HttpStatus.OK)
 			.withExpectedResponse("expected.json")
