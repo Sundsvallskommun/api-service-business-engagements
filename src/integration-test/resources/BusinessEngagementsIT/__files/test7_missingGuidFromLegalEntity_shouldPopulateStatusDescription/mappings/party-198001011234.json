@@ -5,7 +5,7 @@
         "equalTo": "Bearer abc123"
       }
     },
-    "url": "/party/ENTERPRISE/198001011234/partyId",
+    "url": "/party/2281/ENTERPRISE/198001011234/partyId",
     "method": "GET"
   },
   "response": {

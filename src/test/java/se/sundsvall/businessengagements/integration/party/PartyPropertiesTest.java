@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import se.sundsvall.businessengagements.BusinessEngagements;
+import se.sundsvall.businessengagements.Application;
 
-@SpringBootTest(classes = BusinessEngagements.class)
+@SpringBootTest(classes = Application.class)
 @ActiveProfiles("junit")
 class PartyPropertiesTest {
 
@@ -27,4 +27,5 @@ class PartyPropertiesTest {
 		assertThat(properties.getReadTimeout()).isEqualTo(Duration.ofSeconds(4));
 		assertThat(properties.getUrl()).isEqualTo("http://localhost/party");
 	}
+
 }

@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import se.sundsvall.businessengagements.BusinessEngagements;
+import se.sundsvall.businessengagements.Application;
 
-@SpringBootTest(classes = BusinessEngagements.class)
+@SpringBootTest(classes = Application.class)
 @ActiveProfiles("junit")
 class SsbtPropertiesTest {
 
@@ -29,4 +29,5 @@ class SsbtPropertiesTest {
 		assertThat(properties.ssbtenApiUrl()).isEqualTo("http://localhost/ssbten");
 		assertThat(properties.ssbtguApiUrl()).isEqualTo("http://localhost/ssbtgu");
 	}
+
 }

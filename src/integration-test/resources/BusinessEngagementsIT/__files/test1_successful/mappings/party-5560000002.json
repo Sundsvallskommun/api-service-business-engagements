@@ -6,7 +6,7 @@
       }
     },
     "method": "GET",
-    "url": "/party/ENTERPRISE/5560000002/partyId"
+    "url": "/party/2281/ENTERPRISE/5560000002/partyId"
   },
   "response": {
     "body": "bab17d8b-af38-4531-967c-083f15ca1572",

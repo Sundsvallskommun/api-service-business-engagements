@@ -16,15 +16,17 @@ import se.sundsvall.businessengagements.api.model.BusinessEngagementsResponse.St
 import se.sundsvall.businessengagements.api.model.BusinessInformation;
 import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;
 import se.sundsvall.businessengagements.service.BusinessEngagementsService;
+import se.sundsvall.dept44.common.validators.annotation.ValidMunicipalityId;
 import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping(value = "/")
+@RequestMapping(value = "/{municipalityId}")
 @Tag(name = "Business Engagements", description = "Show a persons business engagements and company information.")
 @Validated
 public class BusinessEngagementsResource {
@@ -42,6 +44,7 @@ public class BusinessEngagementsResource {
 	@ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Problem.class)))
 	@GetMapping("/engagements/{partyId}")
 	public ResponseEntity<BusinessEngagementsResponse> getEngagements(
+		@Parameter(name = "municipalityId", description = "Municipality id", example = "2281") @ValidMunicipalityId @PathVariable final String municipalityId,
 		@ValidUuid
 		@PathVariable("partyId") @Schema(description = "Unique identifier for a person", example = "6a5c3d04-412d-11ec-973a-0242ac130003") final String partyId,
 		@NotBlank
@@ -50,8 +53,8 @@ public class BusinessEngagementsResource {
 		@RequestParam("serviceName") @Schema(description = "Name of the system initiating the request", example = "Mina Sidor") final String serviceName
 	) {
 
-		BusinessEngagementsRequestDto requestDto = new BusinessEngagementsRequestDto(personalName, null, partyId, serviceName);   //We don't know personalNumber yet
-		final BusinessEngagementsResponse response = businessEngagementsService.getBusinessEngagements(requestDto);
+		final var requestDto = new BusinessEngagementsRequestDto(personalName, null, partyId, serviceName);   //We don't know personalNumber yet
+		final var response = businessEngagementsService.getBusinessEngagements(requestDto, municipalityId);
 
 		// A little janky but if there's a statusDescription it means something went wrong and we should indicate this with a NOK as status.
 		if (response.getStatusDescriptions() != null) {
@@ -75,11 +78,12 @@ public class BusinessEngagementsResource {
 	@ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Problem.class)))
 	@GetMapping("/information/{partyId}")
 	public ResponseEntity<BusinessInformation> getBusinessInformation(
+		@Parameter(name = "municipalityId", description = "Municipality id", example = "2281") @ValidMunicipalityId @PathVariable final String municipalityId,
 		@ValidUuid
 		@PathVariable("partyId") @Schema(description = "Unique identifier for an organization number", example = "fb2f0290-3820-11ed-a261-0242ac120002") final String partyId,
 		@RequestParam(value = "organizationName", required = false) @Schema(description = "Name of the organization") final String organizationName) {
 
-		BusinessInformation businessInformation = businessEngagementsService.getBusinessInformation(partyId, organizationName);
+		final BusinessInformation businessInformation = businessEngagementsService.getBusinessInformation(partyId, organizationName, municipalityId);
 		return ResponseEntity.ok(businessInformation);
 	}
 

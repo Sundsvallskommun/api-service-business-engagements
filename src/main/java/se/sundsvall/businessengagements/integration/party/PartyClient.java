@@ -17,7 +17,7 @@ public class PartyClient {
 
 	private final PartyIntegration partyIntegration;
 
-	public PartyClient(PartyIntegration partyIntegration) {
+	public PartyClient(final PartyIntegration partyIntegration) {
 		this.partyIntegration = partyIntegration;
 	}
 
@@ -25,11 +25,12 @@ public class PartyClient {
 	 * Get legalIds for the partyId sent in.
 	 * Only for private persons.
 	 *
-	 * @param partyId
+	 * @param municipalityId the municipalityId
+	 * @param partyId the partyId
 	 * @return a legalIds
 	 */
-	public String getPersonalNumberFromPartyId(String partyId) {
-		return partyIntegration.getLegalId(PartyType.PRIVATE, partyId)
+	public String getPersonalNumberFromPartyId(final String partyId, final String municipalityId) {
+		return partyIntegration.getLegalId(municipalityId,PartyType.PRIVATE, partyId)
 			.orElseThrow(() -> Problem.builder()
 				.withTitle("Couldn't find legalId for partyId: " + partyId)
 				.withStatus(NOT_FOUND)
@@ -39,21 +40,23 @@ public class PartyClient {
 	/**
 	 * Get partyId from organizationNumber
 	 *
-	 * @param organizationNumber
+	 * @param municipalityId the municipalityId
+	 * @param organizationNumber the organizationNumber
 	 * @return Optional partyId
 	 */
-	public Optional<String> getPartyIdFromOrganizationNumber(String organizationNumber) {
-		return partyIntegration.getPartyId(PartyType.ENTERPRISE, organizationNumber);
+	public Optional<String> getPartyIdFromOrganizationNumber(final String organizationNumber, final String municipalityId) {
+		return partyIntegration.getPartyId(municipalityId,PartyType.ENTERPRISE, organizationNumber);
 	}
 
 	/**
 	 * GetOrganizationNumber from partyId
 	 *
-	 * @param partyId
+	 * @param municipalityId the municipalityId
+	 * @param partyId the partyId
 	 * @return Optional organizationNumber
 	 */
-	public Optional<String> getOrganizationNumberFromPartyId(String partyId) {
-		return partyIntegration.getLegalId(PartyType.ENTERPRISE, partyId);
+	public Optional<String> getOrganizationNumberFromPartyId(final String partyId, final String municipalityId) {
+		return partyIntegration.getLegalId(municipalityId,PartyType.ENTERPRISE, partyId);
 	}
 
 }

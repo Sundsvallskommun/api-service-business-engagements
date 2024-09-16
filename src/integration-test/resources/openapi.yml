@@ -1,134 +1,151 @@
 openapi: 3.0.1
 info:
   title: api-businessengagements
-  contact: {}
+  contact: { }
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
-  version: "1.2"
+  version: "2.0"
+servers:
+  - url: http://localhost:53507
+    description: Generated server url
 tags:
-- name: Business Engagements
-  description: Show a persons business engagements and company information.
+  - name: Business Engagements
+    description: Show a persons business engagements and company information.
 paths:
-  /information/{partyId}:
+  /{municipalityId}/information/{partyId}:
     get:
       tags:
-      - Business Engagements
+        - Business Engagements
       operationId: getBusinessInformation
       parameters:
-      - name: partyId
-        in: path
-        description: Unique identifier for an organization number
-        required: true
-        schema:
-          type: string
+        - name: municipalityId
+          in: path
+          description: Municipality id
+          required: true
+          schema:
+            type: string
+          example: 2281
+        - name: partyId
+          in: path
           description: Unique identifier for an organization number
+          required: true
+          schema:
+            type: string
+            description: Unique identifier for an organization number
+            example: fb2f0290-3820-11ed-a261-0242ac120002
           example: fb2f0290-3820-11ed-a261-0242ac120002
-        example: fb2f0290-3820-11ed-a261-0242ac120002
-      - name: organizationName
-        in: query
-        description: Name of the organization
-        required: false
-        schema:
-          type: string
+        - name: organizationName
+          in: query
           description: Name of the organization
+          required: false
+          schema:
+            type: string
+            description: Name of the organization
       responses:
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/Problem'
         "400":
           description: Bad Request
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/Problem'
+                $ref: "#/components/schemas/Problem"
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Problem"
         "204":
           description: No Content
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/BusinessInformation'
+                $ref: "#/components/schemas/BusinessInformation"
         "500":
           description: Internal Server Error
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/Problem'
+                $ref: "#/components/schemas/Problem"
         "200":
           description: Successful Operation
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/BusinessInformation'
-  /engagements/{partyId}:
+                $ref: "#/components/schemas/BusinessInformation"
+  /{municipalityId}/engagements/{partyId}:
     get:
       tags:
-      - Business Engagements
+        - Business Engagements
       operationId: getEngagements
       parameters:
-      - name: partyId
-        in: path
-        description: Unique identifier for a person
-        required: true
-        schema:
-          type: string
+        - name: municipalityId
+          in: path
+          description: Municipality id
+          required: true
+          schema:
+            type: string
+          example: 2281
+        - name: partyId
+          in: path
           description: Unique identifier for a person
+          required: true
+          schema:
+            type: string
+            description: Unique identifier for a person
+            example: 6a5c3d04-412d-11ec-973a-0242ac130003
           example: 6a5c3d04-412d-11ec-973a-0242ac130003
-        example: 6a5c3d04-412d-11ec-973a-0242ac130003
-      - name: personalName
-        in: query
-        description: The first and surname of the person
-        required: true
-        schema:
-          type: string
+        - name: personalName
+          in: query
           description: The first and surname of the person
-      - name: serviceName
-        in: query
-        description: Name of the system initiating the request
-        required: true
-        schema:
-          type: string
+          required: true
+          schema:
+            type: string
+            description: The first and surname of the person
+        - name: serviceName
+          in: query
           description: Name of the system initiating the request
+          required: true
+          schema:
+            type: string
+            description: Name of the system initiating the request
+            example: Mina Sidor
           example: Mina Sidor
-        example: Mina Sidor
       responses:
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/Problem'
         "400":
           description: Bad Request
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/Problem'
-        "200":
-          description: Successful Operation
+                $ref: "#/components/schemas/Problem"
+        "404":
+          description: Not Found
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/BusinessEngagementsResponse'
+                $ref: "#/components/schemas/Problem"
         "204":
           description: No Content
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/BusinessEngagementsResponse'
+                $ref: "#/components/schemas/BusinessEngagementsResponse"
+        "200":
+          description: Successful Operation
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BusinessEngagementsResponse"
         "500":
           description: Internal Server Error
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/Problem'
+                $ref: "#/components/schemas/Problem"
   /api-docs:
     get:
       tags:
-      - API
+        - API
       summary: OpenAPI
       operationId: getApiDocs
       responses:
@@ -157,19 +174,19 @@ components:
           additionalProperties:
             type: object
         status:
-          $ref: '#/components/schemas/StatusType'
-        detail:
-          type: string
+          $ref: "#/components/schemas/StatusType"
         title:
+          type: string
+        detail:
           type: string
     StatusType:
       type: object
       properties:
-        reasonPhrase:
-          type: string
         statusCode:
           type: integer
           format: int32
+        reasonPhrase:
+          type: string
     Address:
       type: object
       properties:
@@ -198,9 +215,9 @@ components:
           description: The company's name
           example: Sundsvalls kommun
         legalForm:
-          $ref: '#/components/schemas/LegalForm'
+          $ref: "#/components/schemas/LegalForm"
         address:
-          $ref: '#/components/schemas/Address'
+          $ref: "#/components/schemas/Address"
         emailAddress:
           type: string
           description: The company's contact email
@@ -210,27 +227,27 @@ components:
           description: The company's contact phone number
           example: 070-1234567
         municipality:
-          $ref: '#/components/schemas/Municipality'
+          $ref: "#/components/schemas/Municipality"
         county:
-          $ref: '#/components/schemas/County'
+          $ref: "#/components/schemas/County"
         fiscalYear:
-          $ref: '#/components/schemas/FiscalYear'
+          $ref: "#/components/schemas/FiscalYear"
         companyForm:
-          $ref: '#/components/schemas/CompanyForm'
+          $ref: "#/components/schemas/CompanyForm"
         companyRegistrationTime:
           type: string
           description: When the company was registered
           format: date
           example: 2022-01-01
         liquidationInformation:
-          $ref: '#/components/schemas/LiquidationInformation'
+          $ref: "#/components/schemas/LiquidationInformation"
         deregistrationDate:
           type: string
           description: When and if the company was deregistered
           format: date
           example: 2022-09-01
         companyLocation:
-          $ref: '#/components/schemas/Address'
+          $ref: "#/components/schemas/Address"
         businessSignatory:
           type: string
           description: Who may sign for the company
@@ -240,9 +257,9 @@ components:
           description: Information regarding the company's operations
           example: Psykologisk forskning på bin samt därmed förenlig verksamhet.
         sharesInformation:
-          $ref: '#/components/schemas/SharesInformation'
+          $ref: "#/components/schemas/SharesInformation"
         errorInformation:
-          $ref: '#/components/schemas/ErrorInformation'
+          $ref: "#/components/schemas/ErrorInformation"
       description: Business information model
     CompanyForm:
       type: object
@@ -329,9 +346,9 @@ components:
         liquidationReasons:
           type: array
           items:
-            $ref: '#/components/schemas/LiquidationReason'
+            $ref: "#/components/schemas/LiquidationReason"
         cancelledLiquidation:
-          $ref: '#/components/schemas/LiquidationReason'
+          $ref: "#/components/schemas/LiquidationReason"
       description: Liquidation information model
     LiquidationReason:
       type: object
@@ -388,7 +405,7 @@ components:
         shareTypes:
           type: array
           items:
-            $ref: '#/components/schemas/ShareType'
+            $ref: "#/components/schemas/ShareType"
         numberOfShares:
           type: integer
           description: Number of total shares
@@ -404,13 +421,13 @@ components:
       description: Shares information model
     BusinessEngagementsResponse:
       required:
-      - status
+        - status
       type: object
       properties:
         engagements:
           type: array
           items:
-            $ref: '#/components/schemas/Engagement'
+            $ref: "#/components/schemas/Engagement"
         statusDescriptions:
           type: object
           additionalProperties:
@@ -429,8 +446,8 @@ components:
             still return engagements but indicates that the information is incomplete.
           example: OK
           enum:
-          - OK
-          - NOK
+            - OK
+            - NOK
       description: Business engagements response model
     Engagement:
       type: object
@@ -449,4 +466,4 @@ components:
           description: Unique id for the organization (UUID)
           example: bab17d8b-af38-4531-967c-083f15ca1571
       description: Represents a persons business engagement.
-  securitySchemes: {}
+  securitySchemes: { }
