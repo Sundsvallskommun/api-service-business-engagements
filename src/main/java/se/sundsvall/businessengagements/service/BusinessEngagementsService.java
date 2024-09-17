@@ -25,25 +25,26 @@ public class BusinessEngagementsService {
 	public static final String SERVICE_NAME = "BUSENGBV";  //This is communicated between Bolagsverket and Sundsvalls kommun, must be set in each request.
 
 	public static final String BUSINESS_INFORMATION_CACHE = "businessInformation";
+
 	public static final String BUSINESS_ENGAGEMENTS_CACHE = "businessEngagements";
 
 	private static final Logger LOG = LoggerFactory.getLogger(BusinessEngagementsService.class);
-	
+
 	private final PartyClient partyClient;
 
 	private final SsbtenService ssbtenService;
 
 	private final SsbtguService ssbtguService;
 
-	public BusinessEngagementsService(final PartyClient partyClient, SsbtenService ssbtenService, SsbtguService ssbtguService) {
+	public BusinessEngagementsService(final PartyClient partyClient, final SsbtenService ssbtenService, final SsbtguService ssbtguService) {
 		this.partyClient = partyClient;
 		this.ssbtenService = ssbtenService;
 		this.ssbtguService = ssbtguService;
 	}
 
 	@Cacheable(value = BUSINESS_INFORMATION_CACHE)
-	public BusinessInformation getBusinessInformation(String partyId, String organizationName) {
-		return partyClient.getOrganizationNumberFromPartyId(partyId)
+	public BusinessInformation getBusinessInformation(final String partyId, final String organizationName, final String municipalityId) {
+		return partyClient.getOrganizationNumberFromPartyId(partyId, municipalityId)
 			.map(orgNo -> ssbtguService.fetchBusinessInformation(orgNo, organizationName))
 			.orElseThrow(() -> Problem.builder()
 				.withTitle("Couldn't fetch business information")
@@ -59,20 +60,20 @@ public class BusinessEngagementsService {
 	 * @return The response DTO
 	 */
 	@Cacheable(value = BUSINESS_ENGAGEMENTS_CACHE, key = "#requestDto.partyId")
-	public BusinessEngagementsResponse getBusinessEngagements(BusinessEngagementsRequestDto requestDto) {
+	public BusinessEngagementsResponse getBusinessEngagements(final BusinessEngagementsRequestDto requestDto, final String municipalityId) {
 
-		requestDto.setLegalId(partyClient.getPersonalNumberFromPartyId(requestDto.getPartyId()));
+		requestDto.setLegalId(partyClient.getPersonalNumberFromPartyId(requestDto.getPartyId(), municipalityId));
 
-		var engagements = ssbtenService.getBusinessEngagements(requestDto);
+		final var engagements = ssbtenService.getBusinessEngagements(requestDto);
 
 		if (engagements.getEngagements() != null && !engagements.getEngagements().isEmpty()) {
-			fetchAndPopulateGuidForOrganizations(engagements);
+			fetchAndPopulateGuidForOrganizations(engagements, municipalityId);
 		}
 
 		return engagements;
 	}
 
-	void fetchAndPopulateGuidForOrganizations(BusinessEngagementsResponse businessEngagementsResponse) {
+	void fetchAndPopulateGuidForOrganizations(final BusinessEngagementsResponse businessEngagementsResponse, final String municipalityId) {
 		LOG.info("Starting to fetch guid/uuid for all organizations.");
 
 		businessEngagementsResponse.getEngagements()
@@ -80,8 +81,8 @@ public class BusinessEngagementsService {
 				Optional<String> guidForOrganization = Optional.empty();
 
 				try {
-					guidForOrganization = partyClient.getPartyIdFromOrganizationNumber(engagement.getOrganizationNumber());
-				} catch (Exception e) {
+					guidForOrganization = partyClient.getPartyIdFromOrganizationNumber(engagement.getOrganizationNumber(), municipalityId);
+				} catch (final Exception e) {
 					LOG.warn("Couldn't fetch guid for orgno: {}", engagement.getOrganizationNumber());
 					//Don't fail since the only thing we couldn't get is the partyId.
 				}
@@ -95,4 +96,5 @@ public class BusinessEngagementsService {
 				}
 			});
 	}
+
 }

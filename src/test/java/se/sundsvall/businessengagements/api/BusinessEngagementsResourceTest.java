@@ -37,49 +37,49 @@ class BusinessEngagementsResourceTest {
 
 	@Test
 	void testGetEngagements_invoicesReturned_shouldReturnOkResponse(final SoftAssertions softly) {
-		BusinessEngagementsResponse response = new BusinessEngagementsResponse();
+		final BusinessEngagementsResponse response = new BusinessEngagementsResponse();
 		response.addEngagement("orgname", "orgnumber");
 
-		when(mockService.getBusinessEngagements(any(BusinessEngagementsRequestDto.class))).thenReturn(response);
+		when(mockService.getBusinessEngagements(any(BusinessEngagementsRequestDto.class), anyString())).thenReturn(response);
 
-		final ResponseEntity<BusinessEngagementsResponse> engagements = resource.getEngagements("abc123", "John Doe", "serviceName");
+		final ResponseEntity<BusinessEngagementsResponse> engagements = resource.getEngagements("2281", "abc123", "John Doe", "serviceName");
 		final BusinessEngagementsResponse businessEngagementsResponse = engagements.getBody();
 
 		softly.assertThat(engagements.getStatusCode()).isEqualTo(OK);
 		softly.assertThat(businessEngagementsResponse.getStatus()).isEqualTo(BusinessEngagementsResponse.Status.OK);
-		verify(mockService, times(1)).getBusinessEngagements(any(BusinessEngagementsRequestDto.class));
+		verify(mockService, times(1)).getBusinessEngagements(any(BusinessEngagementsRequestDto.class), anyString());
 	}
 
 	@Test
 	void testGetEngagements_noInvoices_shouldReturnNoContent(final SoftAssertions softly) {
-		when(mockService.getBusinessEngagements(any(BusinessEngagementsRequestDto.class))).thenReturn(new BusinessEngagementsResponse());
+		when(mockService.getBusinessEngagements(any(BusinessEngagementsRequestDto.class), anyString())).thenReturn(new BusinessEngagementsResponse());
 
-		final ResponseEntity<BusinessEngagementsResponse> engagements = resource.getEngagements("abc123", "John Doe", "serviceName");
+		final ResponseEntity<BusinessEngagementsResponse> engagements = resource.getEngagements("2281", "abc123", "John Doe", "serviceName");
 
 		softly.assertThat(engagements.getStatusCode()).isEqualTo(NO_CONTENT);
-		verify(mockService, times(1)).getBusinessEngagements(any(BusinessEngagementsRequestDto.class));
+		verify(mockService, times(1)).getBusinessEngagements(any(BusinessEngagementsRequestDto.class), anyString());
 	}
 
 	@Test
 	void testGetEngagements_populatedStatusDescription_shouldReturnOkResponse(final SoftAssertions softly) {
-		BusinessEngagementsResponse response = new BusinessEngagementsResponse();
+		final BusinessEngagementsResponse response = new BusinessEngagementsResponse();
 		response.addEngagement("orgname", "orgnumber");
 		response.addStatusDescription("type", "description");
 
-		when(mockService.getBusinessEngagements(any(BusinessEngagementsRequestDto.class))).thenReturn(response);
+		when(mockService.getBusinessEngagements(any(BusinessEngagementsRequestDto.class), anyString())).thenReturn(response);
 
-		final ResponseEntity<BusinessEngagementsResponse> engagements = resource.getEngagements("abc123", "John Doe", "serviceName");
+		final ResponseEntity<BusinessEngagementsResponse> engagements = resource.getEngagements("2281", "abc123", "John Doe", "serviceName");
 
 		softly.assertThat(engagements.getStatusCode()).isEqualTo(OK);
-		verify(mockService, times(1)).getBusinessEngagements(any(BusinessEngagementsRequestDto.class));
+		verify(mockService, times(1)).getBusinessEngagements(any(BusinessEngagementsRequestDto.class), anyString());
 	}
 
 	@Test
 	void testGetBusinessInformation_shouldReturnOkResponse(final SoftAssertions softly) {
-		when(mockService.getBusinessInformation(anyString(), anyString())).thenReturn(new BusinessInformation());
+		when(mockService.getBusinessInformation(anyString(), anyString(), anyString())).thenReturn(new BusinessInformation());
 
-		softly.assertThat(resource.getBusinessInformation("uuid", "name")).isNotNull();
-		verify(mockService, times(1)).getBusinessInformation(anyString(), anyString());
+		softly.assertThat(resource.getBusinessInformation("2281", "uuid", "name")).isNotNull();
+		verify(mockService, times(1)).getBusinessInformation(anyString(), anyString(), anyString());
 
 	}
 

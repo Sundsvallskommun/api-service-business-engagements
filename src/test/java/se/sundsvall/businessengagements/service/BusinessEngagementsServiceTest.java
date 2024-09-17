@@ -51,19 +51,19 @@ class BusinessEngagementsServiceTest {
 
 	@Test
 	void testGetBusinessInformation_shouldReturnInfo() {
-		when(mockPartyClient.getOrganizationNumberFromPartyId("abc123")).thenReturn(Optional.of("orgno"));
+		when(mockPartyClient.getOrganizationNumberFromPartyId("abc123", "2281")).thenReturn(Optional.of("orgno"));
 		when(mockSsbtguService.fetchBusinessInformation(eq("orgno"), anyString())).thenReturn(new BusinessInformation());
 
-		assertThat(service.getBusinessInformation("abc123", "some name")).isNotNull();
-		verify(mockPartyClient, times(1)).getOrganizationNumberFromPartyId("abc123");
+		assertThat(service.getBusinessInformation("abc123", "some name", "2281")).isNotNull();
+		verify(mockPartyClient, times(1)).getOrganizationNumberFromPartyId("abc123", "2281");
 		verify(mockSsbtguService, times(1)).fetchBusinessInformation("orgno", "some name");
 	}
 
 	@Test
 	void testGetBusinessInformation_shouldThrowException_whenOrgNoNotFound() {
-		when(mockPartyClient.getOrganizationNumberFromPartyId("abc123")).thenReturn(Optional.empty());
+		when(mockPartyClient.getOrganizationNumberFromPartyId("abc123", "2281")).thenReturn(Optional.empty());
 
-		assertThatExceptionOfType(ThrowableProblem.class).isThrownBy(() -> service.getBusinessInformation("abc123", "some name"))
+		assertThatExceptionOfType(ThrowableProblem.class).isThrownBy(() -> service.getBusinessInformation("abc123", "some name", "2281"))
 			.satisfies(problem -> {
 				assertThat(problem.getTitle()).isEqualTo("Couldn't fetch business information");
 				assertThat(problem.getDetail()).isEqualTo("Couldn't find organizationNumber for partyId: abc123");
@@ -72,7 +72,7 @@ class BusinessEngagementsServiceTest {
 
 	@Test
 	void testGetBusinessEngagements_happyPath() {
-		when(mockPartyClient.getPartyIdFromOrganizationNumber("5591628136")).thenReturn(Optional.of("uuid1"));
+		when(mockPartyClient.getPartyIdFromOrganizationNumber("5591628136", "2281")).thenReturn(Optional.of("uuid1"));
 		when(mockSsbtenService.getBusinessEngagements(any(BusinessEngagementsRequestDto.class))).thenReturn(BusinessEngagementsResponse.builder()
 			.withEngagements(List.of(Engagement.builder()
 				.withOrganizationNumber("5591628136")
@@ -80,9 +80,9 @@ class BusinessEngagementsServiceTest {
 				.build()))
 			.build());
 
-		final BusinessEngagementsResponse response = service.getBusinessEngagements(TestObjectFactory.createDummyRequestDto());
+		final BusinessEngagementsResponse response = service.getBusinessEngagements(TestObjectFactory.createDummyRequestDto(), "2281");
 
-		verify(mockPartyClient, times(1)).getPersonalNumberFromPartyId(anyString());
+		verify(mockPartyClient, times(1)).getPersonalNumberFromPartyId(anyString(), anyString());
 		verify(mockSsbtenService, times(1)).getBusinessEngagements(any(BusinessEngagementsRequestDto.class));
 
 		assertThat(response.getEngagements().stream().anyMatch(engagement -> "5591628136".equals(engagement.getOrganizationNumber()) &&
@@ -94,12 +94,12 @@ class BusinessEngagementsServiceTest {
 	void testGetBusinessEngagements_getCitizenMappingThrowsException_shouldThrowException() {
 
 		final var requestDto = TestObjectFactory.createDummyRequestDto();
-		when(mockPartyClient.getPersonalNumberFromPartyId(anyString())).thenThrow(Problem.builder().withDetail("Something wrong").build());
+		when(mockPartyClient.getPersonalNumberFromPartyId(anyString(), anyString())).thenThrow(Problem.builder().withDetail("Something wrong").build());
 
-		assertThatExceptionOfType(ThrowableProblem.class).isThrownBy(() -> service.getBusinessEngagements(requestDto))
+		assertThatExceptionOfType(ThrowableProblem.class).isThrownBy(() -> service.getBusinessEngagements(requestDto, "2281"))
 			.withMessage("Something wrong");
 
-		verify(mockPartyClient, times(1)).getPersonalNumberFromPartyId(anyString());
+		verify(mockPartyClient, times(1)).getPersonalNumberFromPartyId(anyString(), anyString());
 		verify(mockEngagemangBegaranRequestMapper, times(0)).createEngagemangBegaranRequest((any(BusinessEngagementsRequestDto.class)));
 	}
 
@@ -107,13 +107,13 @@ class BusinessEngagementsServiceTest {
 	void testGetBusinessEngagements_bolagsverketThrowsException_shouldThrowException() {
 
 		final var requestDto = TestObjectFactory.createDummyRequestDto();
-		when(mockPartyClient.getPersonalNumberFromPartyId(anyString())).thenReturn("personalNumber");
+		when(mockPartyClient.getPersonalNumberFromPartyId(anyString(), anyString())).thenReturn("personalNumber");
 		when(mockSsbtenService.getBusinessEngagements(any(BusinessEngagementsRequestDto.class))).thenThrow(Problem.builder().withTitle("Something wrong").build());
 
-		assertThatExceptionOfType(ThrowableProblem.class).isThrownBy(() -> service.getBusinessEngagements(requestDto))
+		assertThatExceptionOfType(ThrowableProblem.class).isThrownBy(() -> service.getBusinessEngagements(requestDto, "2281"))
 			.withMessage("Something wrong");
 
-		verify(mockPartyClient, times(1)).getPersonalNumberFromPartyId(anyString());
+		verify(mockPartyClient, times(1)).getPersonalNumberFromPartyId(anyString(), anyString());
 		verify(mockSsbtenService, times(1)).getBusinessEngagements(any(BusinessEngagementsRequestDto.class));
 	}
 
@@ -124,16 +124,17 @@ class BusinessEngagementsServiceTest {
 		response.addEngagement(Engagement.builder().withOrganizationNumber("654321").build());
 		response.addEngagement(Engagement.builder().withOrganizationNumber("987654").build());
 
-		when(mockPartyClient.getPartyIdFromOrganizationNumber("123456")).thenReturn(Optional.of("uuid1"));
-		when(mockPartyClient.getPartyIdFromOrganizationNumber("654321")).thenReturn(Optional.of("uuid2"));
+		when(mockPartyClient.getPartyIdFromOrganizationNumber("123456", "2281")).thenReturn(Optional.of("uuid1"));
+		when(mockPartyClient.getPartyIdFromOrganizationNumber("654321", "2281")).thenReturn(Optional.of("uuid2"));
 		// Test that we got not uuid
-		when(mockPartyClient.getPartyIdFromOrganizationNumber("987654")).thenReturn(Optional.empty());
+		when(mockPartyClient.getPartyIdFromOrganizationNumber("987654", "2281")).thenReturn(Optional.empty());
 
-		service.fetchAndPopulateGuidForOrganizations(response);
+		service.fetchAndPopulateGuidForOrganizations(response, "2281");
 
 		assertThat(response.getEngagements().stream().anyMatch(engagement -> "123456".equalsIgnoreCase(engagement.getOrganizationNumber()) && "uuid1".equals(engagement.getOrganizationId()))).isTrue();
 		assertThat(response.getEngagements().stream().anyMatch(engagement -> "654321".equalsIgnoreCase(engagement.getOrganizationNumber()) && "uuid2".equals(engagement.getOrganizationId()))).isTrue();
 		assertThat(response.getEngagements().stream().anyMatch(engagement -> "987654".equalsIgnoreCase(engagement.getOrganizationNumber()) && (engagement.getOrganizationId() == null))).isTrue();    // No uuid
 		assertThat(response.getStatusDescriptions()).containsValue("Couldn't fetch guid for organization number"); // Make sure we have a status description.
 	}
+
 }
