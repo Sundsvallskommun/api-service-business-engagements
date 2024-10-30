@@ -22,7 +22,7 @@ public class BusinessEngagementsService {
 
 	public static final String SUNDSVALL_MUNICIPALITY_ORGANIZATION_NUMBER = "2120002411";
 
-	public static final String SERVICE_NAME = "BUSENGBV";  //This is communicated between Bolagsverket and Sundsvalls kommun, must be set in each request.
+	public static final String SERVICE_NAME = "BUSENGBV";  // This is communicated between Bolagsverket and Sundsvalls kommun, must be set in each request.
 
 	public static final String BUSINESS_INFORMATION_CACHE = "businessInformation";
 
@@ -56,8 +56,8 @@ public class BusinessEngagementsService {
 	/**
 	 * Handles fetching of engagements, storing to database cache and updating the cache.
 	 *
-	 * @param requestDto The request DTO
-	 * @return The response DTO
+	 * @param  requestDto The request DTO
+	 * @return            The response DTO
 	 */
 	@Cacheable(value = BUSINESS_ENGAGEMENTS_CACHE, key = "#requestDto.partyId")
 	public BusinessEngagementsResponse getBusinessEngagements(final BusinessEngagementsRequestDto requestDto, final String municipalityId) {
@@ -84,14 +84,14 @@ public class BusinessEngagementsService {
 					guidForOrganization = partyClient.getPartyIdFromOrganizationNumber(engagement.getOrganizationNumber(), municipalityId);
 				} catch (final Exception e) {
 					LOG.warn("Couldn't fetch guid for orgno: {}", engagement.getOrganizationNumber());
-					//Don't fail since the only thing we couldn't get is the partyId.
+					// Don't fail since the only thing we couldn't get is the partyId.
 				}
 
 				if (guidForOrganization.isPresent()) {
-					//If we have a guid, set it.
+					// If we have a guid, set it.
 					engagement.setOrganizationId(guidForOrganization.get());
 				} else {
-					//If no guid, indicate this with a new status description for each.
+					// If no guid, indicate this with a new status description for each.
 					businessEngagementsResponse.addStatusDescription(engagement.getOrganizationNumber(), "Couldn't fetch guid for organization number");
 				}
 			});

@@ -22,7 +22,9 @@ import se.sundsvall.businessengagements.api.model.BusinessInformation;
 import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;
 import se.sundsvall.businessengagements.service.BusinessEngagementsService;
 
-@ExtendWith({MockitoExtension.class, SoftAssertionsExtension.class})
+@ExtendWith({
+	MockitoExtension.class, SoftAssertionsExtension.class
+})
 class BusinessEngagementsResourceTest {
 
 	@Mock

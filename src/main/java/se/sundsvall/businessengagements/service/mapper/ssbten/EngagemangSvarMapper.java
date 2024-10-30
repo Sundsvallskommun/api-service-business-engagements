@@ -22,17 +22,17 @@ public class EngagemangSvarMapper {
 	 * map Bolagsverket response {@link EngagemangSvar} to {@link BusinessEngagementsResponse}
 	 * Since Bolagsverket has a structure that
 	 *
-	 * @param engagemangSvar
-	 * @return {@link BusinessEngagementsResponse}
+	 * @param  engagemangSvar
+	 * @return                {@link BusinessEngagementsResponse}
 	 */
 	public BusinessEngagementsResponse mapBolagsverketResponse(EngagemangSvar engagemangSvar) {
 
 		var foretagList = getSuccessfulEngagements(engagemangSvar);
 
-		//Now we have all Foretag objects
+		// Now we have all Foretag objects
 		var response = mapSuccessfulEngagementsToResponse(foretagList);
 
-		//But we don't have those engagements that might have failed. map those as well
+		// But we don't have those engagements that might have failed. map those as well
 		mapFailedEngagementsToResponse(engagemangSvar, response);
 
 		return response;
@@ -41,12 +41,12 @@ public class EngagemangSvarMapper {
 	/**
 	 * Extract all successful engagements / "Foretag" from the response.
 	 *
-	 * @param engagemangSvar
-	 * @return {@link List} of {@link Foretag}
+	 * @param  engagemangSvar
+	 * @return                {@link List} of {@link Foretag}
 	 */
 	List<Foretag> getSuccessfulEngagements(final EngagemangSvar engagemangSvar) {
-		//Information for each "Foretag" is in a list in the object "ForetagsEngagemang", which is also a list
-		//Flatten all "Foretag".
+		// Information for each "Foretag" is in a list in the object "ForetagsEngagemang", which is also a list
+		// Flatten all "Foretag".
 		return engagemangSvar.getEngagemangSvarDetaljer()
 			.getForetagEngagemangs()
 			.stream()
@@ -58,24 +58,24 @@ public class EngagemangSvarMapper {
 	/**
 	 * Map all succesful {@link se.bolagsverket.schema.ssbten.engagemang.Foretag} from Bolagsverket
 	 *
-	 * @param foretagList
+	 * @param  foretagList
 	 * @return
 	 */
 	BusinessEngagementsResponse mapSuccessfulEngagementsToResponse(List<Foretag> foretagList) {
 		var response = new BusinessEngagementsResponse();
 
 		foretagList.forEach(foretag -> {
-			//Get the type of business, e.g. "Aktiebolag" or "Enskild firma" etc.
+			// Get the type of business, e.g. "Aktiebolag" or "Enskild firma" etc.
 			var foretagsformKod = foretag.getForetagsform().getForetagsformKod();
 
-			//Check if it's an "enskild firma", in that case we handle business information differently
+			// Check if it's an "enskild firma", in that case we handle business information differently
 			if ("E".equalsIgnoreCase(foretagsformKod)) {
 				extractAndSetNameAndPersonalNumber(response, foretag);
 			} else {
 				if (foretag.getForetagId() != null && foretag.getForetagId().getPersonIdentitetsbeteckning() != null) {
 					response.addEngagement(
 						foretag.getForetagNamn(), foretag.getForetagId().getPersonIdentitetsbeteckning().getOrganisationsnummer());
-				} //else: We don't want to map it.
+				} // else: We don't want to map it.
 			}
 		});
 
@@ -90,12 +90,12 @@ public class EngagemangSvarMapper {
 	 */
 	void extractAndSetNameAndPersonalNumber(final BusinessEngagementsResponse response, final Foretag foretag) {
 
-		//First extract the personnumber since it's the same "everywhere"
+		// First extract the personnumber since it's the same "everywhere"
 		var personalNumber = foretag.getForetagId().getPersonIdentitetsbeteckning().getPersonnummer();
 
-		//If the name of the "enskild firma" is protected, it may be found in "ForetagNamn" in the "NamnSkydd" field
-		if (!foretag.getNamnskydds().isEmpty()) { //Check if we have something
-			//If we do, it seems like the person may have several "enskild firma", map them all to a separate engagement
+		// If the name of the "enskild firma" is protected, it may be found in "ForetagNamn" in the "NamnSkydd" field
+		if (!foretag.getNamnskydds().isEmpty()) { // Check if we have something
+			// If we do, it seems like the person may have several "enskild firma", map them all to a separate engagement
 			foretag.getNamnskydds().forEach(namnskydd -> response.addEngagement(namnskydd.getForetagNamn(), personalNumber));
 		} else {
 			response.addEngagement(foretag.getForetagNamn(), personalNumber);
@@ -129,17 +129,16 @@ public class EngagemangSvarMapper {
 	 *     TVETYDIG_BEGARAN(" TvetydigBegaran "),
 	 *     UPPGIFT_FINNS_EJ(" UppgiftFinnsEj "),
 	 *     ODEFINIERAD(" Odefinierad ");
-	 *  </pre>
+	 * </pre>
 	 *
-	 * @param felTyp
+	 * @param  felTyp
 	 * @return
 	 */
 	String translateType(FelTyp felTyp) {
 
 		return switch (felTyp) {
 			case EJ_BEHORIG -> "Not authorized.";
-			case UPPGIFT_FINNS_EJ, EJ_KOMPLETT_SVAR, FORETAG_FINNS_EJ, OGILTIGT_SVAR, OGILTIG_BEGARAN, TVETYDIG_BEGARAN ->
-				"Missing information.";
+			case UPPGIFT_FINNS_EJ, EJ_KOMPLETT_SVAR, FORETAG_FINNS_EJ, OGILTIGT_SVAR, OGILTIG_BEGARAN, TVETYDIG_BEGARAN -> "Missing information.";
 			case OTILLGANGLIG_UPPGIFTSKALLA -> "No response from underlying system.";
 			case TIMEOUT -> "Timeout.";
 			default -> "Unknown error.";

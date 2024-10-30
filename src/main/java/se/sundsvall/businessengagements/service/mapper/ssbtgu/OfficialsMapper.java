@@ -14,8 +14,7 @@ import se.sundsvall.businessengagements.api.model.Official;
 
 public class OfficialsMapper {
 
-	private OfficialsMapper() {
-	}
+	private OfficialsMapper() {}
 
 	/**
 	 * <pre>
@@ -29,46 +28,46 @@ public class OfficialsMapper {
 	 *  The layout is: A description of the role, followed by one or more persons/organizations, repeats.
 	 * </pre>
 	 *
-	 * @param officialsString to map
-	 * @return List of {@link Official}
+	 * @param  officialsString to map
+	 * @return                 List of {@link Official}
 	 */
 	public static List<Official> mapOfficials(String officialsString) {
 		if (StringUtils.isBlank(officialsString)) {
 			return emptyList();
 		}
-		Map<String, Official> officialsMap = new HashMap<>();   //Store it temporary in a map since to be sure that we don't get duplicates
-		String[] split = officialsString.split("\r\n|\n|\r"); //Split on newline
+		Map<String, Official> officialsMap = new HashMap<>();   // Store it temporary in a map since to be sure that we don't get duplicates
+		String[] split = officialsString.split("\r\n|\n|\r"); // Split on newline
 
 		var lines = new ArrayList<>(Arrays.asList(split));
 
 		int ctr = 0;
-		var roleAsString = "";   //Here we store e.g. "styrelseledamot,ordförande", defined here for later use
+		var roleAsString = "";   // Here we store e.g. "styrelseledamot,ordförande", defined here for later use
 
 		while (ctr < lines.size()) {
-			var line = lines.get(ctr).trim(); //Get a row/line and trim it
-			//Check if it doesn't start with a number, then it's a description of the role, anything else is a person/organization
+			var line = lines.get(ctr).trim(); // Get a row/line and trim it
+			// Check if it doesn't start with a number, then it's a description of the role, anything else is a person/organization
 			if (!Character.isDigit(line.charAt(0))) {
 
-				//Get the current row, which will now only contain roles, e.g. "styrelseledamot,ordförande"
+				// Get the current row, which will now only contain roles, e.g. "styrelseledamot,ordförande"
 				roleAsString = lines.get(ctr);
 			} else {
 
-				//Here we have something along "198000000011 Larsson, Nils, SUNDSVALL"
+				// Here we have something along "198000000011 Larsson, Nils, SUNDSVALL"
 				var newLine = lines.get(ctr);
 
-				//If it starts with a number, it's the personalNumber / organizationNumber.
+				// If it starts with a number, it's the personalNumber / organizationNumber.
 				if (Character.isDigit(newLine.charAt(0))) {
-					//Extract all parts from the string/line
+					// Extract all parts from the string/line
 					var legalId = getLegalId(newLine);
 					var name = getName(newLine);
 					var positions = getPositions(roleAsString);
 					var location = getLocation(newLine).trim();
 
-					//If we get a personalId/orgNo already stored we want to update its roles, not add new ones.
+					// If we get a personalId/orgNo already stored we want to update its roles, not add new ones.
 					if (officialsMap.containsKey(legalId)) {
 						officialsMap.get(legalId).getRoles().addAll(positions);
 					} else {
-						//Not present, create a new object.
+						// Not present, create a new object.
 						officialsMap.put(legalId, Official.builder()
 							.withLocation(location)
 							.withName(name)
@@ -81,7 +80,8 @@ public class OfficialsMapper {
 			ctr++;
 		}
 
-		//Now we know that all officials and their information is "gathered", ditch the map and only return a list of all Officials objects.
+		// Now we know that all officials and their information is "gathered", ditch the map and only return a list of all
+		// Officials objects.
 		return new ArrayList<>(officialsMap.values());
 	}
 

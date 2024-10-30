@@ -27,6 +27,7 @@ import se.bolagsverket.schema.ssbten.engagemang.ObjectFactory;
  * Handles request mapping towards Bolagsverket.
  * To avoid getting a huge class some parts of the request has been separated into their own classes.
  * Should generate an xml as follows:
+ * 
  * <pre>
  *     {@code
  *          &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
@@ -112,10 +113,12 @@ public class EngagemangBegaranRequestMapper {
 	}
 
 	/**
-	 * <pre> Root-objekt in the requestet </pre>
+	 * <pre>
+	 *  Root-objekt in the requestet
+	 * </pre>
 	 *
-	 * @param requestDto to be mapped to a request
-	 * @return {@link se.bolagsverket.schema.ssbten.engagemang.EngagemangBegaran}.
+	 * @param  requestDto to be mapped to a request
+	 * @return            {@link se.bolagsverket.schema.ssbten.engagemang.EngagemangBegaran}.
 	 */
 	public EngagemangBegaran createEngagemangBegaranRequest(final BusinessEngagementsRequestDto requestDto) {
 		var engagemangBegaranRequest = ssbtenFactory.createEngagemangBegaran();
@@ -135,13 +138,13 @@ public class EngagemangBegaranRequestMapper {
 	 *  - {@link se.bolagsverket.schema.ssbt.metadata.Anvandningsomrade}
 	 *  </pre>
 	 *
-	 * @param requestDto
+	 * @param  requestDto
 	 * @return
 	 */
 	EngagemangBegaranMetadata createEngagemangBegaranMetadata(final BusinessEngagementsRequestDto requestDto) {
 		var engagemangBegaranMetadata = ssbtenFactory.createEngagemangBegaranMetadata();
-		engagemangBegaranMetadata.setMeddelandeId(UUID.randomUUID().toString());    //Unique for the transaction I guess?
-		engagemangBegaranMetadata.setTransaktionId(RequestId.get());                //Unique for the request, should be taken from x-request-id
+		engagemangBegaranMetadata.setMeddelandeId(UUID.randomUUID().toString());    // Unique for the transaction I guess?
+		engagemangBegaranMetadata.setTransaktionId(RequestId.get());                // Unique for the request, should be taken from x-request-id
 		engagemangBegaranMetadata.setTidstampel(getXMLGregorianCalendarTimeStamp());
 		engagemangBegaranMetadata.setTTL(createTtl());
 
@@ -149,7 +152,7 @@ public class EngagemangBegaranRequestMapper {
 
 		engagemangBegaranMetadata.setAnvandare(anvandareMapper.createAnvandare(requestDto));
 
-		engagemangBegaranMetadata.setAnvandningsomrade(Anvandningsomrade.INDIREKT_ATERANVANDNING);  //Since we're a municipality, only indirect is allowed
+		engagemangBegaranMetadata.setAnvandningsomrade(Anvandningsomrade.INDIREKT_ATERANVANDNING);  // Since we're a municipality, only indirect is allowed
 
 		return engagemangBegaranMetadata;
 	}
@@ -165,16 +168,17 @@ public class EngagemangBegaranRequestMapper {
 
 	/**
 	 * Creates a timestamp for the request.
+	 * 
 	 * @return {@link XMLGregorianCalendar}
 	 */
 	XMLGregorianCalendar getXMLGregorianCalendarTimeStamp() {
 		try {
 			return DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar());
 		} catch (DatatypeConfigurationException e) {
-			//Should never happen?
+			// Should never happen?
 			LOG.error("Couldn't create XMLGregorianCalendar.");
 		}
 
-		return null;    //Should also never happen?
+		return null;    // Should also never happen?
 	}
 }

@@ -1,4 +1,4 @@
 {
-  "status": 404,
-  "title": "Couldn't find legalId for partyId: 6a5c3d04-412d-11ec-973a-0242ac130004"
+	"title": "Couldn't find legalId for partyId: 6a5c3d04-412d-11ec-973a-0242ac130004",
+	"status": 404
 }

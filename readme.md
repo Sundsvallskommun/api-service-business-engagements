@@ -27,6 +27,6 @@ The other ones are there in case we need to test further.
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Sundsvallskommun_api-service-business-engagements&metric=vulnerabilities)](https://sonarcloud.io/summary/overall?id=Sundsvallskommun_api-service-business-engagements)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Sundsvallskommun_api-service-business-engagements&metric=bugs)](https://sonarcloud.io/summary/overall?id=Sundsvallskommun_api-service-business-engagements)
 
-##     
+## 
 
 Copyright (c) 2023 Sundsvalls kommun

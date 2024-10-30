@@ -17,8 +17,9 @@ import se.sundsvall.businessengagements.api.model.Official;
 import se.sundsvall.dept44.test.annotation.resource.Load;
 import se.sundsvall.dept44.test.extension.ResourceLoaderExtension;
 
-
-@ExtendWith({SoftAssertionsExtension.class, ResourceLoaderExtension.class})
+@ExtendWith({
+	SoftAssertionsExtension.class, ResourceLoaderExtension.class
+})
 class OfficialsMapperTest {
 
 	private final Gson gson = new GsonBuilder().setPrettyPrinting().create();

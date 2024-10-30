@@ -25,7 +25,9 @@ import se.bolagsverket.schema.ssbt.metadata.Part;
 import se.bolagsverket.schema.ssbt.metadata.Tidsenhet;
 import se.bolagsverket.schema.ssbten.engagemang.EngagemangBegaran;
 
-@ExtendWith({MockitoExtension.class, SoftAssertionsExtension.class})
+@ExtendWith({
+	MockitoExtension.class, SoftAssertionsExtension.class
+})
 class EngagemangBegaranRequestMapperTest {
 
 	@Mock

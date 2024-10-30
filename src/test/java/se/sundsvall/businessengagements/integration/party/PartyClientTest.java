@@ -19,7 +19,9 @@ import org.zalando.problem.ThrowableProblem;
 
 import generated.se.sundsvall.party.PartyType;
 
-@ExtendWith({MockitoExtension.class, SoftAssertionsExtension.class})
+@ExtendWith({
+	MockitoExtension.class, SoftAssertionsExtension.class
+})
 class PartyClientTest {
 
 	@Mock
@@ -38,8 +40,7 @@ class PartyClientTest {
 	@Test
 	void testGetPersonalNumberFromPartyId_whenNotFound_shouldThrowException() {
 		when(mockPartyIntegration.getLegalId("2281", PartyType.PRIVATE, "abc123")).thenReturn(Optional.empty());
-		assertThatExceptionOfType(ThrowableProblem.class).isThrownBy(() ->
-				partyClient.getPersonalNumberFromPartyId("abc123", "2281"))
+		assertThatExceptionOfType(ThrowableProblem.class).isThrownBy(() -> partyClient.getPersonalNumberFromPartyId("abc123", "2281"))
 			.withMessage("Couldn't find legalId for partyId: abc123");
 		verify(mockPartyIntegration, Mockito.times(1)).getLegalId("2281", PartyType.PRIVATE, "abc123");
 	}

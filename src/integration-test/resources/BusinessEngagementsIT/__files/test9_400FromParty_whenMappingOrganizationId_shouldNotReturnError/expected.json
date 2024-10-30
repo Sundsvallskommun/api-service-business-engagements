@@ -1,12 +1,8 @@
 {
-  "engagements": [
-    {
-      "organizationName": "Testbolag 14 bokat av SKV Handelsbolag",
-      "organizationNumber": "9020025012"
-    }
-  ],
-  "statusDescriptions": {
-    "9020025012": "Couldn't fetch guid for organization number"
-  },
-  "status": "NOK"
+	"statusDescriptions": {"9020025012": "Couldn't fetch guid for organization number"},
+	"engagements": [{
+		"organizationName": "Testbolag 14 bokat av SKV Handelsbolag",
+		"organizationNumber": "9020025012"
+	}],
+	"status": "NOK"
 }

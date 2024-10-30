@@ -17,7 +17,7 @@ public class BusinessEngagementsRequestDto {
 
 	private String personalName;
 
-	private String legalId; //Could be both a "sole trader" or organization
+	private String legalId; // Could be both a "sole trader" or organization
 
 	private String partyId;
 
