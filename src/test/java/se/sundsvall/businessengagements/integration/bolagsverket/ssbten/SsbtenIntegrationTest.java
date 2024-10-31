@@ -17,7 +17,9 @@ import org.zalando.problem.ThrowableProblem;
 import se.bolagsverket.schema.ssbten.engagemang.EngagemangBegaran;
 import se.bolagsverket.schema.ssbten.engagemang.EngagemangSvar;
 
-@ExtendWith({MockitoExtension.class, SoftAssertionsExtension.class})
+@ExtendWith({
+	MockitoExtension.class, SoftAssertionsExtension.class
+})
 class SsbtenIntegrationTest {
 
 	@Mock

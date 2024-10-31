@@ -38,7 +38,7 @@ import se.bolagsverket.schema.ssbten.engagemang.PersonId;
 @Component
 public class EngagemangBegaranDetaljerMapper {
 
-	//These are the different Business/Corporate forms we want to see, i.e. all of them
+	// These are the different Business/Corporate forms we want to see, i.e. all of them
 	private static final List<String> FORETAGSFORM_KODER = List.of("AB", "BRF", "E", "EK", "HB", "KB");
 
 	private final ObjectFactory objectFactory = new ObjectFactory();
@@ -63,7 +63,7 @@ public class EngagemangBegaranDetaljerMapper {
 
 	private Foretagsformer createForetagsformer() {
 		return objectFactory.createForetagsformer()
-			//Attribute "allaEnskilda" is not allowed when usecasearea == "indirect".
+			// Attribute "allaEnskilda" is not allowed when usecasearea == "indirect".
 			.withAllaEnskilda(false)
 			.withForetagsformKods(FORETAGSFORM_KODER);
 	}

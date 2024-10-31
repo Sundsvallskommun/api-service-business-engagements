@@ -1,35 +1,21 @@
 {
-  "request": {
-    "bodyPatterns": [
-      {
-        "matchesXPath": "//*[ns2:PersonIdentitetsbeteckning]//*[ns2:Organisationsnummer='5560000003']",
-        "xPathNamespaces": {
-          "ns2": "http://schema.bolagsverket.se/ssbt/foretag"
-        }
-      }
-    ],
-    "method": "POST",
-    "url": "/ssbtgu"
-  },
-  "response": {
-    "bodyFileName": "test1_fetchingBusinesInformation/response/ssbtgu.xml",
-    "headers": {
-      "Connection": [
-        "keep-alive"
-      ],
-      "Content-Type": [
-        "text/xml;charset=UTF-8"
-      ],
-      "Keep-Alive": [
-        "timeout=60"
-      ],
-      "Transfer-Encoding": [
-        "chunked"
-      ],
-      "Content-Encoding": [
-        ""
-      ]
-    },
-    "status": 200
-  }
+	"request": {
+		"method": "POST",
+		"bodyPatterns": [{
+			"xPathNamespaces": {"ns2": "http://schema.bolagsverket.se/ssbt/foretag"},
+			"matchesXPath": "//*[ns2:PersonIdentitetsbeteckning]//*[ns2:Organisationsnummer='5560000003']"
+		}],
+		"url": "/ssbtgu"
+	},
+	"response": {
+		"headers": {
+			"Keep-Alive": ["timeout=60"],
+			"Transfer-Encoding": ["chunked"],
+			"Connection": ["keep-alive"],
+			"Content-Encoding": [""],
+			"Content-Type": ["text/xml;charset=UTF-8"]
+		},
+		"bodyFileName": "test1_fetchingBusinesInformation/response/ssbtgu.xml",
+		"status": 200
+	}
 }

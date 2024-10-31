@@ -17,7 +17,6 @@ public class SsbtenService {
 
 	private final EngagemangBegaranRequestMapper engagemangBegaranRequestMapper;
 
-
 	public SsbtenService(SsbtenIntegration ssbtenIntegration, EngagemangSvarMapper engagemangSvarMapper, EngagemangBegaranRequestMapper engagemangBegaranRequestMapper) {
 		this.ssbtenIntegration = ssbtenIntegration;
 		this.engagemangSvarMapper = engagemangSvarMapper;
@@ -25,13 +24,13 @@ public class SsbtenService {
 	}
 
 	public BusinessEngagementsResponse getBusinessEngagements(BusinessEngagementsRequestDto requestDto) {
-		//Create request object for Bolagsverket
+		// Create request object for Bolagsverket
 		var engagemangBegaranRequest = engagemangBegaranRequestMapper.createEngagemangBegaranRequest(requestDto);
 
-		//Get the response
+		// Get the response
 		var engagemangSvar = ssbtenIntegration.callBolagsverket(engagemangBegaranRequest);
 
-		//Map it to our response and return
+		// Map it to our response and return
 		return engagemangSvarMapper.mapBolagsverketResponse(engagemangSvar);
 	}
 

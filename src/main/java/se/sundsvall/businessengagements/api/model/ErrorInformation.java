@@ -33,7 +33,7 @@ public class ErrorInformation {
 		if (StringUtils.isNotBlank(errorCode) && StringUtils.isNotBlank(errorDescription)) {
 			this.errorDescriptions.putIfAbsent(errorCode, errorDescription);
 			this.hasErrors = true;
-			//It's quite common that there's no errorCode and only an error description
+			// It's quite common that there's no errorCode and only an error description
 		} else if (StringUtils.isBlank(errorCode) && StringUtils.isNotBlank(errorDescription)) {
 			this.errorDescriptions.putIfAbsent("-1", errorDescription);
 			this.hasErrors = true;

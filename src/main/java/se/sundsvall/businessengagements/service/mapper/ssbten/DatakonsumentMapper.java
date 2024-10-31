@@ -45,14 +45,14 @@ public class DatakonsumentMapper {
 	 *  - ServiceNamn: BUSENGBV
 	 *  - Organisationsnummer: kommunens orgnummer?
 	 *
-	 *  </pre>
+	 * </pre>
 	 *
 	 * @return {}
 	 */
 	Datakonsument createDatakonsument() {
 		return metaDataFactory.createDatakonsument()
 			.withPartId(createPartId())
-			.withPartNamn("SundsvallsKommun")  //I think we can use whatever here.
+			.withPartNamn("SundsvallsKommun")  // I think we can use whatever here.
 			.withService(createService());
 	}
 

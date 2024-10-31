@@ -1,18 +1,12 @@
 {
-  "request": {
-    "headers": {
-      "Authorization": {
-        "equalTo": "Bearer abc123"
-      }
-    },
-    "method": "GET",
-    "url": "/party/2281/PRIVATE/522b52c1-c34d-4f80-b637-29288b08d6dc/legalId"
-  },
-  "response": {
-    "body": "198000000007",
-    "headers": {
-      "Content-Type": "text/plain"
-    },
-    "status": "200"
-  }
+	"request": {
+		"headers": {"Authorization": {"equalTo": "Bearer abc123"}},
+		"method": "GET",
+		"url": "/party/2281/PRIVATE/522b52c1-c34d-4f80-b637-29288b08d6dc/legalId"
+	},
+	"response": {
+		"headers": {"Content-Type": "text/plain"},
+		"body": "198000000007",
+		"status": "200"
+	}
 }

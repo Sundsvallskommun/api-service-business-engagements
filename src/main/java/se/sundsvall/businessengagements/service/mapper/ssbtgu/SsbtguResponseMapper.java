@@ -190,8 +190,7 @@ public class SsbtguResponseMapper {
 		Optional.ofNullable(ud0026)
 			.filter(ud -> !checkAndPopulatePossibleError(ud.getFel(), businessInformation))
 			.map(UD0026::getForetagRegistreratDatum)
-			.ifPresent(registrationTime ->
-				businessInformation.setCompanyRegistrationTime(xmlGregorianCalendarToLocalDate(registrationTime)));
+			.ifPresent(registrationTime -> businessInformation.setCompanyRegistrationTime(xmlGregorianCalendarToLocalDate(registrationTime)));
 	}
 
 	void mapUD0027LiquidationInformation(UD0027 ud0027, BusinessInformation businessInformation) {
@@ -236,8 +235,7 @@ public class SsbtguResponseMapper {
 		Optional.ofNullable(ud0028)
 			.filter(ud -> !checkAndPopulatePossibleError(ud.getFel(), businessInformation))
 			.map(UD0028::getForetagAvregistreratDatum)
-			.ifPresent(deregistrationDate ->
-				businessInformation.setDeregistrationDate(xmlGregorianCalendarToLocalDate(deregistrationDate)));
+			.ifPresent(deregistrationDate -> businessInformation.setDeregistrationDate(xmlGregorianCalendarToLocalDate(deregistrationDate)));
 	}
 
 	void mapUD0040CompanyLocation(UD0040 ud0040, BusinessInformation businessInformation) {
@@ -247,7 +245,7 @@ public class SsbtguResponseMapper {
 			.ifPresent(location -> businessInformation.setCompanyLocation(CompanyLocation.builder()
 				.withAddress(Address.builder()
 					.withCity(location.getPostort())
-					//Concatenate street and number
+					// Concatenate street and number
 					.withStreet(location.getAdressomrade())
 					.withPostcode(location.getPostnummer())
 					.build())
@@ -289,9 +287,9 @@ public class SsbtguResponseMapper {
 	/**
 	 * Checks if an error exists and in that case populates the response with information about it.
 	 *
-	 * @param error possible error
-	 * @param businessInformation response object
-	 * @return if it has an error or not.
+	 * @param  error               possible error
+	 * @param  businessInformation response object
+	 * @return                     if it has an error or not.
 	 */
 	boolean checkAndPopulatePossibleError(Fel error, BusinessInformation businessInformation) {
 		boolean hasError = false;
@@ -306,8 +304,8 @@ public class SsbtguResponseMapper {
 	/**
 	 * Convert an XMLGregorianCalendar to LocalDate
 	 *
-	 * @param calendar to convert
-	 * @return LocalDate if there's a calendar and it's valid, otherwise return null.
+	 * @param  calendar to convert
+	 * @return          LocalDate if there's a calendar and it's valid, otherwise return null.
 	 */
 	LocalDate xmlGregorianCalendarToLocalDate(XMLGregorianCalendar calendar) {
 		if (calendar != null && calendar.isValid()) {

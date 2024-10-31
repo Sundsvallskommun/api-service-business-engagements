@@ -19,7 +19,6 @@ class BusinessEngagementsResponseTest {
 
 	private final BusinessEngagementsResponse response = new BusinessEngagementsResponse();
 
-
 	@Test
 	void testBean() {
 		MatcherAssert.assertThat(BusinessEngagementsResponse.class, allOf(

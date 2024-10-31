@@ -1,5 +1,5 @@
 {
-  "title": "Error while getting digital engagements from bolagsverket/ssbten",
-  "status": 500,
-  "detail": "I/O error: Read timed out"
+	"detail": "I/O error: Read timed out",
+	"title": "Error while getting digital engagements from bolagsverket/ssbten",
+	"status": 500
 }

@@ -1,14 +1,11 @@
-<?xml version="1.0"?>
-<project
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
-		xmlns="http://maven.apache.org/POM/4.0.0">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>se.sundsvall.dept44</groupId>
 		<artifactId>dept44-service-parent</artifactId>
-		<version>6.0.2</version>
-		<relativePath/>
+		<version>6.0.3</version>
+		<relativePath />
 		<!-- lookup parent from repository -->
 	</parent>
 	<groupId>se.sundsvall</groupId>
@@ -22,8 +19,7 @@
 		<jaxb2-fluent-api.version>3.0</jaxb2-fluent-api.version>
 		<jaxb-maven-plugin.version>3.2.0</jaxb-maven-plugin.version>
 		<!-- Generated sources -->
-		<generated-sources-path>${project.build.directory}/generated-sources
-		</generated-sources-path>
+		<generated-sources-path>${project.build.directory}/generated-sources</generated-sources-path>
 	</properties>
 	<dependencies>
 		<!-- Dept44 -->
@@ -89,22 +85,6 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxb2-maven-plugin</artifactId>
 				<version>${jaxb-maven-plugin.version}</version>
-				<!-- Enables fluent builder for generated classes -->
-				<dependencies>
-					<dependency>
-						<groupId>org.jvnet.jaxb2_commons</groupId>
-						<artifactId>jaxb2-fluent-api</artifactId>
-						<version>${jaxb2-fluent-api.version}</version>
-					</dependency>
-				</dependencies>
-				<executions>
-					<execution>
-						<id>xjc</id>
-						<goals>
-							<goal>xjc</goal>
-						</goals>
-					</execution>
-				</executions>
 				<configuration>
 					<clearOutputDir>false</clearOutputDir>
 					<xjbSources>
@@ -121,6 +101,22 @@
 						<source>src/main/resources/contracts/ssbten/Ssbtgu.wsdl</source>
 					</sources>
 				</configuration>
+				<!-- Enables fluent builder for generated classes -->
+				<dependencies>
+					<dependency>
+						<groupId>org.jvnet.jaxb2_commons</groupId>
+						<artifactId>jaxb2-fluent-api</artifactId>
+						<version>${jaxb2-fluent-api.version}</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>xjc</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.openapitools</groupId>
@@ -158,10 +154,10 @@
 				<executions>
 					<!-- Add generated sources from bolagsverket so they're reacheable. -->
 					<execution>
-						<phase>generate-sources</phase>
 						<goals>
 							<goal>add-source</goal>
 						</goals>
+						<phase>generate-sources</phase>
 						<configuration>
 							<sources>
 								<source>${generated-sources-path}/models</source>

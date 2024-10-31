@@ -27,7 +27,9 @@ import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppg
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterSvar;
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterSvarMetadata;
 
-@ExtendWith({MockitoExtension.class, SoftAssertionsExtension.class})
+@ExtendWith({
+	MockitoExtension.class, SoftAssertionsExtension.class
+})
 class SsbtguServiceTest {
 
 	@Mock
@@ -73,7 +75,7 @@ class SsbtguServiceTest {
 
 	@Test
 	void testNonMatchingTransactionIds_shouldThrowException() {
-		//Override with true to test validation
+		// Override with true to test validation
 		this.service = new SsbtguService(mockSsbtguRequestMapper, mockSsbtguResponseMapper, mockSsbtguIntegration, true);
 		assertThatExceptionOfType(ThrowableProblem.class).isThrownBy(() -> service.validateResponse("uuid1", "notmatching"))
 			.withMessage("Response from bolagsverket was inconsistent.");

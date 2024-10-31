@@ -96,7 +96,6 @@ class BusinessInformationTest {
 
 	}
 
-
 	@Test
 	void addErrorInformation() {
 		final var businessInformation = BusinessInformation.builder().build();

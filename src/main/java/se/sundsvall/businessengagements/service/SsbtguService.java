@@ -26,7 +26,6 @@ public class SsbtguService {
 
 	private final boolean shouldValidateResponse;
 
-
 	public SsbtguService(SsbtguRequestMapper ssbtguRequestMapper, SsbtguResponseMapper ssbtguResponseMapper,
 		SsbtguIntegration ssbtguIntegration, @Value("${integration.bolagsverket.should-verify-transactionid}") boolean shouldValidateResponse) {
 		this.ssbtguRequestMapper = ssbtguRequestMapper;

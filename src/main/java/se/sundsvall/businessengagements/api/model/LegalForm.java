@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Legal form information model")
 public class LegalForm {
 
-	//UD0002
+	// UD0002
 	@Schema(description = "Legal form", example = "Övriga aktiebolag")
 	private String legalFormDescription;
 
-	//UD0002
+	// UD0002
 	@Schema(description = "Legal form code", example = "49")
 	private String legalFormCode;
 

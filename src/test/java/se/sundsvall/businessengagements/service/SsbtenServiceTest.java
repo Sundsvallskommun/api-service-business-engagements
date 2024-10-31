@@ -22,7 +22,9 @@ import se.sundsvall.businessengagements.service.mapper.ssbten.EngagemangSvarMapp
 import se.bolagsverket.schema.ssbten.engagemang.EngagemangBegaran;
 import se.bolagsverket.schema.ssbten.engagemang.EngagemangSvar;
 
-@ExtendWith({MockitoExtension.class, SoftAssertionsExtension.class})
+@ExtendWith({
+	MockitoExtension.class, SoftAssertionsExtension.class
+})
 class SsbtenServiceTest {
 
 	@Mock

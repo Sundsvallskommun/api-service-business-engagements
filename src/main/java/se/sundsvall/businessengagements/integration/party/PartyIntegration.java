@@ -26,25 +26,29 @@ public interface PartyIntegration {
 	/**
 	 * Get legalID by partyId
 	 *
-	 * @param municipalityId the municipalityId
-	 * @param partyType "ENTERPRISE" or "PRIVATE"
-	 * @param partyId uuid of the person or organization
-	 * @return legalId of the person or organization, Optional.empty() if not found.
+	 * @param  municipalityId the municipalityId
+	 * @param  partyType      "ENTERPRISE" or "PRIVATE"
+	 * @param  partyId        uuid of the person or organization
+	 * @return                legalId of the person or organization, Optional.empty() if not found.
 	 */
 	@Cacheable(LEGAL_ID_CACHE)
-	@GetMapping(path = "/{municipalityId}/{type}/{partyId}/legalId", produces = {TEXT_PLAIN_VALUE, APPLICATION_PROBLEM_JSON_VALUE})
+	@GetMapping(path = "/{municipalityId}/{type}/{partyId}/legalId", produces = {
+		TEXT_PLAIN_VALUE, APPLICATION_PROBLEM_JSON_VALUE
+	})
 	Optional<String> getLegalId(@PathVariable("municipalityId") String municipalityId, @PathVariable("type") PartyType partyType, @PathVariable("partyId") String partyId);
 
 	/**
 	 * Get partyId for a legalId
-
-	 * @param municipalityId the municipalityId
-	 * @param partyType "ENTERPRISE" or "PRIVATE"
-	 * @param legalId legalid of the person or organization
-	 * @return partyId of the person or organization, Optional.empty() if not found.
+	 * 
+	 * @param  municipalityId the municipalityId
+	 * @param  partyType      "ENTERPRISE" or "PRIVATE"
+	 * @param  legalId        legalid of the person or organization
+	 * @return                partyId of the person or organization, Optional.empty() if not found.
 	 */
 	@Cacheable(PARTY_ID_CACHE)
-	@GetMapping(path = "/{municipalityId}/{type}/{legalId}/partyId", produces = {TEXT_PLAIN_VALUE, APPLICATION_PROBLEM_JSON_VALUE})
+	@GetMapping(path = "/{municipalityId}/{type}/{legalId}/partyId", produces = {
+		TEXT_PLAIN_VALUE, APPLICATION_PROBLEM_JSON_VALUE
+	})
 	Optional<String> getPartyId(@PathVariable("municipalityId") String municipalityId, @PathVariable("type") PartyType partyType, @PathVariable("legalId") String legalId);
 
 }

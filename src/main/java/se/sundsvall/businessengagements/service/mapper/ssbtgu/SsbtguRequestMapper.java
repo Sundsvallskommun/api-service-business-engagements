@@ -37,22 +37,22 @@ import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppg
 public class SsbtguRequestMapper {
 
 	static final List<String> informationIds = List.of(
-		"UD0001",   //Company name
-		"UD0002",   //Juridic form
-		"UD0003",   //Postal address
-		"UD0004",   //E-mail
-		"UD0006",   //Phone number
-		"UD0011",   //Municipality where the company is located
-		"UD0012",   //County where the company is located
-		"UD0014",   //Fiscal year
-		"UD0025",   //Company form
-		"UD0026",   //Company registration time
-		"UD0027",   //Business status/liquidation
-		"UD0028",   //Date when/if the company was deregistered
-		"UD0040",   //Company location
-		"UD0045",   //Signatory information
-		"UD0046",   //Company operation description
-		"UD0048"    //Shares info
+		"UD0001",   // Company name
+		"UD0002",   // Juridic form
+		"UD0003",   // Postal address
+		"UD0004",   // E-mail
+		"UD0006",   // Phone number
+		"UD0011",   // Municipality where the company is located
+		"UD0012",   // County where the company is located
+		"UD0014",   // Fiscal year
+		"UD0025",   // Company form
+		"UD0026",   // Company registration time
+		"UD0027",   // Business status/liquidation
+		"UD0028",   // Date when/if the company was deregistered
+		"UD0040",   // Company location
+		"UD0045",   // Signatory information
+		"UD0046",   // Company operation description
+		"UD0048"    // Shares info
 	);
 
 	public GrundlaggandeUppgifterBegaran createGrundlaggandeUppgifterBegaran(final String orgNumber, String orgName) {
@@ -99,7 +99,7 @@ public class SsbtguRequestMapper {
 			var cal = GregorianCalendar.from(zonedDateTime);
 			return DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
 		} catch (DatatypeConfigurationException e) {
-			//Should never happen.
+			// Should never happen.
 			throw Problem.builder()
 				.withTitle("Error while creating request towards Bolagsverket")
 				.withStatus(INTERNAL_SERVER_ERROR)

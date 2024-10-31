@@ -17,7 +17,9 @@ import org.zalando.problem.ThrowableProblem;
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterBegaran;
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterSvar;
 
-@ExtendWith({MockitoExtension.class, SoftAssertionsExtension.class})
+@ExtendWith({
+	MockitoExtension.class, SoftAssertionsExtension.class
+})
 class SsbtguIntegrationTest {
 
 	@Mock

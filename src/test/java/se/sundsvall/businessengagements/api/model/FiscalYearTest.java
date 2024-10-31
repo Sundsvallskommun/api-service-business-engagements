@@ -54,8 +54,7 @@ class FiscalYearTest {
 				assertThat(fiscalYear.getToDay()).isZero();
 				assertThat(fiscalYear.getFromMonth()).isZero();
 				assertThat(fiscalYear.getToMonth()).isZero();
-			})
-		;
+			});
 	}
 
 }
