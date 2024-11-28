@@ -13,8 +13,6 @@
 	<version>2.0</version>
 	<name>api-service-business-engagements</name>
 	<properties>
-		<!-- CI/CD properties -->
-		<exposed.app.port>8080</exposed.app.port>
 		<!-- Version properties -->
 		<jaxb2-fluent-api.version>3.0</jaxb2-fluent-api.version>
 		<jaxb-maven-plugin.version>3.2.0</jaxb-maven-plugin.version>
