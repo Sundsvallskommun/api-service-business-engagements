@@ -3,25 +3,21 @@ package se.sundsvall.businessengagements.service.mapper.ssbten;
 import java.time.Duration;
 import java.util.GregorianCalendar;
 import java.util.UUID;
-
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;
-import se.sundsvall.dept44.requestid.RequestId;
-
 import se.bolagsverket.schema.ssbt.metadata.Anvandningsomrade;
 import se.bolagsverket.schema.ssbt.metadata.TTL;
 import se.bolagsverket.schema.ssbt.metadata.Tidsenhet;
 import se.bolagsverket.schema.ssbten.engagemang.EngagemangBegaran;
 import se.bolagsverket.schema.ssbten.engagemang.EngagemangBegaranMetadata;
 import se.bolagsverket.schema.ssbten.engagemang.ObjectFactory;
+import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;
+import se.sundsvall.dept44.requestid.RequestId;
 
 /**
  * Handles request mapping towards Bolagsverket.

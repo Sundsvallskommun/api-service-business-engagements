@@ -1,5 +1,7 @@
 {
-	"statusDescriptions": {"198001011234": "Couldn't fetch guid for organization number"},
+	"statusDescriptions": {
+		"198001011234": "Couldn't fetch guid for organization number"
+	},
 	"engagements": [
 		{
 			"organizationName": "Jons barnvagnar",

@@ -1,10 +1,12 @@
-[{
-	"roles": [
-		"styrelseledamot",
-		"ordförande",
-		"styrelsesuppleant"
-	],
-	"legalId": "198000000010",
-	"name": "Larsson, Kent",
-	"location": "SUNDSVALL"
-}]
+[
+	{
+		"roles": [
+			"styrelseledamot",
+			"ordförande",
+			"styrelsesuppleant"
+		],
+		"legalId": "198000000010",
+		"name": "Larsson, Kent",
+		"location": "SUNDSVALL"
+	}
+]

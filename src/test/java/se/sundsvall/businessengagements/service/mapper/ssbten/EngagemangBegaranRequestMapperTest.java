@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
-
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,15 +14,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import se.sundsvall.businessengagements.TestObjectFactory;
-import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;
-
 import se.bolagsverket.schema.ssbt.metadata.Anvandningsomrade;
 import se.bolagsverket.schema.ssbt.metadata.Datakonsument;
 import se.bolagsverket.schema.ssbt.metadata.Part;
 import se.bolagsverket.schema.ssbt.metadata.Tidsenhet;
 import se.bolagsverket.schema.ssbten.engagemang.EngagemangBegaran;
+import se.sundsvall.businessengagements.TestObjectFactory;
+import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;
 
 @ExtendWith({
 	MockitoExtension.class, SoftAssertionsExtension.class

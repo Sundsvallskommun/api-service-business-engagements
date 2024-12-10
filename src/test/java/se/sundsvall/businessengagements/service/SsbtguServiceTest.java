@@ -16,16 +16,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.zalando.problem.ThrowableProblem;
-
-import se.sundsvall.businessengagements.api.model.BusinessInformation;
-import se.sundsvall.businessengagements.integration.bolagsverket.ssbtgu.SsbtguIntegration;
-import se.sundsvall.businessengagements.service.mapper.ssbtgu.SsbtguRequestMapper;
-import se.sundsvall.businessengagements.service.mapper.ssbtgu.SsbtguResponseMapper;
-
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterBegaran;
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterBegaranMetadata;
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterSvar;
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterSvarMetadata;
+import se.sundsvall.businessengagements.api.model.BusinessInformation;
+import se.sundsvall.businessengagements.integration.bolagsverket.ssbtgu.SsbtguIntegration;
+import se.sundsvall.businessengagements.service.mapper.ssbtgu.SsbtguRequestMapper;
+import se.sundsvall.businessengagements.service.mapper.ssbtgu.SsbtguResponseMapper;
 
 @ExtendWith({
 	MockitoExtension.class, SoftAssertionsExtension.class

@@ -1,19 +1,33 @@
 {
 	"request": {
 		"method": "POST",
-		"bodyPatterns": [{
-			"xPathNamespaces": {"for": "http://schema.bolagsverket.se/ssbt/foretag"},
-			"matchesXPath": "//*[for:PersonIdentitetsbeteckning]//*[for:Personnummer='198000000007']"
-		}],
+		"bodyPatterns": [
+			{
+				"xPathNamespaces": {
+					"for": "http://schema.bolagsverket.se/ssbt/foretag"
+				},
+				"matchesXPath": "//*[for:PersonIdentitetsbeteckning]//*[for:Personnummer='198000000007']"
+			}
+		],
 		"url": "/ssbten"
 	},
 	"response": {
 		"headers": {
-			"Keep-Alive": ["timeout=60"],
-			"Transfer-Encoding": ["chunked"],
-			"Connection": ["keep-alive"],
-			"Content-Encoding": [""],
-			"Content-Type": ["text/xml"]
+			"Keep-Alive": [
+				"timeout=60"
+			],
+			"Transfer-Encoding": [
+				"chunked"
+			],
+			"Connection": [
+				"keep-alive"
+			],
+			"Content-Encoding": [
+				""
+			],
+			"Content-Type": [
+				"text/xml"
+			]
 		},
 		"bodyFileName": "../__files/bv/198000000007.xml",
 		"status": 200

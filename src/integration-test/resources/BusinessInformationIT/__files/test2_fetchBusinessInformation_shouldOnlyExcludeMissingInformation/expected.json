@@ -48,16 +48,20 @@
 		"companyFormCode": "AB",
 		"companyFormDescription": "aktiebolag"
 	},
-	"companyLocation": {"address": {
-		"city": "STOCKHOLM",
-		"street": "MÄSTER SAMUELSGATAN",
-		"postcode": "11157"
-	}},
+	"companyLocation": {
+		"address": {
+			"city": "STOCKHOLM",
+			"street": "MÄSTER SAMUELSGATAN",
+			"postcode": "11157"
+		}
+	},
 	"emailAddress": "somewhere@nowhere.com",
 	"phoneNumber": "070-990463",
 	"errorInformation": {
 		"hasErrors": true,
-		"errorDescriptions": {"9071006": "Ej behörig - ej firmatecknare."}
+		"errorDescriptions": {
+			"9071006": "Ej behörig - ej firmatecknare."
+		}
 	},
 	"fiscalYear": {
 		"fromDay": 1,

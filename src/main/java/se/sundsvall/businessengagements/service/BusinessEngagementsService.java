@@ -3,13 +3,11 @@ package se.sundsvall.businessengagements.service;
 import static org.zalando.problem.Status.NOT_FOUND;
 
 import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.zalando.problem.Problem;
-
 import se.sundsvall.businessengagements.api.model.BusinessEngagementsResponse;
 import se.sundsvall.businessengagements.api.model.BusinessInformation;
 import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;

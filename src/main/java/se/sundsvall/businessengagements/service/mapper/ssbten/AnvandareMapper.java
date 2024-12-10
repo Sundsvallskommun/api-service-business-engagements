@@ -1,11 +1,9 @@
 package se.sundsvall.businessengagements.service.mapper.ssbten;
 
 import org.springframework.stereotype.Component;
-
-import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;
-
 import se.bolagsverket.schema.ssbt.metadata.ObjectFactory;
 import se.bolagsverket.schema.ssbt.metadata.Part;
+import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;
 
 /**
  * <pre>

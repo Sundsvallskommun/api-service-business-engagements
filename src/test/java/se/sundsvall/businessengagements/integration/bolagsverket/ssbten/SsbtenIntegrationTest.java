@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.zalando.problem.ThrowableProblem;
-
 import se.bolagsverket.schema.ssbten.engagemang.EngagemangBegaran;
 import se.bolagsverket.schema.ssbten.engagemang.EngagemangSvar;
 

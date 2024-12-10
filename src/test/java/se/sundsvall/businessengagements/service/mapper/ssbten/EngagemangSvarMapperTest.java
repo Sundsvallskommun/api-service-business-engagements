@@ -4,7 +4,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import se.bolagsverket.schema.ssbten.engagemang.EngagemangSvar;
 import se.sundsvall.businessengagements.TestObjectFactory;
 import se.sundsvall.businessengagements.api.model.BusinessEngagementsResponse;

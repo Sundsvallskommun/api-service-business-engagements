@@ -1,16 +1,13 @@
 package se.sundsvall.businessengagements.service.mapper.ssbten;
 
 import java.util.List;
-
 import org.springframework.stereotype.Component;
-
-import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;
-
 import se.bolagsverket.schema.ssbt.foretag.PersonIdentitetsbeteckning;
 import se.bolagsverket.schema.ssbten.engagemang.EngagemangBegaranDetaljer;
 import se.bolagsverket.schema.ssbten.engagemang.Foretagsformer;
 import se.bolagsverket.schema.ssbten.engagemang.ObjectFactory;
 import se.bolagsverket.schema.ssbten.engagemang.PersonId;
+import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;
 
 /**
  * <pre>

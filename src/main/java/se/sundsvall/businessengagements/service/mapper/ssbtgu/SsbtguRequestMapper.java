@@ -10,17 +10,12 @@ import java.time.ZoneId;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
-
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.zalando.problem.Problem;
-
-import se.sundsvall.dept44.requestid.RequestId;
-
 import se.bolagsverket.schema.ssbt.foretag.PersonIdentitetsbeteckning;
 import se.bolagsverket.schema.ssbt.metadata.Anvandningsomrade;
 import se.bolagsverket.schema.ssbt.metadata.Datakonsument;
@@ -32,6 +27,7 @@ import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppg
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterBegaran;
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterBegaranDetaljer;
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterBegaranMetadata;
+import se.sundsvall.dept44.requestid.RequestId;
 
 @Component
 public class SsbtguRequestMapper {

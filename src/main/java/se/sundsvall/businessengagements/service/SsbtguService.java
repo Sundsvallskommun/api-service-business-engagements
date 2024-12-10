@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.zalando.problem.Problem;
-
 import se.sundsvall.businessengagements.api.model.BusinessInformation;
 import se.sundsvall.businessengagements.integration.bolagsverket.ssbtgu.SsbtguIntegration;
 import se.sundsvall.businessengagements.service.mapper.ssbtgu.SsbtguRequestMapper;
