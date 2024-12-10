@@ -4,7 +4,6 @@ import static se.sundsvall.businessengagements.service.BusinessEngagementsServic
 import static se.sundsvall.businessengagements.service.BusinessEngagementsService.SUNDSVALL_MUNICIPALITY_ORGANIZATION_NUMBER;
 
 import org.springframework.stereotype.Component;
-
 import se.bolagsverket.schema.ssbt.metadata.Datakonsument;
 import se.bolagsverket.schema.ssbt.metadata.ObjectFactory;
 import se.bolagsverket.schema.ssbt.metadata.PartId;

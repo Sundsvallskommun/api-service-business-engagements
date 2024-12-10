@@ -1,7 +1,6 @@
 package se.sundsvall.businessengagements.service;
 
 import org.springframework.stereotype.Service;
-
 import se.sundsvall.businessengagements.api.model.BusinessEngagementsResponse;
 import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;
 import se.sundsvall.businessengagements.integration.bolagsverket.ssbten.SsbtenIntegration;

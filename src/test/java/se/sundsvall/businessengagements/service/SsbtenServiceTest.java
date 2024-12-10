@@ -12,15 +12,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
+import se.bolagsverket.schema.ssbten.engagemang.EngagemangBegaran;
+import se.bolagsverket.schema.ssbten.engagemang.EngagemangSvar;
 import se.sundsvall.businessengagements.api.model.BusinessEngagementsResponse;
 import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;
 import se.sundsvall.businessengagements.integration.bolagsverket.ssbten.SsbtenIntegration;
 import se.sundsvall.businessengagements.service.mapper.ssbten.EngagemangBegaranRequestMapper;
 import se.sundsvall.businessengagements.service.mapper.ssbten.EngagemangSvarMapper;
-
-import se.bolagsverket.schema.ssbten.engagemang.EngagemangBegaran;
-import se.bolagsverket.schema.ssbten.engagemang.EngagemangSvar;
 
 @ExtendWith({
 	MockitoExtension.class, SoftAssertionsExtension.class

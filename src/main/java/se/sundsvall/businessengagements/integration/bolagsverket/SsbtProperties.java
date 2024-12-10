@@ -1,7 +1,6 @@
 package se.sundsvall.businessengagements.integration.bolagsverket;
 
 import java.time.Duration;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "integration.bolagsverket")

@@ -4,22 +4,8 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
 import javax.xml.datatype.XMLGregorianCalendar;
-
 import org.springframework.stereotype.Component;
-
-import se.sundsvall.businessengagements.api.model.Address;
-import se.sundsvall.businessengagements.api.model.BusinessInformation;
-import se.sundsvall.businessengagements.api.model.CompanyForm;
-import se.sundsvall.businessengagements.api.model.CompanyLocation;
-import se.sundsvall.businessengagements.api.model.County;
-import se.sundsvall.businessengagements.api.model.FiscalYear;
-import se.sundsvall.businessengagements.api.model.LegalForm;
-import se.sundsvall.businessengagements.api.model.LiquidationInformation;
-import se.sundsvall.businessengagements.api.model.Municipality;
-import se.sundsvall.businessengagements.api.model.SharesInformation;
-
 import se.bolagsverket.schema.ssbt.fel.Fel;
 import se.bolagsverket.schema.ssbt.foretag.Avvecklingsforfarande;
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterSvar;
@@ -40,6 +26,16 @@ import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.UD0040;
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.UD0045;
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.UD0046;
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.UD0048;
+import se.sundsvall.businessengagements.api.model.Address;
+import se.sundsvall.businessengagements.api.model.BusinessInformation;
+import se.sundsvall.businessengagements.api.model.CompanyForm;
+import se.sundsvall.businessengagements.api.model.CompanyLocation;
+import se.sundsvall.businessengagements.api.model.County;
+import se.sundsvall.businessengagements.api.model.FiscalYear;
+import se.sundsvall.businessengagements.api.model.LegalForm;
+import se.sundsvall.businessengagements.api.model.LiquidationInformation;
+import se.sundsvall.businessengagements.api.model.Municipality;
+import se.sundsvall.businessengagements.api.model.SharesInformation;
 
 @Component
 public class SsbtguResponseMapper {

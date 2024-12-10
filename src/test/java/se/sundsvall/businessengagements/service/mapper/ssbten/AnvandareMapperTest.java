@@ -4,10 +4,8 @@ import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import se.sundsvall.businessengagements.TestObjectFactory;
-
 import se.bolagsverket.schema.ssbt.metadata.Part;
+import se.sundsvall.businessengagements.TestObjectFactory;
 
 @ExtendWith(SoftAssertionsExtension.class)
 class AnvandareMapperTest {

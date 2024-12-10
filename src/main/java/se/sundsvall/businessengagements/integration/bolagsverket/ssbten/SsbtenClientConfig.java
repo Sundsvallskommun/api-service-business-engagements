@@ -2,14 +2,12 @@ package se.sundsvall.businessengagements.integration.bolagsverket.ssbten;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.zalando.logbook.Logbook;
-
 import se.sundsvall.businessengagements.integration.bolagsverket.SsbtProperties;
 import se.sundsvall.dept44.configuration.webservicetemplate.WebServiceTemplateBuilder;
 

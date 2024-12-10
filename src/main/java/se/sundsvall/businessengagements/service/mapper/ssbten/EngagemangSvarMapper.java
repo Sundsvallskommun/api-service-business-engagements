@@ -2,15 +2,12 @@ package se.sundsvall.businessengagements.service.mapper.ssbten;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.springframework.stereotype.Component;
-
-import se.sundsvall.businessengagements.api.model.BusinessEngagementsResponse;
-
 import se.bolagsverket.schema.ssbt.fel.FelTyp;
 import se.bolagsverket.schema.ssbten.engagemang.EngagemangSvar;
 import se.bolagsverket.schema.ssbten.engagemang.Foretag;
 import se.bolagsverket.schema.ssbten.engagemang.ForetagEngagemang;
+import se.sundsvall.businessengagements.api.model.BusinessEngagementsResponse;
 
 /**
  * Handles response mapping from Bolagsverket

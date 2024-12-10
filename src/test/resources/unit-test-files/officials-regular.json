@@ -1,12 +1,16 @@
 [
 	{
-		"roles": ["styrelsesuppleant"],
+		"roles": [
+			"styrelsesuppleant"
+		],
 		"legalId": "19870310",
 		"name": "Holt, James",
 		"location": "GÖTEBORG"
 	},
 	{
-		"roles": ["revisor"],
+		"roles": [
+			"revisor"
+		],
 		"legalId": "5560000010,",
 		"name": "Revisionsbyrån AB",
 		"location": "STOCKHOLM"
@@ -21,19 +25,25 @@
 		"location": "SUNDSVALL"
 	},
 	{
-		"roles": ["huvudansvarig revisor"],
+		"roles": [
+			"huvudansvarig revisor"
+		],
 		"legalId": "198000000012",
 		"name": "Westling, Amandus",
 		"location": "LUDVIKA"
 	},
 	{
-		"roles": ["styrelseledamot"],
+		"roles": [
+			"styrelseledamot"
+		],
 		"legalId": "198001011234",
 		"name": "Karlsson, Kristina",
 		"location": "STOCKHOLM"
 	},
 	{
-		"roles": ["styrelseledamot"],
+		"roles": [
+			"styrelseledamot"
+		],
 		"legalId": "198000000011",
 		"name": "Larsson, Nils",
 		"location": "SUNDSVALL"
