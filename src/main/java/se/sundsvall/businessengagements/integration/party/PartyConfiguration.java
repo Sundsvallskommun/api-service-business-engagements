@@ -17,7 +17,7 @@ import se.sundsvall.dept44.configuration.feign.decoder.ProblemErrorDecoder;
 @Import(FeignConfiguration.class)
 public class PartyConfiguration {
 
-	private static final String REGISTRATION_ID = "party";
+	public static final String CLIENT_ID = "party";
 
 	private final PartyProperties partyProperties;
 
@@ -35,7 +35,7 @@ public class PartyConfiguration {
 	}
 
 	private ClientRegistration clientRegistration() {
-		return ClientRegistration.withRegistrationId(REGISTRATION_ID)
+		return ClientRegistration.withRegistrationId(CLIENT_ID)
 			.tokenUri(partyProperties.getOauth2TokenUrl())
 			.clientId(partyProperties.getOauth2ClientId())
 			.clientSecret(partyProperties.getOauth2ClientSecret())
@@ -45,7 +45,7 @@ public class PartyConfiguration {
 
 	ErrorDecoder errorDecoder() {
 		// We want to return 404 as a 404.
-		return new ProblemErrorDecoder(REGISTRATION_ID, List.of(HttpStatus.NOT_FOUND.value()));
+		return new ProblemErrorDecoder(CLIENT_ID, List.of(HttpStatus.NOT_FOUND.value()));
 	}
 
 	Request.Options feignOptions() {
