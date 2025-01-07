@@ -48,7 +48,7 @@ class BusinessInformationTest {
 		final var companyRegistrationTime = LocalDate.now().minusYears(2);
 		final var liquidationInformation = LiquidationInformation.builder().build();
 		final var deregistrationDate = LocalDate.now().minusYears(1);
-		final var companyLocation = CompanyLocation.builder().build();
+		final var companyLocation = Address.builder().build();
 		final var businessSignatory = "someBusinessSignatory";
 		final var companyDescription = "someCompanyDescription";
 		final var sharesInformation = SharesInformation.builder().build();

@@ -49,11 +49,9 @@
 		"companyFormDescription": "aktiebolag"
 	},
 	"companyLocation": {
-		"address": {
-			"city": "STOCKHOLM",
-			"street": "MÄSTER SAMUELSGATAN",
-			"postcode": "11157"
-		}
+		"city": "STOCKHOLM",
+		"street": "MÄSTER SAMUELSGATAN",
+		"postcode": "11157"
 	},
 	"emailAddress": "somewhere@nowhere.com",
 	"phoneNumber": "070-990463",

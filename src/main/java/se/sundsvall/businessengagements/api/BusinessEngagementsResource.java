@@ -1,5 +1,6 @@
 package se.sundsvall.businessengagements.api;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.zalando.problem.Problem;
+import org.zalando.problem.violations.ConstraintViolationProblem;
 import se.sundsvall.businessengagements.api.model.BusinessEngagementsResponse;
 import se.sundsvall.businessengagements.api.model.BusinessEngagementsResponse.Status;
 import se.sundsvall.businessengagements.api.model.BusinessInformation;
@@ -24,6 +26,12 @@ import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
 
 @RestController
 @RequestMapping(value = "/{municipalityId}")
+@ApiResponse(responseCode = "204", description = "No Content")
+@ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(schema = @Schema(implementation = Problem.class)))
+@ApiResponse(responseCode = "404", description = "Not Found", content = @Content(schema = @Schema(oneOf = {
+	Problem.class, ConstraintViolationProblem.class
+})))
+@ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Problem.class)))
 @Tag(name = "Business Engagements", description = "Show a persons business engagements and company information.")
 @Validated
 public class BusinessEngagementsResource {
@@ -34,11 +42,12 @@ public class BusinessEngagementsResource {
 		this.businessEngagementsService = businessEngagementsService;
 	}
 
-	@ApiResponse(responseCode = "200", description = "Successful Operation", content = @Content(schema = @Schema(implementation = BusinessEngagementsResponse.class)))
-	@ApiResponse(responseCode = "204", description = "No Content")
-	@ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(schema = @Schema(implementation = Problem.class)))
-	@ApiResponse(responseCode = "404", description = "Not Found", content = @Content(schema = @Schema(implementation = Problem.class)))
-	@ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Problem.class)))
+	@Operation(
+		summary = "Get business engagements",
+		description = "Get a list of business engagements for a person",
+		responses = {
+			@ApiResponse(responseCode = "200", description = "Successful Operation", useReturnTypeSchema = true)
+		})
 	@GetMapping("/engagements/{partyId}")
 	public ResponseEntity<BusinessEngagementsResponse> getEngagements(
 		@Parameter(name = "municipalityId", description = "Municipality id", example = "2281") @ValidMunicipalityId @PathVariable final String municipalityId,
@@ -65,11 +74,11 @@ public class BusinessEngagementsResource {
 		return ResponseEntity.ok(response);
 	}
 
-	@ApiResponse(responseCode = "200", description = "Successful Operation", content = @Content(schema = @Schema(implementation = BusinessInformation.class)))
-	@ApiResponse(responseCode = "204", description = "No Content")
-	@ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(schema = @Schema(implementation = Problem.class)))
-	@ApiResponse(responseCode = "404", description = "Not Found", content = @Content(schema = @Schema(implementation = Problem.class)))
-	@ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Problem.class)))
+	@Operation(summary = "Get business information",
+		description = "Get information about a company",
+		responses = {
+			@ApiResponse(responseCode = "200", description = "Successful Operation", useReturnTypeSchema = true)
+		})
 	@GetMapping("/information/{partyId}")
 	public ResponseEntity<BusinessInformation> getBusinessInformation(
 		@Parameter(name = "municipalityId", description = "Municipality id", example = "2281") @ValidMunicipalityId @PathVariable final String municipalityId,
