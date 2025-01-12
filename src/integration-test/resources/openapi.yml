@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "3.0"
 servers:
-  - url: http://127.0.0.1:8080
+  - url: http://localhost:8080
     description: Generated server url
 tags:
   - name: Business Engagements
@@ -48,31 +48,31 @@ paths:
         "200":
           description: Successful Operation
           content:
-            '*/*':
+            application/json:
               schema:
                 $ref: "#/components/schemas/BusinessInformation"
         "400":
           description: Bad Request
           content:
-            '*/*':
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+        "500":
+          description: Internal Server Error
+          content:
+            application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
         "204":
           description: No Content
           content:
-            '*/*':
+            application/json:
               schema:
                 $ref: "#/components/schemas/BusinessInformation"
-        "500":
-          description: Internal Server Error
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/Problem"
         "404":
           description: Not Found
           content:
-            '*/*':
+            application/problem+json:
               schema:
                 oneOf:
                   - $ref: "#/components/schemas/Problem"
@@ -121,31 +121,31 @@ paths:
         "200":
           description: Successful Operation
           content:
-            '*/*':
+            application/json:
               schema:
                 $ref: "#/components/schemas/BusinessEngagementsResponse"
         "400":
           description: Bad Request
           content:
-            '*/*':
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+        "500":
+          description: Internal Server Error
+          content:
+            application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
         "204":
           description: No Content
           content:
-            '*/*':
+            application/json:
               schema:
                 $ref: "#/components/schemas/BusinessEngagementsResponse"
-        "500":
-          description: Internal Server Error
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/Problem"
         "404":
           description: Not Found
           content:
-            '*/*':
+            application/problem+json:
               schema:
                 oneOf:
                   - $ref: "#/components/schemas/Problem"
@@ -181,12 +181,12 @@ components:
           type: object
           additionalProperties:
             type: object
+        status:
+          $ref: "#/components/schemas/StatusType"
         title:
           type: string
         detail:
           type: string
-        status:
-          $ref: "#/components/schemas/StatusType"
     StatusType:
       type: object
       properties:
@@ -316,12 +316,12 @@ components:
           type: object
           additionalProperties:
             type: object
+        status:
+          $ref: "#/components/schemas/StatusType"
         title:
           type: string
         detail:
           type: string
-        status:
-          $ref: "#/components/schemas/StatusType"
         suppressed:
           type: array
           items:

@@ -1,10 +1,14 @@
 package se.sundsvall.businessengagements.api;
 
+import static io.netty.handler.codec.http.HttpHeaders.Values.APPLICATION_JSON;
+import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +30,14 @@ import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
 
 @RestController
 @RequestMapping(value = "/{municipalityId}")
-@ApiResponse(responseCode = "204", description = "No Content")
-@ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(schema = @Schema(implementation = Problem.class)))
-@ApiResponse(responseCode = "404", description = "Not Found", content = @Content(schema = @Schema(oneOf = {
-	Problem.class, ConstraintViolationProblem.class
-})))
-@ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = Problem.class)))
+@ApiResponses(value = {
+	@ApiResponse(responseCode = "204", description = "No Content"),
+	@ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(implementation = Problem.class))),
+	@ApiResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(oneOf = {
+		Problem.class, ConstraintViolationProblem.class
+	}))),
+	@ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
+})
 @Tag(name = "Business Engagements", description = "Show a persons business engagements and company information.")
 @Validated
 public class BusinessEngagementsResource {
@@ -48,7 +54,7 @@ public class BusinessEngagementsResource {
 		responses = {
 			@ApiResponse(responseCode = "200", description = "Successful Operation", useReturnTypeSchema = true)
 		})
-	@GetMapping("/engagements/{partyId}")
+	@GetMapping(value = "/engagements/{partyId}", produces = APPLICATION_JSON)
 	public ResponseEntity<BusinessEngagementsResponse> getEngagements(
 		@Parameter(name = "municipalityId", description = "Municipality id", example = "2281") @ValidMunicipalityId @PathVariable final String municipalityId,
 		@ValidUuid @PathVariable("partyId") @Schema(description = "Unique identifier for a person", example = "6a5c3d04-412d-11ec-973a-0242ac130003") final String partyId,
@@ -79,7 +85,7 @@ public class BusinessEngagementsResource {
 		responses = {
 			@ApiResponse(responseCode = "200", description = "Successful Operation", useReturnTypeSchema = true)
 		})
-	@GetMapping("/information/{partyId}")
+	@GetMapping(value = "/information/{partyId}", produces = APPLICATION_JSON)
 	public ResponseEntity<BusinessInformation> getBusinessInformation(
 		@Parameter(name = "municipalityId", description = "Municipality id", example = "2281") @ValidMunicipalityId @PathVariable final String municipalityId,
 		@ValidUuid @PathVariable("partyId") @Schema(description = "Unique identifier for an organization number", example = "fb2f0290-3820-11ed-a261-0242ac120002") final String partyId,
