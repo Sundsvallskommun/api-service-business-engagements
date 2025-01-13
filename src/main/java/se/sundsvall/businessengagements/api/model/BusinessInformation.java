@@ -67,7 +67,7 @@ public class BusinessInformation {
 
 	// UD0040
 	@Schema(description = "Company location", implementation = Address.class)
-	private CompanyLocation companyLocation;
+	private Address companyLocation;
 
 	// UD0045
 	@Schema(description = "Who may sign for the company", example = "Firman tecknas av styrelsen")

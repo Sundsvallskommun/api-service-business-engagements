@@ -29,7 +29,6 @@ import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.UD0048;
 import se.sundsvall.businessengagements.api.model.Address;
 import se.sundsvall.businessengagements.api.model.BusinessInformation;
 import se.sundsvall.businessengagements.api.model.CompanyForm;
-import se.sundsvall.businessengagements.api.model.CompanyLocation;
 import se.sundsvall.businessengagements.api.model.County;
 import se.sundsvall.businessengagements.api.model.FiscalYear;
 import se.sundsvall.businessengagements.api.model.LegalForm;
@@ -238,13 +237,10 @@ public class SsbtguResponseMapper {
 		Optional.ofNullable(ud0040)
 			.filter(ud -> !checkAndPopulatePossibleError(ud.getFel(), businessInformation))
 			.map(UD0040::getBelagenhetsadress)
-			.ifPresent(location -> businessInformation.setCompanyLocation(CompanyLocation.builder()
-				.withAddress(Address.builder()
-					.withCity(location.getPostort())
-					// Concatenate street and number
-					.withStreet(location.getAdressomrade())
-					.withPostcode(location.getPostnummer())
-					.build())
+			.ifPresent(location -> businessInformation.setCompanyLocation(Address.builder()
+				.withCity(location.getPostort())
+				.withStreet(location.getAdressomrade())
+				.withPostcode(location.getPostnummer())
 				.build()));
 	}
 
