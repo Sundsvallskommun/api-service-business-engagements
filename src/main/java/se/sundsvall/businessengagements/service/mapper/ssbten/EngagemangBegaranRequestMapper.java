@@ -20,10 +20,9 @@ import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto
 import se.sundsvall.dept44.requestid.RequestId;
 
 /**
- * Handles request mapping towards Bolagsverket.
- * To avoid getting a huge class some parts of the request has been separated into their own classes.
- * Should generate an xml as follows:
- * 
+ * Handles request mapping towards Bolagsverket. To avoid getting a huge class some parts of the request has been
+ * separated into their own classes. Should generate an xml as follows:
+ *
  * <pre>
  *     {@code
  *          &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
@@ -83,7 +82,7 @@ public class EngagemangBegaranRequestMapper {
 	private static final Logger LOG = LoggerFactory.getLogger(EngagemangBegaranRequestMapper.class);
 
 	@Value("${integration.bolagsverket.schema-version:1.4.0}")
-	private String SCHEMA_VERSION;
+	private String schemaVersion;
 
 	private final ObjectFactory ssbtenFactory;
 
@@ -120,7 +119,7 @@ public class EngagemangBegaranRequestMapper {
 		var engagemangBegaranRequest = ssbtenFactory.createEngagemangBegaran();
 		engagemangBegaranRequest.setEngagemangBegaranMetadata(createEngagemangBegaranMetadata(requestDto));
 		engagemangBegaranRequest.setEngagemangBegaranDetaljer(engagemangBegaranDetaljerMapper.createEngagemangBegaranDetaljer(requestDto));
-		engagemangBegaranRequest.setSchemaVersion(SCHEMA_VERSION);
+		engagemangBegaranRequest.setSchemaVersion(schemaVersion);
 
 		return engagemangBegaranRequest;
 	}
@@ -164,7 +163,7 @@ public class EngagemangBegaranRequestMapper {
 
 	/**
 	 * Creates a timestamp for the request.
-	 * 
+	 *
 	 * @return {@link XMLGregorianCalendar}
 	 */
 	XMLGregorianCalendar getXMLGregorianCalendarTimeStamp() {
