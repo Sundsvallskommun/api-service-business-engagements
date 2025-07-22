@@ -82,8 +82,8 @@ public class EngagemangBegaranRequestMapper {
 
 	private static final Logger LOG = LoggerFactory.getLogger(EngagemangBegaranRequestMapper.class);
 
-	@Value("${integration.bolagsverket.schema-version}")
-	private static final String SCHEMA_VERSION = "1.4.0";
+	@Value("${integration.bolagsverket.schema-version:1.4.0}")
+	private String SCHEMA_VERSION;
 
 	private final ObjectFactory ssbtenFactory;
 
