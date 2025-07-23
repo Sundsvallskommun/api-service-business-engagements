@@ -7,7 +7,6 @@ import static se.sundsvall.businessengagements.integration.party.PartyConfigurat
 import generated.se.sundsvall.party.PartyType;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.Optional;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,9 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @CircuitBreaker(name = CLIENT_ID)
 public interface PartyIntegration {
 
-	String LEGAL_ID_CACHE = "legalIds";
-	String PARTY_ID_CACHE = "partyIds";
-
 	/**
 	 * Get legalID by partyId
 	 *
@@ -31,7 +27,6 @@ public interface PartyIntegration {
 	 * @param  partyId        uuid of the person or organization
 	 * @return                legalId of the person or organization, Optional.empty() if not found.
 	 */
-	@Cacheable(LEGAL_ID_CACHE)
 	@GetMapping(path = "/{municipalityId}/{type}/{partyId}/legalId", produces = {
 		TEXT_PLAIN_VALUE, APPLICATION_PROBLEM_JSON_VALUE
 	})
@@ -45,7 +40,6 @@ public interface PartyIntegration {
 	 * @param  legalId        legalid of the person or organization
 	 * @return                partyId of the person or organization, Optional.empty() if not found.
 	 */
-	@Cacheable(PARTY_ID_CACHE)
 	@GetMapping(path = "/{municipalityId}/{type}/{legalId}/partyId", produces = {
 		TEXT_PLAIN_VALUE, APPLICATION_PROBLEM_JSON_VALUE
 	})
