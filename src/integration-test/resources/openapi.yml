@@ -402,7 +402,7 @@ components:
         phoneNumber:
           type: string
           description: The company's contact phone number
-          example: 070-1234567
+          example: 070-1740605
         municipality:
           $ref: "#/components/schemas/Municipality"
         county:

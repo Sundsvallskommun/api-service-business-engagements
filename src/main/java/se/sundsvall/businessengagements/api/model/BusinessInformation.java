@@ -32,7 +32,7 @@ public class BusinessInformation {
 	private String emailAddress;
 
 	// UD0006
-	@Schema(description = "The company's contact phone number", example = "070-1234567")
+	@Schema(description = "The company's contact phone number", example = "070-1740605")
 	private String phoneNumber;
 
 	// UD0011
