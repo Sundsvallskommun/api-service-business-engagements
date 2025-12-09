@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Swedish Standard Industrial Classification model")
 public class SNI {
 
-	@Schema(description = "SNI code", example = "72110")
+	@Schema(description = "SNI code", examples = "72110")
 	private String sniCode;
 
-	@Schema(description = "SNO description", example = "Bioteknisk forskning och utveckling")
+	@Schema(description = "SNO description", examples = "Bioteknisk forskning och utveckling")
 	private String sniDescription;
 
 }

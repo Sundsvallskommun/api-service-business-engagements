@@ -35,17 +35,17 @@ public class LiquidationInformation {
 		@Serial
 		private static final long serialVersionUID = -6283599400246819040L;
 
-		@Schema(description = "Liquidation code", example = "21")
+		@Schema(description = "Liquidation code", examples = "21")
 		private String liquidationCode;
 
-		@Schema(description = "Liquidation description", example = "Konkurs avslutad")
+		@Schema(description = "Liquidation description", examples = "Konkurs avslutad")
 		private String liquidationDescription;
 
 		@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-		@Schema(description = "Liquidation date", example = "2022-09-01")
+		@Schema(description = "Liquidation date", examples = "2022-09-01")
 		private LocalDate liquidationDate;
 
-		@Schema(description = "Type of liquidation", example = "Konkurs")
+		@Schema(description = "Type of liquidation", examples = "Konkurs")
 		private String liquidationType;
 
 	}

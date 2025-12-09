@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @Schema(description = "County information model")
 public class County {
 
-	@Schema(description = "County", example = "Västernorrland")
+	@Schema(description = "County", examples = "Västernorrland")
 	private String countyName;
 
-	@Schema(description = "County code", example = "22")
+	@Schema(description = "County code", examples = "22")
 	private String countyCode;
 
 }
