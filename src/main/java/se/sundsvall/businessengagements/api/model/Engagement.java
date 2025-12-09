@@ -18,13 +18,13 @@ public class Engagement implements Serializable {
 	@Serial
 	private static final long serialVersionUID = -5101038115881580186L;
 
-	@Schema(description = "Name of the organization", example = "Styrbjörns båtar")
+	@Schema(description = "Name of the organization", examples = "Styrbjörns båtar")
 	private String organizationName;
 
-	@Schema(description = "Organization number, may also be personal number in case of enskild firma", example = "2021005448")
+	@Schema(description = "Organization number, may also be personal number in case of enskild firma", examples = "2021005448")
 	private String organizationNumber;
 
-	@Schema(description = "Unique id for the organization (UUID)", example = "bab17d8b-af38-4531-967c-083f15ca1571")
+	@Schema(description = "Unique id for the organization (UUID)", examples = "bab17d8b-af38-4531-967c-083f15ca1571")
 	private String organizationId;
 
 }

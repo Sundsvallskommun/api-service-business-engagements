@@ -20,15 +20,15 @@ import lombok.Setter;
 public class SharesInformation {
 
 	@ArraySchema(schema = @Schema(implementation = ShareType.class))
-	List<ShareType> shareTypes;
+	private List<ShareType> shareTypes;
 
-	@Schema(description = "Number of total shares", example = "100000")
+	@Schema(description = "Number of total shares", examples = "100000")
 	private BigInteger numberOfShares;
 
-	@Schema(description = "Shares value", example = "120000.00")
+	@Schema(description = "Shares value", examples = "120000.00")
 	private BigDecimal shareCapital;
 
-	@Schema(description = "Shares value currency", example = "sek")
+	@Schema(description = "Shares value currency", examples = "sek")
 	private String shareCurrency;
 
 	@Getter
@@ -37,13 +37,13 @@ public class SharesInformation {
 	@Schema(description = "Share information model")
 	public static class ShareType {
 
-		@Schema(description = "Label of the shares", example = "B")
+		@Schema(description = "Label of the shares", examples = "B")
 		private String label;
 
-		@Schema(description = "Number of shares of this class", example = "25000")
+		@Schema(description = "Number of shares of this class", examples = "25000")
 		private BigInteger numberOfShares;
 
-		@Schema(description = "The vote value for one share", example = "1/10")
+		@Schema(description = "The vote value for one share", examples = "1/10")
 		private String voteValue;
 
 	}

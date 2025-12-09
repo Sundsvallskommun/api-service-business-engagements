@@ -14,11 +14,11 @@ import lombok.NoArgsConstructor;
 public class Municipality {
 
 	// UD0011
-	@Schema(description = "Municipality", example = "Sundsvalls Kommun")
+	@Schema(description = "Municipality", examples = "Sundsvalls Kommun")
 	private String municipalityName;
 
 	// UD0011
-	@Schema(description = "Municipality code", example = "2281")
+	@Schema(description = "Municipality code", examples = "2281")
 	private String municipalityCode;
 
 }

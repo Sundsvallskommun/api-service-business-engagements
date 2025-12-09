@@ -26,12 +26,12 @@ public class BusinessEngagementsResponse implements Serializable {
 
 	@Schema(description = "In case fetching one or more engagement failed, this will show why it failed."
 		+ " There may be more than one description if several engagements failed.",
-		example = "Timeout")
+		examples = "Timeout")
 	private Map<String, String> statusDescriptions;
 
 	@Schema(description = "If fetching all engagements went \"OK\" or \"NOK\". "
 		+ "A \"NOK\" may still return engagements but indicates that the information is incomplete.",
-		example = "OK",
+		examples = "OK",
 		requiredMode = Schema.RequiredMode.REQUIRED)
 	private Status status;
 

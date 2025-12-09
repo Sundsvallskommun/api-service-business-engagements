@@ -13,16 +13,16 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Fiscal year information model")
 public class FiscalYear {
 
-	@Schema(description = "Fiscal year start day", example = "1")
+	@Schema(description = "Fiscal year start day", examples = "1")
 	private int fromDay;
 
-	@Schema(description = "Fiscal year start month", example = "1")
+	@Schema(description = "Fiscal year start month", examples = "1")
 	private int fromMonth;
 
-	@Schema(description = "Fiscal year end day", example = "31")
+	@Schema(description = "Fiscal year end day", examples = "31")
 	private int toDay;
 
-	@Schema(description = "Fiscal year end month", example = "12")
+	@Schema(description = "Fiscal year end month", examples = "12")
 	private int toMonth;
 
 }

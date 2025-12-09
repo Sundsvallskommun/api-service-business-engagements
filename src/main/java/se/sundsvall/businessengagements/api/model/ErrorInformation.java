@@ -16,11 +16,11 @@ import org.apache.commons.lang3.StringUtils;
 @Schema(description = "Error information model")
 public class ErrorInformation {
 
-	@Schema(description = "Indicates if there was an error while fetching data and that one or more parameters could not be fetched", example = "true")
+	@Schema(description = "Indicates if there was an error while fetching data and that one or more parameters could not be fetched", examples = "true")
 	private Boolean hasErrors;
 
 	@Builder.Default
-	@Schema(description = "Map with error code (from bolagsverket) as key and the error description as value", example = "9071006, Ej behörig - ej firmatecknare.")
+	@Schema(description = "Map with error code (from bolagsverket) as key and the error description as value", examples = "9071006, Ej behörig - ej firmatecknare.")
 	private Map<String, String> errorDescriptions = new HashMap<>();
 
 	/**

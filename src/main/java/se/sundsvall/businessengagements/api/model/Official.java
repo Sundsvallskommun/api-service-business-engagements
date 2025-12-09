@@ -16,17 +16,19 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Officials information model")
 public class Official {
 
-	@ArraySchema(schema = @Schema(description = "List of roles the official has", example = "styrelseledamot,ordförande"))
+	@ArraySchema(schema = @Schema(description = "List of roles the official has", examples = {
+		"styrelseledamot", "ordförande"
+	}))
 	@Builder.Default
 	private List<String> roles = new ArrayList<>();
 
-	@Schema(description = "Legal Id of the official", example = "198001011234")
+	@Schema(description = "Legal Id of the official", examples = "198001011234")
 	private String legalId;
 
-	@Schema(description = "Name of the official", example = "Kalle Kallesson")
+	@Schema(description = "Name of the official", examples = "Kalle Kallesson")
 	private String name;
 
-	@Schema(description = "Location", example = "Sundsvall")
+	@Schema(description = "Location", examples = "Sundsvall")
 	private String location;
 
 }

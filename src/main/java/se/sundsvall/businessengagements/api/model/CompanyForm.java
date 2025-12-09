@@ -14,11 +14,11 @@ import lombok.NoArgsConstructor;
 public class CompanyForm {
 
 	// UD0025
-	@Schema(description = "Company form", example = "AB")
+	@Schema(description = "Company form", examples = "AB")
 	private String companyFormCode;
 
 	// UD0025
-	@Schema(description = "Company form description", example = "Aktiebolag")
+	@Schema(description = "Company form description", examples = "Aktiebolag")
 	private String companyFormDescription;
 
 }

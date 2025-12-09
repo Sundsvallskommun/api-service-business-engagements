@@ -57,9 +57,9 @@ public class BusinessEngagementsResource {
 	@GetMapping(value = "/engagements/{partyId}", produces = APPLICATION_JSON)
 	public ResponseEntity<BusinessEngagementsResponse> getEngagements(
 		@Parameter(name = "municipalityId", description = "Municipality id", example = "2281") @ValidMunicipalityId @PathVariable final String municipalityId,
-		@ValidUuid @PathVariable("partyId") @Schema(description = "Unique identifier for a person", example = "6a5c3d04-412d-11ec-973a-0242ac130003") final String partyId,
-		@NotBlank @RequestParam("personalName") @Schema(description = "The first and surname of the person") final String personalName,
-		@NotBlank @RequestParam("serviceName") @Schema(description = "Name of the system initiating the request", example = "Mina Sidor") final String serviceName) {
+		@ValidUuid @PathVariable("partyId") @Parameter(description = "Unique identifier for a person", example = "6a5c3d04-412d-11ec-973a-0242ac130003") final String partyId,
+		@NotBlank @RequestParam("personalName") @Parameter(description = "The first and surname of the person") final String personalName,
+		@NotBlank @RequestParam("serviceName") @Parameter(description = "Name of the system initiating the request", example = "Mina Sidor") final String serviceName) {
 
 		final var requestDto = new BusinessEngagementsRequestDto(personalName, null, partyId, serviceName);   // We don't know personalNumber yet
 		final var response = businessEngagementsService.getBusinessEngagements(requestDto, municipalityId);
@@ -88,8 +88,8 @@ public class BusinessEngagementsResource {
 	@GetMapping(value = "/information/{partyId}", produces = APPLICATION_JSON)
 	public ResponseEntity<BusinessInformation> getBusinessInformation(
 		@Parameter(name = "municipalityId", description = "Municipality id", example = "2281") @ValidMunicipalityId @PathVariable final String municipalityId,
-		@ValidUuid @PathVariable("partyId") @Schema(description = "Unique identifier for an organization number", example = "fb2f0290-3820-11ed-a261-0242ac120002") final String partyId,
-		@RequestParam(value = "organizationName", required = false) @Schema(description = "Name of the organization") final String organizationName) {
+		@Parameter(description = "Unique identifier for an organization number", example = "fb2f0290-3820-11ed-a261-0242ac120002") @ValidUuid @PathVariable("partyId") final String partyId,
+		@Parameter(description = "Name of the organization", example = "Lelles Kebaberia") @RequestParam(value = "organizationName", required = false) final String organizationName) {
 
 		final BusinessInformation businessInformation = businessEngagementsService.getBusinessInformation(partyId, organizationName, municipalityId);
 		return ResponseEntity.ok(businessInformation);

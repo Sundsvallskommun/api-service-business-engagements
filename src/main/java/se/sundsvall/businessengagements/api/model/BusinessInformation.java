@@ -16,7 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class BusinessInformation {
 
 	// UD0001
-	@Schema(description = "The company's name", example = "Sundsvalls kommun")
+	@Schema(description = "The company's name", examples = "Sundsvalls kommun")
 	private String companyName;
 
 	// UD0002
@@ -28,11 +28,11 @@ public class BusinessInformation {
 	private Address address;
 
 	// UD0004
-	@Schema(description = "The company's contact email", example = "somecompany@noreply.com")
+	@Schema(description = "The company's contact email", examples = "somecompany@noreply.com")
 	private String emailAddress;
 
 	// UD0006
-	@Schema(description = "The company's contact phone number", example = "070-1740605")
+	@Schema(description = "The company's contact phone number", examples = "070-1740605")
 	private String phoneNumber;
 
 	// UD0011
@@ -53,7 +53,7 @@ public class BusinessInformation {
 
 	// UD0026
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-	@Schema(description = "When the company was registered", example = "2022-01-01")
+	@Schema(description = "When the company was registered", examples = "2022-01-01")
 	private LocalDate companyRegistrationTime;
 
 	// UD0027
@@ -62,7 +62,7 @@ public class BusinessInformation {
 
 	// UD0028
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-	@Schema(description = "When and if the company was deregistered", example = "2022-09-01")
+	@Schema(description = "When and if the company was deregistered", examples = "2022-09-01")
 	private LocalDate deregistrationDate;
 
 	// UD0040
@@ -70,11 +70,11 @@ public class BusinessInformation {
 	private Address companyLocation;
 
 	// UD0045
-	@Schema(description = "Who may sign for the company", example = "Firman tecknas av styrelsen")
+	@Schema(description = "Who may sign for the company", examples = "Firman tecknas av styrelsen")
 	private String businessSignatory;
 
 	// UD0046
-	@Schema(description = "Information regarding the company's operations", example = "Psykologisk forskning på bin samt därmed förenlig verksamhet.")
+	@Schema(description = "Information regarding the company's operations", examples = "Psykologisk forskning på bin samt därmed förenlig verksamhet.")
 	private String companyDescription;
 
 	// UD0048
