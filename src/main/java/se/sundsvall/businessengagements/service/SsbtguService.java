@@ -1,7 +1,5 @@
 package se.sundsvall.businessengagements.service;
 
-import static org.zalando.problem.Status.BAD_GATEWAY;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +9,8 @@ import se.sundsvall.businessengagements.api.model.BusinessInformation;
 import se.sundsvall.businessengagements.integration.bolagsverket.ssbtgu.SsbtguIntegration;
 import se.sundsvall.businessengagements.service.mapper.ssbtgu.SsbtguRequestMapper;
 import se.sundsvall.businessengagements.service.mapper.ssbtgu.SsbtguResponseMapper;
+
+import static org.zalando.problem.Status.BAD_GATEWAY;
 
 @Component
 public class SsbtguService {

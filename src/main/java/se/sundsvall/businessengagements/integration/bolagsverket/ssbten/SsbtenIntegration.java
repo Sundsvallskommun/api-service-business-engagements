@@ -1,7 +1,5 @@
 package se.sundsvall.businessengagements.integration.bolagsverket.ssbten;
 
-import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
-
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -9,6 +7,8 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 import org.zalando.problem.Problem;
 import se.bolagsverket.schema.ssbten.engagemang.EngagemangBegaran;
 import se.bolagsverket.schema.ssbten.engagemang.EngagemangSvar;
+
+import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
 
 @Component
 @CircuitBreaker(name = "SsbtenIntegration")

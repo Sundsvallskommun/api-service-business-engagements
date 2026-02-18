@@ -1,7 +1,5 @@
 package se.sundsvall.businessengagements.service.mapper.ssbtgu;
 
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +17,8 @@ import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppg
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterBegaran;
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterBegaranDetaljer;
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterBegaranMetadata;
+
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @ExtendWith(SoftAssertionsExtension.class)
 class SsbtguRequestMapperTest {
