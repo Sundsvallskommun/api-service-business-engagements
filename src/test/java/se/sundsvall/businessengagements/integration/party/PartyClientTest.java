@@ -1,10 +1,5 @@
 package se.sundsvall.businessengagements.integration.party;
 
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import generated.se.sundsvall.party.PartyType;
 import java.util.Optional;
 import org.assertj.core.api.SoftAssertions;
@@ -16,6 +11,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.zalando.problem.ThrowableProblem;
+
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith({
 	MockitoExtension.class, SoftAssertionsExtension.class

@@ -1,10 +1,5 @@
 package se.sundsvall.businessengagements.service.mapper.ssbtgu;
 
-import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
-import static se.sundsvall.businessengagements.service.BusinessEngagementsService.SERVICE_NAME;
-import static se.sundsvall.businessengagements.service.BusinessEngagementsService.SUNDSVALLS_KOMMUN;
-import static se.sundsvall.businessengagements.service.BusinessEngagementsService.SUNDSVALL_MUNICIPALITY_ORGANIZATION_NUMBER;
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.GregorianCalendar;
@@ -28,6 +23,11 @@ import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppg
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterBegaranDetaljer;
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterBegaranMetadata;
 import se.sundsvall.dept44.requestid.RequestId;
+
+import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
+import static se.sundsvall.businessengagements.service.BusinessEngagementsService.SERVICE_NAME;
+import static se.sundsvall.businessengagements.service.BusinessEngagementsService.SUNDSVALLS_KOMMUN;
+import static se.sundsvall.businessengagements.service.BusinessEngagementsService.SUNDSVALL_MUNICIPALITY_ORGANIZATION_NUMBER;
 
 @Component
 public class SsbtguRequestMapper {

@@ -1,8 +1,5 @@
 package se.sundsvall.businessengagements.api;
 
-import static io.netty.handler.codec.http.HttpHeaders.Values.APPLICATION_JSON;
-import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -27,6 +24,9 @@ import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto
 import se.sundsvall.businessengagements.service.BusinessEngagementsService;
 import se.sundsvall.dept44.common.validators.annotation.ValidMunicipalityId;
 import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
+
+import static io.netty.handler.codec.http.HttpHeaders.Values.APPLICATION_JSON;
+import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
 
 @RestController
 @RequestMapping(value = "/{municipalityId}")

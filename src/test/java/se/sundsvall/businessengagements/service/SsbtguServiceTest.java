@@ -1,12 +1,5 @@
 package se.sundsvall.businessengagements.service;
 
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +17,13 @@ import se.sundsvall.businessengagements.api.model.BusinessInformation;
 import se.sundsvall.businessengagements.integration.bolagsverket.ssbtgu.SsbtguIntegration;
 import se.sundsvall.businessengagements.service.mapper.ssbtgu.SsbtguRequestMapper;
 import se.sundsvall.businessengagements.service.mapper.ssbtgu.SsbtguResponseMapper;
+
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith({
 	MockitoExtension.class, SoftAssertionsExtension.class

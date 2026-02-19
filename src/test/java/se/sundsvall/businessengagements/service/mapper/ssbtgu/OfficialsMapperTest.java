@@ -1,7 +1,5 @@
 package se.sundsvall.businessengagements.service.mapper.ssbtgu;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -14,6 +12,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import se.sundsvall.businessengagements.api.model.Official;
 import se.sundsvall.dept44.test.annotation.resource.Load;
 import se.sundsvall.dept44.test.extension.ResourceLoaderExtension;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith({
 	SoftAssertionsExtension.class, ResourceLoaderExtension.class

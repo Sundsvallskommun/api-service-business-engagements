@@ -1,7 +1,5 @@
 package se.sundsvall.businessengagements.service.mapper.ssbtgu;
 
-import static java.util.Collections.emptyList;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import se.sundsvall.businessengagements.api.model.Official;
+
+import static java.util.Collections.emptyList;
 
 public class OfficialsMapper {
 

@@ -1,10 +1,5 @@
 package se.sundsvall.businessengagements.service.mapper.ssbten;
 
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import org.assertj.core.api.SoftAssertions;
@@ -21,6 +16,11 @@ import se.bolagsverket.schema.ssbt.metadata.Tidsenhet;
 import se.bolagsverket.schema.ssbten.engagemang.EngagemangBegaran;
 import se.sundsvall.businessengagements.TestObjectFactory;
 import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;
+
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith({
 	MockitoExtension.class, SoftAssertionsExtension.class
