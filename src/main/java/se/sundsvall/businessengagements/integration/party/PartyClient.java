@@ -4,9 +4,9 @@ import generated.se.sundsvall.party.PartyType;
 import java.util.Optional;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
-import org.zalando.problem.Problem;
+import se.sundsvall.dept44.problem.Problem;
 
-import static org.zalando.problem.Status.NOT_FOUND;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 /**
  * Class to interact with the PartyIntegration.

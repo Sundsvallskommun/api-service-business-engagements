@@ -1,26 +1,27 @@
 package openapi;
 
-import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
-
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import net.javacrumbs.jsonunit.core.Option;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.resttestclient.TestRestTemplate;
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import se.sundsvall.businessengagements.Application;
 import se.sundsvall.dept44.util.ResourceUtils;
+import tools.jackson.dataformat.yaml.YAMLMapper;
 
-import net.javacrumbs.jsonunit.core.Option;
+import static java.nio.file.Files.writeString;
+import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
 @ActiveProfiles("it")
+@AutoConfigureTestRestTemplate
 @SpringBootTest(
 	webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 	classes = Application.class,
@@ -47,9 +48,11 @@ class OpenApiSpecificationIT {
 	private TestRestTemplate restTemplate;
 
 	@Test
-	void compareOpenApiSpecifications() {
+	void compareOpenApiSpecifications() throws IOException {
 		final String existingOpenApiSpecification = ResourceUtils.asString(openApiResource);
 		final String currentOpenApiSpecification = getCurrentOpenApiSpecification();
+
+		writeString(Path.of("target/generated-api.yaml"), currentOpenApiSpecification);
 
 		assertThatJson(toJson(existingOpenApiSpecification))
 			.withOptions(List.of(Option.IGNORING_ARRAY_ORDER))
@@ -77,11 +80,7 @@ class OpenApiSpecificationIT {
 	 * @return a JSON string
 	 */
 	private String toJson(final String yaml) {
-		try {
-			return YAML_MAPPER.readTree(yaml).toString();
-		} catch (final JsonProcessingException e) {
-			throw new IllegalStateException("Unable to convert YAML to JSON", e);
-		}
+		return YAML_MAPPER.readTree(yaml).toString();
 	}
 
 }

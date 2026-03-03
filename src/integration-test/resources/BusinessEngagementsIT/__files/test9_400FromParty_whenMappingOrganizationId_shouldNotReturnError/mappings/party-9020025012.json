@@ -12,7 +12,7 @@
 		"headers": {
 			"Content-Type": "application/problem+json"
 		},
-		"body": "{\"type\":\"https://zalando.github.io/problem/constraint-violation\",\"status\":400,\"violations\":[{\"field\":\"getPartyIdByLegalId.legalId\",\"message\":\"must match the regular expression ^([1235789][2-9]\\\\d{8})$\"}],\"title\":\"Constraint Violation\"}",
+		"body": "{\"type\":\"about:blank\",\"status\":400,\"violations\":[{\"field\":\"getPartyIdByLegalId.legalId\",\"message\":\"must match the regular expression ^([1235789][2-9]\\\\d{8})$\"}],\"title\":\"Constraint Violation\"}",
 		"status": "400"
 	}
 }
