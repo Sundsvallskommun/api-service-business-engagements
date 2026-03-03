@@ -18,7 +18,7 @@ class BusinessInformationIT extends AbstractAppTest {
 
 	@BeforeEach
 	public void setup() {
-		CommonStubs.stubAccessToken();
+		CommonStubs.stubAccessToken(wiremock);
 	}
 
 	@Test
