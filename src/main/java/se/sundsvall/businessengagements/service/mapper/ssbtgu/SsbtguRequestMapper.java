@@ -10,7 +10,6 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
-import org.zalando.problem.Problem;
 import se.bolagsverket.schema.ssbt.foretag.PersonIdentitetsbeteckning;
 import se.bolagsverket.schema.ssbt.metadata.Anvandningsomrade;
 import se.bolagsverket.schema.ssbt.metadata.Datakonsument;
@@ -22,9 +21,10 @@ import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppg
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterBegaran;
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterBegaranDetaljer;
 import se.bolagsverket.schema.ssbtgu.v2.grundlaggandeuppgifter.GrundlaggandeUppgifterBegaranMetadata;
+import se.sundsvall.dept44.problem.Problem;
 import se.sundsvall.dept44.requestid.RequestId;
 
-import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static se.sundsvall.businessengagements.service.BusinessEngagementsService.SERVICE_NAME;
 import static se.sundsvall.businessengagements.service.BusinessEngagementsService.SUNDSVALLS_KOMMUN;
 import static se.sundsvall.businessengagements.service.BusinessEngagementsService.SUNDSVALL_MUNICIPALITY_ORGANIZATION_NUMBER;

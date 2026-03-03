@@ -9,8 +9,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import org.zalando.problem.Problem;
-import org.zalando.problem.ThrowableProblem;
 import se.sundsvall.businessengagements.TestObjectFactory;
 import se.sundsvall.businessengagements.api.model.BusinessEngagementsResponse;
 import se.sundsvall.businessengagements.api.model.BusinessInformation;
@@ -18,6 +16,8 @@ import se.sundsvall.businessengagements.api.model.Engagement;
 import se.sundsvall.businessengagements.domain.dto.BusinessEngagementsRequestDto;
 import se.sundsvall.businessengagements.integration.party.PartyClient;
 import se.sundsvall.businessengagements.service.mapper.ssbten.EngagemangBegaranRequestMapper;
+import se.sundsvall.dept44.problem.Problem;
+import se.sundsvall.dept44.problem.ThrowableProblem;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;

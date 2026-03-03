@@ -1,47 +1,47 @@
 openapi: 3.1.0
 info:
   title: api-businessengagements
-  contact: { }
+  contact: {}
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
   version: "3.0"
 servers:
-  - url: http://localhost:51784
-    description: Generated server url
+- url: http://localhost:18080
+  description: Generated server url
 tags:
-  - name: Business Engagements
-    description: Show a persons business engagements and company information.
+- name: Business Engagements
+  description: Show a persons business engagements and company information.
 paths:
   /{municipalityId}/information/{partyId}:
     get:
       tags:
-        - Business Engagements
+      - Business Engagements
       summary: Get business information
       description: Get information about a company
       operationId: getBusinessInformation
       parameters:
-        - name: municipalityId
-          in: path
-          description: Municipality id
-          required: true
-          schema:
-            type: string
-          example: 2281
-        - name: partyId
-          in: path
-          description: Unique identifier for an organization number
-          required: true
-          schema:
-            type: string
-          example: fb2f0290-3820-11ed-a261-0242ac120002
-        - name: organizationName
-          in: query
-          description: Name of the organization
-          required: false
-          schema:
-            type: string
-          example: Lelles Kebaberia
+      - name: municipalityId
+        in: path
+        description: Municipality id
+        required: true
+        schema:
+          type: string
+        example: 2281
+      - name: partyId
+        in: path
+        description: Unique identifier for an organization number
+        required: true
+        schema:
+          type: string
+        example: fb2f0290-3820-11ed-a261-0242ac120002
+      - name: organizationName
+        in: query
+        description: Name of the organization
+        required: false
+        schema:
+          type: string
+        example: Lelles Kebaberia
       responses:
         "200":
           description: Successful Operation
@@ -67,8 +67,8 @@ paths:
             application/problem+json:
               schema:
                 oneOf:
-                  - $ref: "#/components/schemas/Problem"
-                  - $ref: "#/components/schemas/ConstraintViolationProblem"
+                - $ref: "#/components/schemas/Problem"
+                - $ref: "#/components/schemas/ConstraintViolationProblem"
         "500":
           description: Internal Server Error
           content:
@@ -78,40 +78,38 @@ paths:
   /{municipalityId}/engagements/{partyId}:
     get:
       tags:
-        - Business Engagements
+      - Business Engagements
       summary: Get business engagements
       description: Get a list of business engagements for a person
       operationId: getEngagements
       parameters:
-        - name: municipalityId
-          in: path
-          description: Municipality id
-          required: true
-          schema:
-            type: string
-          example: 2281
-        - name: partyId
-          in: path
-          description: Unique identifier for a person
-          required: true
-          schema:
-            type: string
-          example: 6a5c3d04-412d-11ec-973a-0242ac130003
-        - name: personalName
-          in: query
-          description: The first and surname of the person
-          required: true
-          schema:
-            type: string
-            minLength: 1
-        - name: serviceName
-          in: query
-          description: Name of the system initiating the request
-          required: true
-          schema:
-            type: string
-            minLength: 1
-          example: Mina Sidor
+      - name: municipalityId
+        in: path
+        description: Municipality id
+        required: true
+        schema:
+          type: string
+        example: 2281
+      - name: partyId
+        in: path
+        description: Unique identifier for a person
+        required: true
+        schema:
+          type: string
+        example: 6a5c3d04-412d-11ec-973a-0242ac130003
+      - name: personalName
+        in: query
+        description: The first and surname of the person
+        required: true
+        schema:
+          type: string
+      - name: serviceName
+        in: query
+        description: Name of the system initiating the request
+        required: true
+        schema:
+          type: string
+        example: Mina Sidor
       responses:
         "200":
           description: Successful Operation
@@ -137,8 +135,8 @@ paths:
             application/problem+json:
               schema:
                 oneOf:
-                  - $ref: "#/components/schemas/Problem"
-                  - $ref: "#/components/schemas/ConstraintViolationProblem"
+                - $ref: "#/components/schemas/Problem"
+                - $ref: "#/components/schemas/ConstraintViolationProblem"
         "500":
           description: Internal Server Error
           content:
@@ -148,7 +146,7 @@ paths:
   /api-docs:
     get:
       tags:
-        - API
+      - API
       summary: OpenAPI
       operationId: getApiDocs
       responses:
@@ -166,186 +164,58 @@ components:
     Problem:
       type: object
       properties:
+        title:
+          type: string
+        detail:
+          type: string
         instance:
           type: string
           format: uri
         type:
           type: string
           format: uri
-        parameters:
-          type: object
-          additionalProperties: { }
         status:
-          $ref: "#/components/schemas/StatusType"
-        title:
-          type: string
-        detail:
-          type: string
-    StatusType:
-      type: object
-      properties:
-        statusCode:
           type: integer
           format: int32
-        reasonPhrase:
-          type: string
     ConstraintViolationProblem:
       type: object
       properties:
-        cause:
-          $ref: "#/components/schemas/ThrowableProblem"
-        stackTrace:
-          type: array
-          items:
-            type: object
-            properties:
-              classLoaderName:
-                type: string
-              moduleName:
-                type: string
-              moduleVersion:
-                type: string
-              methodName:
-                type: string
-              fileName:
-                type: string
-              lineNumber:
-                type: integer
-                format: int32
-              className:
-                type: string
-              nativeMethod:
-                type: boolean
         type:
           type: string
           format: uri
         status:
-          $ref: "#/components/schemas/StatusType"
+          type: integer
+          format: int32
         violations:
           type: array
           items:
             $ref: "#/components/schemas/Violation"
         title:
           type: string
-        message:
+        detail:
           type: string
+        causeAsProblem:
+          $ref: "#/components/schemas/ThrowableProblem"
         instance:
           type: string
           format: uri
-        parameters:
-          type: object
-          additionalProperties: { }
-        detail:
-          type: string
-        suppressed:
-          type: array
-          items:
-            type: object
-            properties:
-              stackTrace:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    classLoaderName:
-                      type: string
-                    moduleName:
-                      type: string
-                    moduleVersion:
-                      type: string
-                    methodName:
-                      type: string
-                    fileName:
-                      type: string
-                    lineNumber:
-                      type: integer
-                      format: int32
-                    className:
-                      type: string
-                    nativeMethod:
-                      type: boolean
-              message:
-                type: string
-              localizedMessage:
-                type: string
-        localizedMessage:
-          type: string
     ThrowableProblem:
       type: object
       properties:
-        cause: { }
-        stackTrace:
-          type: array
-          items:
-            type: object
-            properties:
-              classLoaderName:
-                type: string
-              moduleName:
-                type: string
-              moduleVersion:
-                type: string
-              methodName:
-                type: string
-              fileName:
-                type: string
-              lineNumber:
-                type: integer
-                format: int32
-              className:
-                type: string
-              nativeMethod:
-                type: boolean
-        message:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+          format: int32
+        detail:
           type: string
         instance:
           type: string
           format: uri
-        type:
-          type: string
-          format: uri
-        parameters:
-          type: object
-          additionalProperties: { }
-        status:
-          $ref: "#/components/schemas/StatusType"
-        title:
-          type: string
-        detail:
-          type: string
-        suppressed:
-          type: array
-          items:
-            type: object
-            properties:
-              stackTrace:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    classLoaderName:
-                      type: string
-                    moduleName:
-                      type: string
-                    moduleVersion:
-                      type: string
-                    methodName:
-                      type: string
-                    fileName:
-                      type: string
-                    lineNumber:
-                      type: integer
-                      format: int32
-                    className:
-                      type: string
-                    nativeMethod:
-                      type: boolean
-              message:
-                type: string
-              localizedMessage:
-                type: string
-        localizedMessage:
-          type: string
+        causeAsProblem: {}
     Violation:
       type: object
       properties:
@@ -361,22 +231,22 @@ components:
           type: string
           description: City
           examples:
-            - Sundsvall
+          - Sundsvall
         street:
           type: string
           description: Street address
           examples:
-            - Storgatan 10
+          - Storgatan 10
         postcode:
           type: string
           description: Postal code
           examples:
-            - "85740"
+          - "85740"
         careOf:
           type: string
           description: Care of
           examples:
-            - John Doe
+          - John Doe
     BusinessInformation:
       type: object
       description: Business information model
@@ -385,7 +255,7 @@ components:
           type: string
           description: The company's name
           examples:
-            - Sundsvalls kommun
+          - Sundsvalls kommun
         legalForm:
           $ref: "#/components/schemas/LegalForm"
         address:
@@ -394,12 +264,12 @@ components:
           type: string
           description: The company's contact email
           examples:
-            - somecompany@noreply.com
+          - somecompany@noreply.com
         phoneNumber:
           type: string
           description: The company's contact phone number
           examples:
-            - 070-1740605
+          - 070-1740605
         municipality:
           $ref: "#/components/schemas/Municipality"
         county:
@@ -413,7 +283,7 @@ components:
           format: date
           description: When the company was registered
           examples:
-            - 2022-01-01
+          - 2022-01-01
         liquidationInformation:
           $ref: "#/components/schemas/LiquidationInformation"
           description: Liquidation information
@@ -422,7 +292,7 @@ components:
           format: date
           description: When and if the company was deregistered
           examples:
-            - 2022-09-01
+          - 2022-09-01
         companyLocation:
           $ref: "#/components/schemas/Address"
           description: Company location
@@ -430,12 +300,12 @@ components:
           type: string
           description: Who may sign for the company
           examples:
-            - Firman tecknas av styrelsen
+          - Firman tecknas av styrelsen
         companyDescription:
           type: string
           description: Information regarding the company's operations
           examples:
-            - Psykologisk forskning på bin samt därmed förenlig verksamhet.
+          - Psykologisk forskning på bin samt därmed förenlig verksamhet.
         sharesInformation:
           $ref: "#/components/schemas/SharesInformation"
         errorInformation:
@@ -448,12 +318,12 @@ components:
           type: string
           description: Company form
           examples:
-            - AB
+          - AB
         companyFormDescription:
           type: string
           description: Company form description
           examples:
-            - Aktiebolag
+          - Aktiebolag
     County:
       type: object
       description: County information model
@@ -462,12 +332,12 @@ components:
           type: string
           description: County
           examples:
-            - Västernorrland
+          - Västernorrland
         countyCode:
           type: string
           description: County code
           examples:
-            - "22"
+          - "22"
     ErrorInformation:
       type: object
       description: Error information model
@@ -477,7 +347,7 @@ components:
           description: Indicates if there was an error while fetching data and that
             one or more parameters could not be fetched
           examples:
-            - "true"
+          - "true"
         errorDescriptions:
           type: object
           additionalProperties:
@@ -485,7 +355,7 @@ components:
           description: Map with error code (from bolagsverket) as key and the error
             description as value
           examples:
-            - "9071006, Ej behörig - ej firmatecknare."
+          - "9071006, Ej behörig - ej firmatecknare."
     FiscalYear:
       type: object
       description: Fiscal year information model
@@ -495,25 +365,25 @@ components:
           format: int32
           description: Fiscal year start day
           examples:
-            - "1"
+          - "1"
         fromMonth:
           type: integer
           format: int32
           description: Fiscal year start month
           examples:
-            - "1"
+          - "1"
         toDay:
           type: integer
           format: int32
           description: Fiscal year end day
           examples:
-            - "31"
+          - "31"
         toMonth:
           type: integer
           format: int32
           description: Fiscal year end month
           examples:
-            - "12"
+          - "12"
     LegalForm:
       type: object
       description: Legal form information model
@@ -522,12 +392,12 @@ components:
           type: string
           description: Legal form
           examples:
-            - Övriga aktiebolag
+          - Övriga aktiebolag
         legalFormCode:
           type: string
           description: Legal form code
           examples:
-            - "49"
+          - "49"
     LiquidationInformation:
       type: object
       description: Liquidation information model
@@ -546,23 +416,23 @@ components:
           type: string
           description: Liquidation code
           examples:
-            - "21"
+          - "21"
         liquidationDescription:
           type: string
           description: Liquidation description
           examples:
-            - Konkurs avslutad
+          - Konkurs avslutad
         liquidationDate:
           type: string
           format: date
           description: Liquidation date
           examples:
-            - 2022-09-01
+          - 2022-09-01
         liquidationType:
           type: string
           description: Type of liquidation
           examples:
-            - Konkurs
+          - Konkurs
     Municipality:
       type: object
       description: Municipality information model
@@ -571,12 +441,12 @@ components:
           type: string
           description: Municipality
           examples:
-            - Sundsvalls Kommun
+          - Sundsvalls Kommun
         municipalityCode:
           type: string
           description: Municipality code
           examples:
-            - "2281"
+          - "2281"
     ShareType:
       type: object
       description: Share information model
@@ -585,17 +455,17 @@ components:
           type: string
           description: Label of the shares
           examples:
-            - B
+          - B
         numberOfShares:
           type: integer
           description: Number of shares of this class
           examples:
-            - "25000"
+          - "25000"
         voteValue:
           type: string
           description: The vote value for one share
           examples:
-            - 1/10
+          - 1/10
     SharesInformation:
       type: object
       description: Shares information model
@@ -608,17 +478,17 @@ components:
           type: integer
           description: Number of total shares
           examples:
-            - "100000"
+          - "100000"
         shareCapital:
           type: number
           description: Shares value
           examples:
-            - "120000.00"
+          - "120000.00"
         shareCurrency:
           type: string
           description: Shares value currency
           examples:
-            - sek
+          - sek
     BusinessEngagementsResponse:
       type: object
       description: Business engagements response model
@@ -635,18 +505,18 @@ components:
             \ show why it failed. There may be more than one description if several\
             \ engagements failed."
           examples:
-            - Timeout
+          - Timeout
         status:
           type: string
           description: If fetching all engagements went "OK" or "NOK". A "NOK" may
             still return engagements but indicates that the information is incomplete.
           enum:
-            - OK
-            - NOK
+          - OK
+          - NOK
           examples:
-            - OK
+          - OK
       required:
-        - status
+      - status
     Engagement:
       type: object
       description: Represents a persons business engagement.
@@ -655,16 +525,16 @@ components:
           type: string
           description: Name of the organization
           examples:
-            - Styrbjörns båtar
+          - Styrbjörns båtar
         organizationNumber:
           type: string
           description: "Organization number, may also be personal number in case of\
             \ enskild firma"
           examples:
-            - "2021005448"
+          - "2021005448"
         organizationId:
           type: string
           description: Unique id for the organization (UUID)
           examples:
-            - bab17d8b-af38-4531-967c-083f15ca1571
-  securitySchemes: { }
+          - bab17d8b-af38-4531-967c-083f15ca1571
+  securitySchemes: {}
